@@ -45,10 +45,10 @@ destroyStub_gdb( gdbstub_handle_t stub);
 void
 activateStub_gdb( gdbstub_handle_t stub);
 
-  /*
-   * An implementation of the following functions is required
-   * for the GDB stub to function.
-   */
+/*
+ * An implementation of the following functions is required
+ * for the GDB stub to function.
+ */
 void *
 createThread_gdb( void (WINAPI *thread_function)( void *data),
                   void *thread_data);

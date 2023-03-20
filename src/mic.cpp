@@ -38,100 +38,100 @@ static unsigned int micBufferFillCount; // The number of readable samples in the
 
 static void Mic_BufferClear(void)
 {
-	if (micSampleBuffer == NULL) {
-		return;
-	}
+    if (micSampleBuffer == NULL) {
+        return;
+    }
 
-	memset(micSampleBuffer, MIC_NULL_SAMPLE_VALUE, MIC_BUFFER_SIZE);
-	micReadPosition = micSampleBuffer;
-	micWritePosition = micSampleBuffer;
-	micBufferFillCount = 0;
+    memset(micSampleBuffer, MIC_NULL_SAMPLE_VALUE, MIC_BUFFER_SIZE);
+    micReadPosition = micSampleBuffer;
+    micWritePosition = micSampleBuffer;
+    micBufferFillCount = 0;
 }
 
 BOOL Mic_Init(void)
 {
-	BOOL result = FALSE;
+    BOOL result = FALSE;
 
-	u8 *newBuffer = (u8 *)malloc(MIC_BUFFER_SIZE);
-	if (newBuffer == NULL) {
-		return result;
-	}
+    u8 *newBuffer = (u8 *)malloc(MIC_BUFFER_SIZE);
+    if (newBuffer == NULL) {
+        return result;
+    }
 
-	micSampleBuffer = newBuffer;
-	Mic_BufferClear();
-	result = TRUE;
+    micSampleBuffer = newBuffer;
+    Mic_BufferClear();
+    result = TRUE;
 
-	return result;
+    return result;
 }
 
 void Mic_DeInit(void)
 {
-	free(micSampleBuffer);
-	micSampleBuffer = NULL;
+    free(micSampleBuffer);
+    micSampleBuffer = NULL;
 }
 
 void Mic_Reset(void)
 {
-	*micReadPosition = MIC_NULL_SAMPLE_VALUE;
-	micWritePosition = micReadPosition;
-	micBufferFillCount = 0;
+    *micReadPosition = MIC_NULL_SAMPLE_VALUE;
+    micWritePosition = micReadPosition;
+    micBufferFillCount = 0;
 }
 
 static bool Mic_GetActivate(void)
 {
-	return NDS_getFinalUserInput().mic.micButtonPressed;
+    return NDS_getFinalUserInput().mic.micButtonPressed;
 }
 
 static bool Mic_IsBufferFull(void)
 {
-	return (micBufferFillCount >= MIC_MAX_BUFFER_SAMPLES);
+    return (micBufferFillCount >= MIC_MAX_BUFFER_SAMPLES);
 }
 
 static bool Mic_IsBufferEmpty(void)
 {
-	return (micBufferFillCount == 0);
+    return (micBufferFillCount == 0);
 }
 
 static u8 Mic_DefaultBufferRead(void)
 {
-	u8 theSample = MIC_NULL_SAMPLE_VALUE;
+    u8 theSample = MIC_NULL_SAMPLE_VALUE;
 
-	if (micSampleBuffer == NULL) {
-		return theSample;
-	}
+    if (micSampleBuffer == NULL) {
+        return theSample;
+    }
 
-	theSample = *micReadPosition;
+    theSample = *micReadPosition;
 
-	if (Mic_IsBufferEmpty()) {
-		return theSample;
-	}
+    if (Mic_IsBufferEmpty()) {
+        return theSample;
+    }
 
-	micReadPosition++;
-	micBufferFillCount--;
+    micReadPosition++;
+    micBufferFillCount--;
 
-	// Move the pointer back to start if we reach the end of the memory block.
-	if (micReadPosition >= (micSampleBuffer + MIC_BUFFER_SIZE)) {
-		micReadPosition = micSampleBuffer;
-	}
+    // Move the pointer back to start if we reach the end of the memory block.
+    if (micReadPosition >= (micSampleBuffer + MIC_BUFFER_SIZE)) {
+        micReadPosition = micSampleBuffer;
+    }
 
-	return theSample;
+    return theSample;
 }
 
 
 static u8 Mic_GenerateInternalNoiseSample(void)
 {
-	const u8 noiseSample[NUM_INTERNAL_NOISE_SAMPLES] =
-	{
-		0xFC, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xF5, 0xFF, 0xFF, 0xFF, 0xFF, 0x8E, 0xFF, 
-		0xF4, 0xE1, 0xBF, 0x9A, 0x71, 0x58, 0x5B, 0x5F, 0x62, 0xC2, 0x25, 0x05, 0x01, 0x01, 0x01, 0x01
-	};
-	static unsigned int i = 0;
+    const u8 noiseSample[NUM_INTERNAL_NOISE_SAMPLES] =
+    {
+        0xFC, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xF5, 0xFF, 0xFF, 0xFF, 0xFF, 0x8E, 0xFF,
+        0xF4, 0xE1, 0xBF, 0x9A, 0x71, 0x58, 0x5B, 0x5F, 0x62, 0xC2, 0x25, 0x05, 0x01, 0x01, 0x01, 0x01
+    };
+    static unsigned int i = 0;
 
-	if (++i >= NUM_INTERNAL_NOISE_SAMPLES) {
-		i = 0;
-	}
+    if (++i >= NUM_INTERNAL_NOISE_SAMPLES) {
+        i = 0;
+    }
 
-	return noiseSample[i];
+    return noiseSample[i];
 }
 
 /*
@@ -150,65 +150,65 @@ u8 Mic_ReadSample(void)
 
 static void Mic_DefaultBufferWrite(u8 theSample)
 {
-	if (micSampleBuffer == NULL || Mic_IsBufferFull()) {
-		return;
-	}
+    if (micSampleBuffer == NULL || Mic_IsBufferFull()) {
+        return;
+    }
 
-	*micWritePosition = theSample;
-	micWritePosition++;
-	micBufferFillCount++;
+    *micWritePosition = theSample;
+    micWritePosition++;
+    micBufferFillCount++;
 
-	// Move the pointer back to start if we reach the end of the memory block.
-	if (micWritePosition >= (micSampleBuffer + MIC_BUFFER_SIZE)) {
-		micWritePosition = micSampleBuffer;
-	}
+    // Move the pointer back to start if we reach the end of the memory block.
+    if (micWritePosition >= (micSampleBuffer + MIC_BUFFER_SIZE)) {
+        micWritePosition = micSampleBuffer;
+    }
 }
 
 
 static u8 Mic_GenerateWhiteNoiseSample(void)
 {
-	return (u8)(rand() & 0xFF);
+    return (u8)(rand() & 0xFF);
 }
 
 static u8 Mic_GenerateNullSample(void)
 {
-	return MIC_NULL_SAMPLE_VALUE;
+    return MIC_NULL_SAMPLE_VALUE;
 }
 
 void Mic_DoNoise(BOOL noise)
 {
-	u8 (*generator) (void) = NULL;
+    u8 (*generator) (void) = NULL;
 
-	if (micSampleBuffer == NULL) {
-		return;
-	}
+    if (micSampleBuffer == NULL) {
+        return;
+    }
 
-	if (!noise) {
-		generator = &Mic_GenerateNullSample;
-	} else if (CommonSettings.micMode == TCommonSettings::InternalNoise) {
-		generator = &Mic_GenerateInternalNoiseSample;
-	} else if (CommonSettings.micMode == TCommonSettings::Random) {
-		generator = &Mic_GenerateWhiteNoiseSample;
-	}
+    if (!noise) {
+        generator = &Mic_GenerateNullSample;
+    } else if (CommonSettings.micMode == TCommonSettings::InternalNoise) {
+        generator = &Mic_GenerateInternalNoiseSample;
+    } else if (CommonSettings.micMode == TCommonSettings::Random) {
+        generator = &Mic_GenerateWhiteNoiseSample;
+    }
 
-	if (generator == NULL) {
-		return;
-	}
+    if (generator == NULL) {
+        return;
+    }
 
-	while (micBufferFillCount < MIC_MAX_BUFFER_SAMPLES) {
-		Mic_DefaultBufferWrite(generator());
-	}
+    while (micBufferFillCount < MIC_MAX_BUFFER_SAMPLES) {
+        Mic_DefaultBufferWrite(generator());
+    }
 }
 
 void mic_savestate(EMUFILE &os)
 {
-	os.write_32LE(-1);
+    os.write_32LE(-1);
 }
 
 bool mic_loadstate(EMUFILE &is, int size)
 {
-	is.fseek(size, SEEK_CUR);
-	return TRUE;
+    is.fseek(size, SEEK_CUR);
+    return TRUE;
 }
 
 #endif

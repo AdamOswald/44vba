@@ -31,10 +31,10 @@
 #define CALL_CONVENTION
 typedef struct
 {
-	void (CALL_CONVENTION*  info)	(const char *fmt, ...);
-	bool (CALL_CONVENTION*  confirm)(const char *fmt, ...);
-	void (CALL_CONVENTION*  error)	(const char *fmt, ...);
-	void (CALL_CONVENTION*  warn)	(const char *fmt, ...);
+    void (CALL_CONVENTION*  info)	(const char *fmt, ...);
+    bool (CALL_CONVENTION*  confirm)(const char *fmt, ...);
+    void (CALL_CONVENTION*  error)	(const char *fmt, ...);
+    void (CALL_CONVENTION*  warn)	(const char *fmt, ...);
 } msgBoxInterface;
 
 extern msgBoxInterface *msgbox;

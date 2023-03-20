@@ -26,55 +26,73 @@
 class VIEW3D_Driver
 {
 public:
-	virtual void Launch() {}
-	virtual void NewFrame() {}
-	virtual bool IsRunning() { return false; }
+    virtual void Launch() {}
+    virtual void NewFrame() {}
+    virtual bool IsRunning() {
+        return false;
+    }
 };
 
 //each platform needs to implement this, although it doesnt need to implement any functions
 class BaseDriver {
 public:
-	BaseDriver();
-	~BaseDriver();
-	
-	virtual void AVI_SoundUpdate(void* soundData, int soundLen) {}
-	virtual bool AVI_IsRecording() { return FALSE; }
-	virtual bool WAV_IsRecording() { return FALSE; }
+    BaseDriver();
+    ~BaseDriver();
 
-	virtual void USR_InfoMessage(const char *message) { LOG("%s\n", message); }
-	virtual void USR_RefreshScreen() {}
-	virtual void USR_SetDisplayPostpone(int milliseconds, bool drawNextFrame) {} // -1 == indefinitely, 0 == don't pospone, 500 == don't draw for 0.5 seconds
+    virtual void AVI_SoundUpdate(void* soundData, int soundLen) {}
+    virtual bool AVI_IsRecording() {
+        return FALSE;
+    }
+    virtual bool WAV_IsRecording() {
+        return FALSE;
+    }
 
-	enum eStepMainLoopResult
-	{
-		ESTEP_NOT_IMPLEMENTED = -1,
-		ESTEP_CALL_AGAIN      = 0,
-		ESTEP_DONE            = 1
-	};
-	virtual eStepMainLoopResult EMU_StepMainLoop(bool allowSleep, bool allowPause, int frameSkip, bool disableUser, bool disableCore) { return ESTEP_NOT_IMPLEMENTED; } // -1 frameSkip == useCurrentDefault
-	virtual void EMU_PauseEmulation(bool pause) {}
-	virtual bool EMU_IsEmulationPaused() { return false; }
-	virtual bool EMU_IsFastForwarding() { return false; }
-	virtual bool EMU_HasEmulationStarted() { return true; }
-	virtual bool EMU_IsAtFrameBoundary() { return true; }
-	
-	virtual void EMU_DebugIdleEnter() {}
-	virtual void EMU_DebugIdleUpdate() {}
-	virtual void EMU_DebugIdleWakeUp() {}
+    virtual void USR_InfoMessage(const char *message) {
+        LOG("%s\n", message);
+    }
+    virtual void USR_RefreshScreen() {}
+    virtual void USR_SetDisplayPostpone(int milliseconds, bool drawNextFrame) {} // -1 == indefinitely, 0 == don't pospone, 500 == don't draw for 0.5 seconds
 
-	enum eDebug_IOReg
-	{
-		EDEBUG_IOREG_DMA
-	};
+    enum eStepMainLoopResult
+    {
+        ESTEP_NOT_IMPLEMENTED = -1,
+        ESTEP_CALL_AGAIN      = 0,
+        ESTEP_DONE            = 1
+    };
+    virtual eStepMainLoopResult EMU_StepMainLoop(bool allowSleep, bool allowPause, int frameSkip, bool disableUser, bool disableCore) {
+        return ESTEP_NOT_IMPLEMENTED;    // -1 frameSkip == useCurrentDefault
+    }
+    virtual void EMU_PauseEmulation(bool pause) {}
+    virtual bool EMU_IsEmulationPaused() {
+        return false;
+    }
+    virtual bool EMU_IsFastForwarding() {
+        return false;
+    }
+    virtual bool EMU_HasEmulationStarted() {
+        return true;
+    }
+    virtual bool EMU_IsAtFrameBoundary() {
+        return true;
+    }
 
-	virtual void DEBUG_UpdateIORegView(eDebug_IOReg category) { }
+    virtual void EMU_DebugIdleEnter() {}
+    virtual void EMU_DebugIdleUpdate() {}
+    virtual void EMU_DebugIdleWakeUp() {}
 
-	VIEW3D_Driver* view3d;
-	void VIEW3D_Shutdown();
-	void VIEW3D_Init();
+    enum eDebug_IOReg
+    {
+        EDEBUG_IOREG_DMA
+    };
 
-	virtual void AddLine(const char *fmt, ...);
-	virtual void SetLineColor(u8 r, u8 b, u8 g);
+    virtual void DEBUG_UpdateIORegView(eDebug_IOReg category) { }
+
+    VIEW3D_Driver* view3d;
+    void VIEW3D_Shutdown();
+    void VIEW3D_Init();
+
+    virtual void AddLine(const char *fmt, ...);
+    virtual void SetLineColor(u8 r, u8 b, u8 g);
 };
 extern BaseDriver* driver;
 

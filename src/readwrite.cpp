@@ -20,22 +20,22 @@
 
 size_t read_32LE(u32 &u32valueOut, std::istream *is)
 {
-	u32 temp;
-	if (is->read((char*)&temp,4).gcount() != 4)
-		return 0;
-	
-	u32valueOut = LE_TO_LOCAL_32(temp);
-	
-	return 1;
+    u32 temp;
+    if (is->read((char*)&temp,4).gcount() != 4)
+        return 0;
+
+    u32valueOut = LE_TO_LOCAL_32(temp);
+
+    return 1;
 }
 
 size_t read_16LE(u16 &u16valueOut, std::istream *is)
 {
-	u16 temp;
-	if (is->read((char*)&temp,2).gcount() != 2)
-		return 0;
-	
-	u16valueOut = LE_TO_LOCAL_16(temp);
-	
-	return 1;
+    u16 temp;
+    if (is->read((char*)&temp,2).gcount() != 2)
+        return 0;
+
+    u16valueOut = LE_TO_LOCAL_16(temp);
+
+    return 1;
 }

@@ -179,7 +179,7 @@
 #define REG_SQRTRESULT                          0x040002B4
 #define REG_SQRTPARAM                           0x040002B8
 
-// Other 
+// Other
 #define REG_POSTFLG                             0x04000300
 #define REG_HALTCNT                             0x04000301
 #define REG_POWCNT1                             0x04000304

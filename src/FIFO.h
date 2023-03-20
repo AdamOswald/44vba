@@ -26,11 +26,11 @@
 //=================================================== IPC FIFO
 typedef struct
 {
-	u32		buf[16];
-	
-	u8		head;
-	u8		tail;
-	u8		size;
+    u32		buf[16];
+
+    u8		head;
+    u8		tail;
+    u8		size;
 } IPC_FIFO;
 
 extern IPC_FIFO ipc_fifo[2];
@@ -48,23 +48,23 @@ extern void IPC_FIFOcnt(u8 proc, u16 val);
 
 typedef struct
 {
-	u8		cmd[HACK_GXIFO_SIZE];
-	u32		param[HACK_GXIFO_SIZE];
+    u8		cmd[HACK_GXIFO_SIZE];
+    u32		param[HACK_GXIFO_SIZE];
 
-	u32		head;		// start position
-	u32		tail;		// tail
-	u32		size;		// size FIFO buffer
-	u32		matrix_stack_op_size; //number of matrix stack items in the fifo (stack is busy when this is nonzero)
+    u32		head;		// start position
+    u32		tail;		// tail
+    u32		size;		// size FIFO buffer
+    u32		matrix_stack_op_size; //number of matrix stack items in the fifo (stack is busy when this is nonzero)
 } GFX_FIFO;
 
 typedef struct
 {
-	u8		cmd[4];
-	u32		param[4];
+    u8		cmd[4];
+    u32		param[4];
 
-	u8		head;
-	u8		tail;
-	u8		size;
+    u8		head;
+    u8		tail;
+    u8		size;
 } GFX_PIPE;
 
 extern GFX_PIPE gxPIPE;
@@ -78,9 +78,9 @@ void GFX_FIFOcnt(u32 val);
 //=================================================== Display memory FIFO
 typedef struct
 {
-	u32		buf[0x6000];			// 256x192 32K color
-	u32		head;					// head
-	u32		tail;					// tail
+    u32		buf[0x6000];			// 256x192 32K color
+    u32		head;					// head
+    u32		tail;					// tail
 } DISP_FIFO;
 
 extern DISP_FIFO disp_fifo;

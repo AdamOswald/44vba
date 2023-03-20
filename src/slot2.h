@@ -29,75 +29,89 @@ class EMUFILE;
 class Slot2Info
 {
 public:
-	virtual const char* name() const = 0;
-	virtual const char* descr() const = 0;
-	virtual u8 id() const = 0;
+    virtual const char* name() const = 0;
+    virtual const char* descr() const = 0;
+    virtual u8 id() const = 0;
 };
 
 class Slot2InfoSimple : public Slot2Info
 {
 public:
-	Slot2InfoSimple(const char* _name, const char* _descr, const u8 _id)
-		: mName(_name)
-		, mDescr(_descr)
-		, mID(_id)
-	{
-	}
-	virtual const char* name() const { return mName; }
-	virtual const char* descr() const { return mDescr; }
-	virtual u8 id() const { return mID; }
+    Slot2InfoSimple(const char* _name, const char* _descr, const u8 _id)
+        : mName(_name)
+        , mDescr(_descr)
+        , mID(_id)
+    {
+    }
+    virtual const char* name() const {
+        return mName;
+    }
+    virtual const char* descr() const {
+        return mDescr;
+    }
+    virtual u8 id() const {
+        return mID;
+    }
 private:
-	const char* mName, *mDescr;
-	const u8 mID;
+    const char* mName, *mDescr;
+    const u8 mID;
 };
 
 class ISlot2Interface
 {
 public:
-   virtual ~ISlot2Interface() {}
-	//called to get info about device (description)
-	virtual Slot2Info const* info() = 0;
+    virtual ~ISlot2Interface() {}
+    //called to get info about device (description)
+    virtual Slot2Info const* info() = 0;
 
-	//called once when the emulator starts up, or when the device springs into existence
-	virtual bool init() { return true; }
-	
-	//called when the emulator connects the device
-	virtual void connect() { }
+    //called once when the emulator starts up, or when the device springs into existence
+    virtual bool init() {
+        return true;
+    }
 
-	//called when the emulator disconnects the device
-	virtual void disconnect() { }
-	
-	//called when the emulator shuts down, or when the device disappears from existence
-	virtual void shutdown() { }
+    //called when the emulator connects the device
+    virtual void connect() { }
 
-	virtual void writeByte(u8 PROCNUM, u32 addr, u8 val) {};
-	virtual void writeWord(u8 PROCNUM, u32 addr, u16 val) {};
-	virtual void writeLong(u8 PROCNUM, u32 addr, u32 val) {};
+    //called when the emulator disconnects the device
+    virtual void disconnect() { }
 
-	virtual u8	readByte(u8 PROCNUM, u32 addr) { return 0xFF; };
-	virtual u16	readWord(u8 PROCNUM, u32 addr) { return 0xFFFF; };
-	virtual u32	readLong(u8 PROCNUM, u32 addr) { return 0xFFFFFFFF; };
+    //called when the emulator shuts down, or when the device disappears from existence
+    virtual void shutdown() { }
 
-	virtual void savestate(EMUFILE &os) {}
+    virtual void writeByte(u8 PROCNUM, u32 addr, u8 val) {};
+    virtual void writeWord(u8 PROCNUM, u32 addr, u16 val) {};
+    virtual void writeLong(u8 PROCNUM, u32 addr, u32 val) {};
 
-	virtual void loadstate(EMUFILE &is) {}
-}; 
+    virtual u8	readByte(u8 PROCNUM, u32 addr) {
+        return 0xFF;
+    };
+    virtual u16	readWord(u8 PROCNUM, u32 addr) {
+        return 0xFFFF;
+    };
+    virtual u32	readLong(u8 PROCNUM, u32 addr) {
+        return 0xFFFFFFFF;
+    };
+
+    virtual void savestate(EMUFILE &os) {}
+
+    virtual void loadstate(EMUFILE &is) {}
+};
 
 typedef ISlot2Interface* TISlot2InterfaceConstructor();
 
 enum NDS_SLOT2_TYPE
 {
-	NDS_SLOT2_NONE,			// 0xFF
-	NDS_SLOT2_AUTO,			// 0xFE - Auto-select
-	NDS_SLOT2_CFLASH,		// 0x01 - Compact flash
-	NDS_SLOT2_RUMBLEPAK,	// 0x02 - RumblePak
-	NDS_SLOT2_GBACART,		// 0x03 - GBA cartrindge in slot
-	NDS_SLOT2_GUITARGRIP,	// 0x04 - Guitar Grip
-	NDS_SLOT2_EXPMEMORY,	// 0x05 - Memory Expansion Pak 
-	NDS_SLOT2_EASYPIANO,	// 0x06 - Easy Piano
-	NDS_SLOT2_PADDLE,		// 0x07 - Arkanoids DS paddle
-	NDS_SLOT2_PASSME,		// 0x08 - PassME/Homebrew
-	NDS_SLOT2_COUNT			// use for counter addons - MUST TO BE LAST!!!
+    NDS_SLOT2_NONE,			// 0xFF
+    NDS_SLOT2_AUTO,			// 0xFE - Auto-select
+    NDS_SLOT2_CFLASH,		// 0x01 - Compact flash
+    NDS_SLOT2_RUMBLEPAK,	// 0x02 - RumblePak
+    NDS_SLOT2_GBACART,		// 0x03 - GBA cartrindge in slot
+    NDS_SLOT2_GUITARGRIP,	// 0x04 - Guitar Grip
+    NDS_SLOT2_EXPMEMORY,	// 0x05 - Memory Expansion Pak
+    NDS_SLOT2_EASYPIANO,	// 0x06 - Easy Piano
+    NDS_SLOT2_PADDLE,		// 0x07 - Arkanoids DS paddle
+    NDS_SLOT2_PASSME,		// 0x08 - PassME/Homebrew
+    NDS_SLOT2_COUNT			// use for counter addons - MUST TO BE LAST!!!
 };
 
 extern ISlot2Interface* slot2_device;						//the current slot2 device instance
@@ -145,12 +159,14 @@ extern void (*FeedbackON)(bool enable);				// feedback on/off
 
 enum ADDON_CFLASH_MODE
 {
-	ADDON_CFLASH_MODE_Path, ADDON_CFLASH_MODE_File, ADDON_CFLASH_MODE_RomPath
+    ADDON_CFLASH_MODE_Path, ADDON_CFLASH_MODE_File, ADDON_CFLASH_MODE_RomPath
 };
 
 extern ADDON_CFLASH_MODE CFlash_Mode;
 extern std::string CFlash_Path;
-inline bool CFlash_IsUsingPath() { return CFlash_Mode==ADDON_CFLASH_MODE_Path || CFlash_Mode==ADDON_CFLASH_MODE_RomPath; }
+inline bool CFlash_IsUsingPath() {
+    return CFlash_Mode==ADDON_CFLASH_MODE_Path || CFlash_Mode==ADDON_CFLASH_MODE_RomPath;
+}
 
 u16 Paddle_GetValue();
 void Paddle_SetValue(u16 theValue);

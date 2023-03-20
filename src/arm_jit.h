@@ -20,7 +20,7 @@
 #define ARM_JIT
 
 #include "types.h"
-#ifndef _MSC_VER 
+#ifndef _MSC_VER
 #include <stdint.h>
 #endif
 
@@ -34,10 +34,10 @@ template<int PROCNUM> u32 arm_jit_compile();
 //#define MAPPED_JIT_FUNCS: to define or not to define?
 //* x86 windows seems faster with NON-DEFINED
 //* x64 windows seems faster with DEFINED
-//* x86 windows seems to have problems without DEFINED when desmume is built as a dll due to the 
+//* x86 windows seems to have problems without DEFINED when desmume is built as a dll due to the
 //   ~300 MB .bss section created by the 256MB non-mapped compiled_funcs table
 //   (when loaded as a dll into a busy process, that much contiguous address space is hard to find. No big deal when starting up a process)
-//In principle, mapped compiled_funcs should be faster because it avoids some bit shifting logic to look it up from the memory map, right, 
+//In principle, mapped compiled_funcs should be faster because it avoids some bit shifting logic to look it up from the memory map, right,
 //but I guess it doesn't always work out that way.
 //
 //So here's my proposed policy. NON-DEFINED is dangerous due to the huge .bss section, so it should be the default
@@ -47,20 +47,20 @@ template<int PROCNUM> u32 arm_jit_compile();
 #endif
 
 #ifdef MAPPED_JIT_FUNCS
-struct JIT_struct 
+struct JIT_struct
 {
-	// only include the memory types that code can execute from
-	uintptr_t MAIN_MEM[16*1024*1024/2];
-	uintptr_t SWIRAM[0x8000/2];
-	uintptr_t ARM9_ITCM[0x8000/2];
-	uintptr_t ARM9_LCDC[0xA4000/2];
-	uintptr_t ARM9_BIOS[0x8000/2];
-	uintptr_t ARM7_BIOS[0x4000/2];
-	uintptr_t ARM7_ERAM[0x10000/2];
-	uintptr_t ARM7_WIRAM[0x10000/2];
-	uintptr_t ARM7_WRAM[0x40000/2];
+    // only include the memory types that code can execute from
+    uintptr_t MAIN_MEM[16*1024*1024/2];
+    uintptr_t SWIRAM[0x8000/2];
+    uintptr_t ARM9_ITCM[0x8000/2];
+    uintptr_t ARM9_LCDC[0xA4000/2];
+    uintptr_t ARM9_BIOS[0x8000/2];
+    uintptr_t ARM7_BIOS[0x4000/2];
+    uintptr_t ARM7_ERAM[0x10000/2];
+    uintptr_t ARM7_WIRAM[0x10000/2];
+    uintptr_t ARM7_WRAM[0x40000/2];
 
-	static uintptr_t *JIT_MEM[2][0x4000];
+    static uintptr_t *JIT_MEM[2][0x4000];
 };
 extern CACHE_ALIGN JIT_struct JIT;
 #define JIT_COMPILED_FUNC(adr, PROCNUM) JIT.JIT_MEM[PROCNUM][((adr)&0x0FFFC000)>>14][((adr)&0x00003FFE)>>1]

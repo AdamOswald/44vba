@@ -29,20 +29,20 @@
 
 static VIEW3D_Driver nullView3d;
 BaseDriver::BaseDriver()
-: view3d(NULL)
+    : view3d(NULL)
 {
-	VIEW3D_Shutdown();
+    VIEW3D_Shutdown();
 }
 
 void BaseDriver::VIEW3D_Shutdown()
 {
-	if(view3d != &nullView3d) delete view3d;
-	view3d = &nullView3d;
+    if(view3d != &nullView3d) delete view3d;
+    view3d = &nullView3d;
 }
 
 void BaseDriver::VIEW3D_Init()
 {
-	VIEW3D_Shutdown();
+    VIEW3D_Shutdown();
 }
 
 BaseDriver::~BaseDriver()
@@ -52,17 +52,17 @@ BaseDriver::~BaseDriver()
 void BaseDriver::AddLine(const char *fmt, ...)
 {
 #if HAVE_LIBAGG
-	if(!osd) return;
-	va_list list;
-	va_start(list,fmt);
-	osd->addLine(fmt,list);
-	va_end(list);
+    if(!osd) return;
+    va_list list;
+    va_start(list,fmt);
+    osd->addLine(fmt,list);
+    va_end(list);
 #endif
 }
 void BaseDriver::SetLineColor(u8 r, u8 b, u8 g)
 {
 #if HAVE_LIBAGG
-	if(!osd) return;
-	osd->setLineColor(r,b,g);
+    if(!osd) return;
+    osd->setLineColor(r,b,g);
 #endif
 }

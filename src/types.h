@@ -43,129 +43,129 @@ typedef int64_t s64;
 
 //analyze microsoft compilers
 #ifdef _MSC_VER
-	#define HOST_WINDOWS
+#define HOST_WINDOWS
 #endif //_MSC_VER
 
 // Determine CPU architecture for platforms that don't use the autoconf script
 #if defined(HOST_WINDOWS) || defined(DESMUME_COCOA)
-	#if defined(__x86_64__) || defined(__LP64) || defined(__IA64__) || defined(_M_X64) || defined(_WIN64)
-		#define HOST_64
-	#else
-		#define HOST_32
-	#endif
+#if defined(__x86_64__) || defined(__LP64) || defined(__IA64__) || defined(_M_X64) || defined(_WIN64)
+#define HOST_64
+#else
+#define HOST_32
+#endif
 #endif
 
 //enforce a constraint: gdb stub requires developer
 #if defined(GDB_STUB) && !defined(DEVELOPER)
-	#define DEVELOPER
+#define DEVELOPER
 #endif
 
 #ifdef DEVELOPER
-	#define IF_DEVELOPER(X) X
+#define IF_DEVELOPER(X) X
 #else
-	#define IF_DEVELOPER(X)
+#define IF_DEVELOPER(X)
 #endif
 
 #ifdef __GNUC__
-	#ifdef __ALTIVEC__
-		#define ENABLE_ALTIVEC
-	#endif
-
-	#ifdef __SSE__
-		#define ENABLE_SSE
-	#endif
-
-	#ifdef __SSE2__
-		#define ENABLE_SSE2
-	#endif
-
-	#ifdef __SSE3__
-		#define ENABLE_SSE3
-	#endif
-
-	#ifdef __SSSE3__
-		#define ENABLE_SSSE3
-	#endif
-
-	#ifdef __SSE4_1__
-		#define ENABLE_SSE4_1
-	#endif
-
-	#ifdef __SSE4_2__
-		#define ENABLE_SSE4_2
-	#endif
-
-	#ifdef __AVX__
-		#define ENABLE_AVX
-	#endif
-
-	#ifdef __AVX2__
-		#define ENABLE_AVX2
-	#endif
-
-	// AVX-512 is special because it has multiple tiers of support.
-	//
-	// For our case, Tier-0 will be the baseline AVX-512 tier that includes the basic Foundation and
-	// Conflict Detection extensions, which should be supported on all AVX-512 CPUs. Higher tiers
-	// include more extensions, where each higher tier also assumes support for all lower tiers.
-	//
-	// For typical use cases in DeSmuME, the most practical AVX-512 tier will be Tier-1.
-	#if defined(__AVX512F__) && defined(__AVX512CD__)
-		#define ENABLE_AVX512_0
-	#endif
-
-	#if defined(ENABLE_AVX512_0) && defined(__AVX512BW__) && defined(__AVX512DQ__) && !defined(FORCE_AVX512_0)
-		#define ENABLE_AVX512_1
-	#endif
-
-	#if defined(ENABLE_AVX512_1) && defined(__AVX512IFMA__) && defined(__AVX512VBMI__)
-		#define ENABLE_AVX512_2
-	#endif
-
-	#if defined(ENABLE_AVX512_2) && defined(__AVX512VNNI__) && defined(__AVX512VBMI2__) && defined(__AVX512BITALG__)
-		#define ENABLE_AVX512_3
-	#endif
+#ifdef __ALTIVEC__
+#define ENABLE_ALTIVEC
 #endif
 
-#ifdef _MSC_VER 
-	#include <compat/msvc.h>
+#ifdef __SSE__
+#define ENABLE_SSE
+#endif
+
+#ifdef __SSE2__
+#define ENABLE_SSE2
+#endif
+
+#ifdef __SSE3__
+#define ENABLE_SSE3
+#endif
+
+#ifdef __SSSE3__
+#define ENABLE_SSSE3
+#endif
+
+#ifdef __SSE4_1__
+#define ENABLE_SSE4_1
+#endif
+
+#ifdef __SSE4_2__
+#define ENABLE_SSE4_2
+#endif
+
+#ifdef __AVX__
+#define ENABLE_AVX
+#endif
+
+#ifdef __AVX2__
+#define ENABLE_AVX2
+#endif
+
+// AVX-512 is special because it has multiple tiers of support.
+//
+// For our case, Tier-0 will be the baseline AVX-512 tier that includes the basic Foundation and
+// Conflict Detection extensions, which should be supported on all AVX-512 CPUs. Higher tiers
+// include more extensions, where each higher tier also assumes support for all lower tiers.
+//
+// For typical use cases in DeSmuME, the most practical AVX-512 tier will be Tier-1.
+#if defined(__AVX512F__) && defined(__AVX512CD__)
+#define ENABLE_AVX512_0
+#endif
+
+#if defined(ENABLE_AVX512_0) && defined(__AVX512BW__) && defined(__AVX512DQ__) && !defined(FORCE_AVX512_0)
+#define ENABLE_AVX512_1
+#endif
+
+#if defined(ENABLE_AVX512_1) && defined(__AVX512IFMA__) && defined(__AVX512VBMI__)
+#define ENABLE_AVX512_2
+#endif
+
+#if defined(ENABLE_AVX512_2) && defined(__AVX512VNNI__) && defined(__AVX512VBMI2__) && defined(__AVX512BITALG__)
+#define ENABLE_AVX512_3
+#endif
+#endif
+
+#ifdef _MSC_VER
+#include <compat/msvc.h>
 
 #else
-	#define WINAPI
+#define WINAPI
 #endif
 
 #if !defined(MAX_PATH)
-	#if defined(HOST_WINDOWS)
-		#define MAX_PATH 260
-	#elif defined(__GNUC__)
-		#include <limits.h>
-		#if !defined(PATH_MAX)
-			#define MAX_PATH 1024
-		#else
-			#define MAX_PATH PATH_MAX
-		#endif
-	#else
-		#define MAX_PATH 1024
-	#endif
+#if defined(HOST_WINDOWS)
+#define MAX_PATH 260
+#elif defined(__GNUC__)
+#include <limits.h>
+#if !defined(PATH_MAX)
+#define MAX_PATH 1024
+#else
+#define MAX_PATH PATH_MAX
+#endif
+#else
+#define MAX_PATH 1024
+#endif
 #endif
 
 //------------alignment macros-------------
 //dont apply these to types without further testing. it only works portably here on declarations of variables
 //cant we find a pattern other people use more successfully?
 #if _MSC_VER >= 9999 // Was 1900. The way we use DS_ALIGN doesn't jive with how alignas() wants itself to be used, so just use __declspec(align(X)) for now to avoid problems.
-	#define DS_ALIGN(X) alignas(X)
+#define DS_ALIGN(X) alignas(X)
 #elif defined(_MSC_VER) || defined(__INTEL_COMPILER)
-	#define DS_ALIGN(X) __declspec(align(X))
+#define DS_ALIGN(X) __declspec(align(X))
 #elif defined(__GNUC__)
-	#define DS_ALIGN(X) __attribute__ ((aligned (X)))
+#define DS_ALIGN(X) __attribute__ ((aligned (X)))
 #else
-	#define DS_ALIGN(X)
+#define DS_ALIGN(X)
 #endif
 
 #ifdef HOST_64
-	#define CACHE_ALIGN_SIZE 64
+#define CACHE_ALIGN_SIZE 64
 #else
-	#define CACHE_ALIGN_SIZE 32
+#define CACHE_ALIGN_SIZE 32
 #endif
 
 //use this for example when you want a byte value to be better-aligned
@@ -174,55 +174,55 @@ typedef int64_t s64;
 //---------------------------------------------
 
 #ifdef __MINGW32__
-	#define FASTCALL __attribute__((fastcall))
-	#define ASMJIT_CALL_CONV kX86FuncConvGccFastCall
+#define FASTCALL __attribute__((fastcall))
+#define ASMJIT_CALL_CONV kX86FuncConvGccFastCall
 #elif defined (__i386__) && !defined(__clang__)
-	#define FASTCALL __attribute__((regparm(3)))
-	#define ASMJIT_CALL_CONV kX86FuncConvGccRegParm3
+#define FASTCALL __attribute__((regparm(3)))
+#define ASMJIT_CALL_CONV kX86FuncConvGccRegParm3
 #elif defined(_MSC_VER) || defined(__INTEL_COMPILER)
-	#define FASTCALL
-	#define ASMJIT_CALL_CONV kX86FuncConvDefault
+#define FASTCALL
+#define ASMJIT_CALL_CONV kX86FuncConvDefault
 #else
-	#define FASTCALL
-	#define ASMJIT_CALL_CONV kX86FuncConvDefault
+#define FASTCALL
+#define ASMJIT_CALL_CONV kX86FuncConvDefault
 #endif
 
 #ifdef _MSC_VER
-	#define _CDECL_ __cdecl
+#define _CDECL_ __cdecl
 #else
-	#define _CDECL_
+#define _CDECL_
 #endif
 
 #ifndef FORCEINLINE
-	#if defined(_MSC_VER) || defined(__INTEL_COMPILER)
-		#define FORCEINLINE __forceinline
-		#define MSC_FORCEINLINE __forceinline
-	#else
-		#define FORCEINLINE inline __attribute__((always_inline))
-		#define MSC_FORCEINLINE
-	#endif
+#if defined(_MSC_VER) || defined(__INTEL_COMPILER)
+#define FORCEINLINE __forceinline
+#define MSC_FORCEINLINE __forceinline
+#else
+#define FORCEINLINE inline __attribute__((always_inline))
+#define MSC_FORCEINLINE
+#endif
 #endif
 
 #ifndef NOINLINE
-	#ifdef __GNUC__
-		#define NOINLINE __attribute__((noinline))
-	#else
-		#define NOINLINE
-	#endif
+#ifdef __GNUC__
+#define NOINLINE __attribute__((noinline))
+#else
+#define NOINLINE
+#endif
 #endif
 
 #ifndef LOOPVECTORIZE_DISABLE
-	#if defined(_MSC_VER)
-		#if _MSC_VER >= 1700
-			#define LOOPVECTORIZE_DISABLE loop(no_vector)
-		#else
-			#define LOOPVECTORIZE_DISABLE 
-		#endif
-	#elif defined(__clang__)
-		#define LOOPVECTORIZE_DISABLE clang loop vectorize(disable)
-	#else
-		#define LOOPVECTORIZE_DISABLE
-	#endif
+#if defined(_MSC_VER)
+#if _MSC_VER >= 1700
+#define LOOPVECTORIZE_DISABLE loop(no_vector)
+#else
+#define LOOPVECTORIZE_DISABLE
+#endif
+#elif defined(__clang__)
+#define LOOPVECTORIZE_DISABLE clang loop vectorize(disable)
+#else
+#define LOOPVECTORIZE_DISABLE
+#endif
 #endif
 
 #if defined(__LP64__)
@@ -265,9 +265,9 @@ typedef u32 uint32;
 #endif
 
 #ifdef ENABLE_ALTIVEC
-	#ifndef __APPLE_ALTIVEC__
-		#include <altivec.h>
-	#endif
+#ifndef __APPLE_ALTIVEC__
+#include <altivec.h>
+#endif
 typedef vector unsigned char v128u8;
 typedef vector signed char v128s8;
 typedef vector unsigned short v128u16;
@@ -359,8 +359,12 @@ typedef int desmume_BOOL;
 #include <winnt.h>
 
 //#define atomic_add_32(V,M)					InterlockedAddNoFence((volatile LONG *)(V),(LONG)(M))			// Requires Windows 8
-inline s32 atomic_add_32(volatile s32 *V, s32 M)						{ return (s32)(InterlockedExchangeAdd((volatile LONG *)V, (LONG)M) + M); }
-inline s32 atomic_add_barrier32(volatile s32 *V, s32 M)					{ return (s32)(InterlockedExchangeAdd((volatile LONG *)V, (LONG)M) + M); }
+inline s32 atomic_add_32(volatile s32 *V, s32 M)						{
+    return (s32)(InterlockedExchangeAdd((volatile LONG *)V, (LONG)M) + M);
+}
+inline s32 atomic_add_barrier32(volatile s32 *V, s32 M)					{
+    return (s32)(InterlockedExchangeAdd((volatile LONG *)V, (LONG)M) + M);
+}
 
 //#define atomic_inc_32(V)						InterlockedIncrementNoFence((volatile LONG *)(V))				// Requires Windows 8
 #define atomic_inc_32(V)						_InterlockedIncrement((volatile LONG *)(V))
@@ -379,10 +383,18 @@ inline s32 atomic_add_barrier32(volatile s32 *V, s32 M)					{ return (s32)(Inter
 #define atomic_xor_32(V,M)						_InterlockedXor((volatile LONG *)(V),(LONG)(M))
 #define atomic_xor_barrier32(V,M)				_InterlockedXor((volatile LONG *)(V),(LONG)(M))
 
-inline bool atomic_test_and_set_32(volatile s32 *V, s32 M)				{ return (_interlockedbittestandset((volatile LONG *)V, (LONG)M)) ? true : false; }
-inline bool atomic_test_and_set_barrier32(volatile s32 *V, s32 M)		{ return (_interlockedbittestandset((volatile LONG *)V, (LONG)M)) ? true : false; }
-inline bool atomic_test_and_clear_32(volatile s32 *V, s32 M)			{ return (_interlockedbittestandreset((volatile LONG *)V, (LONG)M)) ? true : false; }
-inline bool atomic_test_and_clear_barrier32(volatile s32 *V, s32 M)		{ return (_interlockedbittestandreset((volatile LONG *)V, (LONG)M)) ? true : false; }
+inline bool atomic_test_and_set_32(volatile s32 *V, s32 M)				{
+    return (_interlockedbittestandset((volatile LONG *)V, (LONG)M)) ? true : false;
+}
+inline bool atomic_test_and_set_barrier32(volatile s32 *V, s32 M)		{
+    return (_interlockedbittestandset((volatile LONG *)V, (LONG)M)) ? true : false;
+}
+inline bool atomic_test_and_clear_32(volatile s32 *V, s32 M)			{
+    return (_interlockedbittestandreset((volatile LONG *)V, (LONG)M)) ? true : false;
+}
+inline bool atomic_test_and_clear_barrier32(volatile s32 *V, s32 M)		{
+    return (_interlockedbittestandreset((volatile LONG *)V, (LONG)M)) ? true : false;
+}
 
 #elif defined(DESMUME_COCOA)
 #include <libkern/OSAtomic.h>
@@ -410,25 +422,57 @@ inline bool atomic_test_and_clear_barrier32(volatile s32 *V, s32 M)		{ return (_
 #else // Just use C++11 std::atomic
 #include <atomic>
 
-inline s32 atomic_add_32(volatile s32 *V, s32 M)			{ return std::atomic_fetch_add_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_relaxed) + M; }
-inline s32 atomic_add_barrier32(volatile s32 *V, s32 M)		{ return std::atomic_fetch_add_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_seq_cst) + M; }
+inline s32 atomic_add_32(volatile s32 *V, s32 M)			{
+    return std::atomic_fetch_add_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_relaxed) + M;
+}
+inline s32 atomic_add_barrier32(volatile s32 *V, s32 M)		{
+    return std::atomic_fetch_add_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_seq_cst) + M;
+}
 
-inline s32 atomic_inc_32(volatile s32 *V)					{ return atomic_add_32(V, 1); }
-inline s32 atomic_inc_barrier32(volatile s32 *V)			{ return atomic_add_barrier32(V, 1); }
-inline s32 atomic_dec_32(volatile s32 *V)					{ return atomic_add_32(V, -1); }
-inline s32 atomic_dec_barrier32(volatile s32 *V)			{ return atomic_add_barrier32(V, -1); }
+inline s32 atomic_inc_32(volatile s32 *V)					{
+    return atomic_add_32(V, 1);
+}
+inline s32 atomic_inc_barrier32(volatile s32 *V)			{
+    return atomic_add_barrier32(V, 1);
+}
+inline s32 atomic_dec_32(volatile s32 *V)					{
+    return atomic_add_32(V, -1);
+}
+inline s32 atomic_dec_barrier32(volatile s32 *V)			{
+    return atomic_add_barrier32(V, -1);
+}
 
-inline s32 atomic_or_32(volatile s32 *V, s32 M)				{ return std::atomic_fetch_or_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_relaxed) | M; }
-inline s32 atomic_or_barrier32(volatile s32 *V, s32 M)		{ return std::atomic_fetch_or_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_seq_cst) | M; }
-inline s32 atomic_and_32(volatile s32 *V, s32 M)			{ return std::atomic_fetch_and_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_relaxed) & M; }
-inline s32 atomic_and_barrier32(volatile s32 *V, s32 M)		{ return std::atomic_fetch_and_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_seq_cst) & M; }
-inline s32 atomic_xor_32(volatile s32 *V, s32 M)			{ return std::atomic_fetch_xor_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_relaxed) ^ M; }
-inline s32 atomic_xor_barrier32(volatile s32 *V, s32 M)		{ return std::atomic_fetch_xor_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_seq_cst) ^ M; }
+inline s32 atomic_or_32(volatile s32 *V, s32 M)				{
+    return std::atomic_fetch_or_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_relaxed) | M;
+}
+inline s32 atomic_or_barrier32(volatile s32 *V, s32 M)		{
+    return std::atomic_fetch_or_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_seq_cst) | M;
+}
+inline s32 atomic_and_32(volatile s32 *V, s32 M)			{
+    return std::atomic_fetch_and_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_relaxed) & M;
+}
+inline s32 atomic_and_barrier32(volatile s32 *V, s32 M)		{
+    return std::atomic_fetch_and_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_seq_cst) & M;
+}
+inline s32 atomic_xor_32(volatile s32 *V, s32 M)			{
+    return std::atomic_fetch_xor_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_relaxed) ^ M;
+}
+inline s32 atomic_xor_barrier32(volatile s32 *V, s32 M)		{
+    return std::atomic_fetch_xor_explicit<s32>((volatile std::atomic<s32> *)V, M, std::memory_order::memory_order_seq_cst) ^ M;
+}
 
-inline bool atomic_test_and_set_32(volatile s32 *V, s32 M)				{ return (std::atomic_fetch_or_explicit<s32>((volatile std::atomic<s32> *)V,(0x80>>((M)&0x07)), std::memory_order::memory_order_relaxed) & (0x80>>((M)&0x07))) ? true : false; }
-inline bool atomic_test_and_set_barrier32(volatile s32 *V, s32 M)		{ return (std::atomic_fetch_or_explicit<s32>((volatile std::atomic<s32> *)V,(0x80>>((M)&0x07)), std::memory_order::memory_order_seq_cst) & (0x80>>((M)&0x07))) ? true : false; }
-inline bool atomic_test_and_clear_32(volatile s32 *V, s32 M)			{ return (std::atomic_fetch_and_explicit<s32>((volatile std::atomic<s32> *)V,~(s32)(0x80>>((M)&0x07)), std::memory_order::memory_order_relaxed) & (0x80>>((M)&0x07))) ? true : false; }
-inline bool atomic_test_and_clear_barrier32(volatile s32 *V, s32 M)		{ return (std::atomic_fetch_and_explicit<s32>((volatile std::atomic<s32> *)V,~(s32)(0x80>>((M)&0x07)), std::memory_order::memory_order_seq_cst) & (0x80>>((M)&0x07))) ? true : false; }
+inline bool atomic_test_and_set_32(volatile s32 *V, s32 M)				{
+    return (std::atomic_fetch_or_explicit<s32>((volatile std::atomic<s32> *)V,(0x80>>((M)&0x07)), std::memory_order::memory_order_relaxed) & (0x80>>((M)&0x07))) ? true : false;
+}
+inline bool atomic_test_and_set_barrier32(volatile s32 *V, s32 M)		{
+    return (std::atomic_fetch_or_explicit<s32>((volatile std::atomic<s32> *)V,(0x80>>((M)&0x07)), std::memory_order::memory_order_seq_cst) & (0x80>>((M)&0x07))) ? true : false;
+}
+inline bool atomic_test_and_clear_32(volatile s32 *V, s32 M)			{
+    return (std::atomic_fetch_and_explicit<s32>((volatile std::atomic<s32> *)V,~(s32)(0x80>>((M)&0x07)), std::memory_order::memory_order_relaxed) & (0x80>>((M)&0x07))) ? true : false;
+}
+inline bool atomic_test_and_clear_barrier32(volatile s32 *V, s32 M)		{
+    return (std::atomic_fetch_and_explicit<s32>((volatile std::atomic<s32> *)V,~(s32)(0x80>>((M)&0x07)), std::memory_order::memory_order_seq_cst) & (0x80>>((M)&0x07))) ? true : false;
+}
 
 #endif
 
@@ -485,7 +529,7 @@ inline bool atomic_test_and_clear_barrier32(volatile s32 *V, s32 M)		{ return (s
 //8-bit constants max value 0x11111111, always fits in unsigned long
 #define HEX__(n) 0x##n##LU
 
-//8-bit conversion function 
+//8-bit conversion function
 #define B8__(x) ((x&0x0000000FLU)?1:0) \
 +((x&0x000000F0LU)?2:0) \
 +((x&0x00000F00LU)?4:0) \
@@ -518,9 +562,9 @@ inline bool atomic_test_and_clear_barrier32(volatile s32 *V, s32 M)		{ return (s
 #define	CTASSERT(x)		typedef char __assert ## y[(x) ? 1 : -1]
 #endif
 
-template<typename T> inline void reconstruct(T* t) { 
-	t->~T();
-	new(t) T();
+template<typename T> inline void reconstruct(T* t) {
+    t->~T();
+    new(t) T();
 }
 
 #endif

@@ -32,17 +32,17 @@ class EMUFILE;
 
 struct DebugStatistics
 {
-	DebugStatistics();
-	struct InstructionHits {
-		InstructionHits();
-		u32 thumb[1024];
-		u32 arm[4096];
-	} instructionHits[2]; //one for each cpu
+    DebugStatistics();
+    struct InstructionHits {
+        InstructionHits();
+        u32 thumb[1024];
+        u32 arm[4096];
+    } instructionHits[2]; //one for each cpu
 
-	s32 sequencerExecutionCounters[32];
+    s32 sequencerExecutionCounters[32];
 
-	void print();
-	void printSequencerExecutionCounters();
+    void print();
+    void printSequencerExecutionCounters();
 };
 
 extern DebugStatistics DEBUG_statistics;
@@ -54,31 +54,31 @@ struct armcpu_t;
 
 class Logger {
 protected:
-	void (*callback)(const Logger& logger, const char * format);
-	std::ostream * out;
-	unsigned int flags;
+    void (*callback)(const Logger& logger, const char * format);
+    std::ostream * out;
+    unsigned int flags;
 
-	static std::vector<Logger *> channels;
+    static std::vector<Logger *> channels;
 
-	static void fixSize(unsigned int channel);
+    static void fixSize(unsigned int channel);
 public:
-	Logger();
-	~Logger();
+    Logger();
+    ~Logger();
 
-	void vprintf(const char * format, va_list l, const char * filename, unsigned int line);
-	void setOutput(std::ostream * o);
-	void setCallback(void (*cback)(const Logger& logger, const char * message));
-	void setFlag(unsigned int flag);
+    void vprintf(const char * format, va_list l, const char * filename, unsigned int line);
+    void setOutput(std::ostream * o);
+    void setCallback(void (*cback)(const Logger& logger, const char * message));
+    void setFlag(unsigned int flag);
 
-	std::ostream& getOutput() const;
+    std::ostream& getOutput() const;
 
-	static const int LINE = 1;
-	static const int FILE = 2;
+    static const int LINE = 1;
+    static const int FILE = 2;
 
-	static void log(unsigned int channel, const char * file, unsigned int line, const char * format, ...);
-	static void log(unsigned int channel, const char * file, unsigned int line, std::ostream& os);
-	static void log(unsigned int channel, const char * file, unsigned int line, unsigned int flag);
-	static void log(unsigned int channel, const char * file, unsigned int line, void (*callback)(const Logger& logger, const char * message));
+    static void log(unsigned int channel, const char * file, unsigned int line, const char * format, ...);
+    static void log(unsigned int channel, const char * file, unsigned int line, std::ostream& os);
+    static void log(unsigned int channel, const char * file, unsigned int line, unsigned int flag);
+    static void log(unsigned int channel, const char * file, unsigned int line, void (*callback)(const Logger& logger, const char * message));
 };
 
 #if defined(DEBUG) || defined(GPUDEBUG) || defined(DIVDEBUG) || defined(SQRTDEBUG) || defined(DMADEBUG) || defined(DEVELOPER)
@@ -145,28 +145,28 @@ void NocashMessage(armcpu_t* cpu, int offset);
 
 enum EDEBUG_EVENT
 {
-	DEBUG_EVENT_READ=1, //read from arm9 or arm7 bus, including cpu prefetch
-	DEBUG_EVENT_WRITE=2, //write on arm9 or arm7 bus
-	DEBUG_EVENT_EXECUTE=3, //prefetch on arm9 or arm7, triggered after the read event
-	DEBUG_EVENT_ACL_EXCEPTION=4, //acl exception on arm9
-	DEBUG_EVENT_CACHE_MISS=5, //cache miss on arm9
+    DEBUG_EVENT_READ=1, //read from arm9 or arm7 bus, including cpu prefetch
+    DEBUG_EVENT_WRITE=2, //write on arm9 or arm7 bus
+    DEBUG_EVENT_EXECUTE=3, //prefetch on arm9 or arm7, triggered after the read event
+    DEBUG_EVENT_ACL_EXCEPTION=4, //acl exception on arm9
+    DEBUG_EVENT_CACHE_MISS=5, //cache miss on arm9
 };
 
 enum EDEBUG_NOTIFY
 {
-	DEBUG_NOTIFY_READ_BEYOND_END_OF_CART,
-	DEBUG_NOTIFY_MAX
+    DEBUG_NOTIFY_READ_BEYOND_END_OF_CART,
+    DEBUG_NOTIFY_MAX
 };
 
 class DebugNotify
 {
 public:
-	void NextFrame();
-	void ReadBeyondEndOfCart(u32 addr, u32 romsize);
+    void NextFrame();
+    void ReadBeyondEndOfCart(u32 addr, u32 romsize);
 private:
-	std::bitset<DEBUG_NOTIFY_MAX> pingBits;
-	std::bitset<DEBUG_NOTIFY_MAX> enableBits;
-	bool ping(EDEBUG_NOTIFY which);
+    std::bitset<DEBUG_NOTIFY_MAX> pingBits;
+    std::bitset<DEBUG_NOTIFY_MAX> enableBits;
+    bool ping(EDEBUG_NOTIFY which);
 };
 
 extern DebugNotify DEBUG_Notify;
@@ -174,9 +174,9 @@ extern DebugNotify DEBUG_Notify;
 //information about a debug event will be stuffed into here by the generator
 struct TDebugEventData
 {
-	MMU_ACCESS_TYPE memAccessType;
-	u32 procnum, addr, size, val;
-	armcpu_t* cpu();
+    MMU_ACCESS_TYPE memAccessType;
+    u32 procnum, addr, size, val;
+    armcpu_t* cpu();
 };
 
 extern TDebugEventData DebugEventData;
@@ -187,14 +187,14 @@ extern u32 debugFlag;
 
 FORCEINLINE bool CheckDebugEvent(EDEBUG_EVENT event)
 {
-	//for now, debug events are only handled in dev+ builds
+    //for now, debug events are only handled in dev+ builds
 #ifndef DEVELOPER
-	return false;
+    return false;
 #endif
 
-	if(!debugFlag) return false;
+    if(!debugFlag) return false;
 
-	return true;
+    return true;
 }
 
 void HandleDebugEvent_Read();
@@ -205,14 +205,24 @@ void HandleDebugEvent_CacheMiss();
 
 inline void HandleDebugEvent(EDEBUG_EVENT event)
 {
-	switch(event)
-	{
-	case DEBUG_EVENT_READ: HandleDebugEvent_Read(); return;
-	case DEBUG_EVENT_WRITE: HandleDebugEvent_Write(); return;
-	case DEBUG_EVENT_EXECUTE: HandleDebugEvent_Execute(); return;
-	case DEBUG_EVENT_ACL_EXCEPTION: HandleDebugEvent_ACL_Exception(); return;
-	case DEBUG_EVENT_CACHE_MISS: HandleDebugEvent_CacheMiss(); return;
-	}
+    switch(event)
+    {
+    case DEBUG_EVENT_READ:
+        HandleDebugEvent_Read();
+        return;
+    case DEBUG_EVENT_WRITE:
+        HandleDebugEvent_Write();
+        return;
+    case DEBUG_EVENT_EXECUTE:
+        HandleDebugEvent_Execute();
+        return;
+    case DEBUG_EVENT_ACL_EXCEPTION:
+        HandleDebugEvent_ACL_Exception();
+        return;
+    case DEBUG_EVENT_CACHE_MISS:
+        HandleDebugEvent_CacheMiss();
+        return;
+    }
 }
 
 

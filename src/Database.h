@@ -3,8 +3,8 @@
 
 namespace Database
 {
-	const char* RegionXXXForCode(char code, bool unknownAsString);
-	const char* MakerNameForMakerCode(u16 id, bool unknownAsString);
+const char* RegionXXXForCode(char code, bool unknownAsString);
+const char* MakerNameForMakerCode(u16 id, bool unknownAsString);
 };
 
 #endif

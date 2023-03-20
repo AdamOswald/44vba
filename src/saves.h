@@ -28,26 +28,26 @@
 
 extern int lastSaveState;
 
-typedef struct 
+typedef struct
 {
-  BOOL exists;
-  char date[40];
+    BOOL exists;
+    char date[40];
 } savestates_t;
 
 
 struct SFORMAT
 {
-	//a string description of the element
-	const char *desc;
+    //a string description of the element
+    const char *desc;
 
-	//the size of each element
-	u32 size;
+    //the size of each element
+    u32 size;
 
-	//the number of each element
-	u32 count;
+    //the number of each element
+    u32 count;
 
-	//a void* to the data or a void** to the data
-	void *v;
+    //a void* to the data or a void** to the data
+    void *v;
 };
 
 extern savestates_t savestates[NB_STATES];

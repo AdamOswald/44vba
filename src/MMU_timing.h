@@ -40,21 +40,21 @@
 // obviously, these defines don't cover all the variables or features needed,
 // and in particular, DMA or code+data access bus contention is still missing.
 
-	//disable this to prevent the advanced timing logic from ever running at all
+//disable this to prevent the advanced timing logic from ever running at all
 //#define ENABLE_ADVANCED_TIMING
 
 #ifdef ENABLE_ADVANCED_TIMING
-	// makes non-sequential accesses slower than sequential ones.
+// makes non-sequential accesses slower than sequential ones.
 #define ACCOUNT_FOR_NON_SEQUENTIAL_ACCESS
-	//(SOMETIMES THIS IS A BIG SPEED HIT!)
+//(SOMETIMES THIS IS A BIG SPEED HIT!)
 
-	// enables emulation of code fetch waits.
+// enables emulation of code fetch waits.
 #define ACCOUNT_FOR_CODE_FETCH_CYCLES
 
-	// makes access to DTCM (arm9 only) fast.
+// makes access to DTCM (arm9 only) fast.
 #define ACCOUNT_FOR_DATA_TCM_SPEED
 
-	// enables simulation of cache hits and cache misses.
+// enables simulation of cache hits and cache misses.
 #define ENABLE_CACHE_CONTROLLER_EMULATION
 
 #endif //ENABLE_ADVANCED_TIMING
@@ -62,18 +62,18 @@
 //
 ////////////////////////////////////////////////////////////////
 
-FORCEINLINE bool USE_TIMING() { 
+FORCEINLINE bool USE_TIMING() {
 #ifdef ENABLE_ADVANCED_TIMING
-	return CommonSettings.advanced_timing;
+    return CommonSettings.advanced_timing;
 #else
-	return false;
+    return false;
 #endif
 }
 
 
 enum MMU_ACCESS_DIRECTION
 {
-	MMU_AD_READ, MMU_AD_WRITE
+    MMU_AD_READ, MMU_AD_WRITE
 };
 
 
@@ -84,102 +84,102 @@ template<int SIZESHIFT, int ASSOCIATIVESHIFT, int BLOCKSIZESHIFT>
 class CacheController
 {
 public:
-	template<MMU_ACCESS_DIRECTION DIR>
-	FORCEINLINE bool Cached(u32 addr)
-	{
-		u32 blockMasked = addr & BLOCKMASK;
-		if(blockMasked == m_cacheCache)
-			return true;
-		else
-			return this->CachedInternal<DIR>(addr, blockMasked);
-	}
-	
-	void Reset()
-	{
-		for(int blockIndex = 0; blockIndex < NUMBLOCKS; blockIndex++)
-			m_blocks[blockIndex].Reset();
-		m_cacheCache = ~0;
-	}
-	CacheController()
-	{
-		Reset();
-	}
-	
-	void savestate(EMUFILE &os, int version)
-	{
-		os.write_32LE(m_cacheCache);
-		for (int i = 0; i < NUMBLOCKS; i++)
-		{
-			for (int j = 0; j < ASSOCIATIVITY; j++)
-				os.write_32LE(m_blocks[i].tag[j]);
-			os.write_32LE(m_blocks[i].nextWay);
-		}
-	}
-	bool loadstate(EMUFILE &is, int version)
-	{
-		is.read_32LE(m_cacheCache);
-		for (int i = 0; i < NUMBLOCKS; i++)
-		{
-			for (int j = 0; j < ASSOCIATIVITY; j++)
-				is.read_32LE(m_blocks[i].tag[j]);
-			is.read_32LE(m_blocks[i].nextWay);
-		}
-		return true;
-	}
+    template<MMU_ACCESS_DIRECTION DIR>
+    FORCEINLINE bool Cached(u32 addr)
+    {
+        u32 blockMasked = addr & BLOCKMASK;
+        if(blockMasked == m_cacheCache)
+            return true;
+        else
+            return this->CachedInternal<DIR>(addr, blockMasked);
+    }
+
+    void Reset()
+    {
+        for(int blockIndex = 0; blockIndex < NUMBLOCKS; blockIndex++)
+            m_blocks[blockIndex].Reset();
+        m_cacheCache = ~0;
+    }
+    CacheController()
+    {
+        Reset();
+    }
+
+    void savestate(EMUFILE &os, int version)
+    {
+        os.write_32LE(m_cacheCache);
+        for (int i = 0; i < NUMBLOCKS; i++)
+        {
+            for (int j = 0; j < ASSOCIATIVITY; j++)
+                os.write_32LE(m_blocks[i].tag[j]);
+            os.write_32LE(m_blocks[i].nextWay);
+        }
+    }
+    bool loadstate(EMUFILE &is, int version)
+    {
+        is.read_32LE(m_cacheCache);
+        for (int i = 0; i < NUMBLOCKS; i++)
+        {
+            for (int j = 0; j < ASSOCIATIVITY; j++)
+                is.read_32LE(m_blocks[i].tag[j]);
+            is.read_32LE(m_blocks[i].nextWay);
+        }
+        return true;
+    }
 
 private:
-	template<MMU_ACCESS_DIRECTION DIR>
-	bool CachedInternal(u32 addr, u32 blockMasked)
-	{
-		u32 blockIndex = blockMasked >> BLOCKSIZESHIFT;
-		CacheBlock& block = m_blocks[blockIndex];
-		addr &= TAGMASK;
+    template<MMU_ACCESS_DIRECTION DIR>
+    bool CachedInternal(u32 addr, u32 blockMasked)
+    {
+        u32 blockIndex = blockMasked >> BLOCKSIZESHIFT;
+        CacheBlock& block = m_blocks[blockIndex];
+        addr &= TAGMASK;
 
-		for(int way = 0; way < ASSOCIATIVITY; way++)
-			if(addr == block.tag[way])
-			{
-				// found it, already allocated
-				m_cacheCache = blockMasked;
-				return true;
-			}
-		if(DIR == MMU_AD_READ)
-		{
-			// TODO: support other allocation orders?
-			block.tag[block.nextWay++] = addr;
-			block.nextWay %= ASSOCIATIVITY;
-			m_cacheCache = blockMasked;
-		}
-		return false;
-	}
+        for(int way = 0; way < ASSOCIATIVITY; way++)
+            if(addr == block.tag[way])
+            {
+                // found it, already allocated
+                m_cacheCache = blockMasked;
+                return true;
+            }
+        if(DIR == MMU_AD_READ)
+        {
+            // TODO: support other allocation orders?
+            block.tag[block.nextWay++] = addr;
+            block.nextWay %= ASSOCIATIVITY;
+            m_cacheCache = blockMasked;
+        }
+        return false;
+    }
 
-	enum { SIZE = 1 << SIZESHIFT };
-	enum { ASSOCIATIVITY = 1 << ASSOCIATIVESHIFT };
-	enum { BLOCKSIZE = 1 << BLOCKSIZESHIFT };
-	enum { TAGSHIFT = SIZESHIFT - ASSOCIATIVESHIFT };
-	enum { TAGMASK = (u32)(~0U << TAGSHIFT) };
-	enum { BLOCKMASK = ((u32)~0U >> (32 - TAGSHIFT)) & (u32)(~0U << BLOCKSIZESHIFT) };
-	enum { WORDSIZE = sizeof(u32) };
-	enum { WORDSPERBLOCK = (1 << BLOCKSIZESHIFT) / WORDSIZE };
-	enum { DATAPERWORD = WORDSIZE * ASSOCIATIVITY };
-	enum { DATAPERBLOCK = DATAPERWORD * WORDSPERBLOCK };
-	enum { NUMBLOCKS = SIZE / DATAPERBLOCK };
+    enum { SIZE = 1 << SIZESHIFT };
+    enum { ASSOCIATIVITY = 1 << ASSOCIATIVESHIFT };
+    enum { BLOCKSIZE = 1 << BLOCKSIZESHIFT };
+    enum { TAGSHIFT = SIZESHIFT - ASSOCIATIVESHIFT };
+    enum { TAGMASK = (u32)(~0U << TAGSHIFT) };
+    enum { BLOCKMASK = ((u32)~0U >> (32 - TAGSHIFT)) & (u32)(~0U << BLOCKSIZESHIFT) };
+    enum { WORDSIZE = sizeof(u32) };
+    enum { WORDSPERBLOCK = (1 << BLOCKSIZESHIFT) / WORDSIZE };
+    enum { DATAPERWORD = WORDSIZE * ASSOCIATIVITY };
+    enum { DATAPERBLOCK = DATAPERWORD * WORDSPERBLOCK };
+    enum { NUMBLOCKS = SIZE / DATAPERBLOCK };
 
-	struct CacheBlock
-	{
-		u32 tag [ASSOCIATIVITY];
-		u32 nextWay;
+    struct CacheBlock
+    {
+        u32 tag [ASSOCIATIVITY];
+        u32 nextWay;
 
-		void Reset()
-		{
-			nextWay = 0;
-			for(int way = 0; way < ASSOCIATIVITY; way++)
-				tag[way] = 0;
-		}
-	};
+        void Reset()
+        {
+            nextWay = 0;
+            for(int way = 0; way < ASSOCIATIVITY; way++)
+                tag[way] = 0;
+        }
+    };
 
-	u32 m_cacheCache; // optimization
+    u32 m_cacheCache; // optimization
 
-	CacheBlock m_blocks [NUMBLOCKS];
+    CacheBlock m_blocks [NUMBLOCKS];
 };
 
 
@@ -191,56 +191,58 @@ template<int PROCNUM, MMU_ACCESS_TYPE AT>
 class FetchAccessUnit
 {
 public:
-	template<int READSIZE, MMU_ACCESS_DIRECTION DIRECTION, bool TIMING>
-	FORCEINLINE u32 Fetch(u32 address)
-	{
-		#ifdef ACCOUNT_FOR_CODE_FETCH_CYCLES
-		const bool prohibit = TIMING;
-		#else
-		const bool prohibit = false;
-		#endif
-		
-		if(AT == MMU_AT_CODE && !prohibit)
-		{
-			return 1;
-		}
-
-		u32 time = _MMU_accesstime<PROCNUM, AT, READSIZE, DIRECTION,TIMING>(address,
-#ifdef ACCOUNT_FOR_NON_SEQUENTIAL_ACCESS
-			(TIMING?
-				(address == (m_lastAddress + (READSIZE>>3)))
-				:true
-			)
+    template<int READSIZE, MMU_ACCESS_DIRECTION DIRECTION, bool TIMING>
+    FORCEINLINE u32 Fetch(u32 address)
+    {
+#ifdef ACCOUNT_FOR_CODE_FETCH_CYCLES
+        const bool prohibit = TIMING;
 #else
-			true
+        const bool prohibit = false;
 #endif
-		);
+
+        if(AT == MMU_AT_CODE && !prohibit)
+        {
+            return 1;
+        }
+
+        u32 time = _MMU_accesstime<PROCNUM, AT, READSIZE, DIRECTION,TIMING>(address,
+#ifdef ACCOUNT_FOR_NON_SEQUENTIAL_ACCESS
+                   (TIMING?
+                    (address == (m_lastAddress + (READSIZE>>3)))
+                    :true
+                   )
+#else
+                   true
+#endif
+                                                                           );
 
 #ifdef ACCOUNT_FOR_NON_SEQUENTIAL_ACCESS
-		m_lastAddress = address;
+        m_lastAddress = address;
 #endif
 
-		return time;
-	}
+        return time;
+    }
 
-	void Reset()
-	{
-		m_lastAddress = ~0;
-	}
-	FetchAccessUnit() { this->Reset(); }
+    void Reset()
+    {
+        m_lastAddress = ~0;
+    }
+    FetchAccessUnit() {
+        this->Reset();
+    }
 
-	void savestate(EMUFILE &os, int version)
-	{
-		os.write_32LE(m_lastAddress);
-	}
-	bool loadstate(EMUFILE &is, int version)
-	{
-		is.read_32LE(m_lastAddress);
-		return true;
-	}
+    void savestate(EMUFILE &os, int version)
+    {
+        os.write_32LE(m_lastAddress);
+    }
+    bool loadstate(EMUFILE &is, int version)
+    {
+        is.read_32LE(m_lastAddress);
+        return true;
+    }
 
 private:
-	u32 m_lastAddress;
+    u32 m_lastAddress;
 };
 
 
@@ -249,24 +251,32 @@ private:
 
 struct MMU_struct_timing
 {
-	// technically part of the cp15, but I didn't want the dereferencing penalty.
-	// these template values correspond with the value of armcp15->cacheType.
-	CacheController<13,2,5> arm9codeCache; // 8192 bytes, 4-way associative, 32-byte blocks
-	CacheController<12,2,5> arm9dataCache; // 4096 bytes, 4-way associative, 32-byte blocks
+    // technically part of the cp15, but I didn't want the dereferencing penalty.
+    // these template values correspond with the value of armcp15->cacheType.
+    CacheController<13,2,5> arm9codeCache; // 8192 bytes, 4-way associative, 32-byte blocks
+    CacheController<12,2,5> arm9dataCache; // 4096 bytes, 4-way associative, 32-byte blocks
 
-	// technically part of armcpu_t, but that struct isn't templated on PROCNUM
-	FetchAccessUnit<0,MMU_AT_CODE> arm9codeFetch;
-	FetchAccessUnit<0,MMU_AT_DATA> arm9dataFetch;
-	FetchAccessUnit<1,MMU_AT_CODE> arm7codeFetch;
-	FetchAccessUnit<1,MMU_AT_DATA> arm7dataFetch;
+    // technically part of armcpu_t, but that struct isn't templated on PROCNUM
+    FetchAccessUnit<0,MMU_AT_CODE> arm9codeFetch;
+    FetchAccessUnit<0,MMU_AT_DATA> arm9dataFetch;
+    FetchAccessUnit<1,MMU_AT_CODE> arm7codeFetch;
+    FetchAccessUnit<1,MMU_AT_DATA> arm7dataFetch;
 
-	template<int PROCNUM> FORCEINLINE FetchAccessUnit<PROCNUM,MMU_AT_CODE>& armCodeFetch();
-	template<int PROCNUM> FORCEINLINE FetchAccessUnit<PROCNUM,MMU_AT_DATA>& armDataFetch();
+    template<int PROCNUM> FORCEINLINE FetchAccessUnit<PROCNUM,MMU_AT_CODE>& armCodeFetch();
+    template<int PROCNUM> FORCEINLINE FetchAccessUnit<PROCNUM,MMU_AT_DATA>& armDataFetch();
 };
-template<> FORCEINLINE FetchAccessUnit<0,MMU_AT_CODE>& MMU_struct_timing::armCodeFetch<0>() { return this->arm9codeFetch; }
-template<> FORCEINLINE FetchAccessUnit<1,MMU_AT_CODE>& MMU_struct_timing::armCodeFetch<1>() { return this->arm7codeFetch; }
-template<> FORCEINLINE FetchAccessUnit<0,MMU_AT_DATA>& MMU_struct_timing::armDataFetch<0>() { return this->arm9dataFetch; }
-template<> FORCEINLINE FetchAccessUnit<1,MMU_AT_DATA>& MMU_struct_timing::armDataFetch<1>() { return this->arm7dataFetch; }
+template<> FORCEINLINE FetchAccessUnit<0,MMU_AT_CODE>& MMU_struct_timing::armCodeFetch<0>() {
+    return this->arm9codeFetch;
+}
+template<> FORCEINLINE FetchAccessUnit<1,MMU_AT_CODE>& MMU_struct_timing::armCodeFetch<1>() {
+    return this->arm7codeFetch;
+}
+template<> FORCEINLINE FetchAccessUnit<0,MMU_AT_DATA>& MMU_struct_timing::armDataFetch<0>() {
+    return this->arm9dataFetch;
+}
+template<> FORCEINLINE FetchAccessUnit<1,MMU_AT_DATA>& MMU_struct_timing::armDataFetch<1>() {
+    return this->arm7dataFetch;
+}
 
 
 extern MMU_struct_timing MMU_timing;
@@ -280,81 +290,81 @@ extern MMU_struct_timing MMU_timing;
 template<int PROCNUM, MMU_ACCESS_TYPE AT, int READSIZE, MMU_ACCESS_DIRECTION DIRECTION, bool TIMING>
 FORCEINLINE u32 _MMU_accesstime(u32 addr, bool sequential)
 {
-	static const int MC = 1; // cached or tcm memory speed
-	static const int M32 = (PROCNUM==ARMCPU_ARM9) ? 2 : 1; // access through 32-bit bus
-	static const int M16 = M32 * ((READSIZE>16) ? 2 : 1); // access through 16-bit bus
-	static const int MSLW = M16 * 8; // this needs tuning
+    static const int MC = 1; // cached or tcm memory speed
+    static const int M32 = (PROCNUM==ARMCPU_ARM9) ? 2 : 1; // access through 32-bit bus
+    static const int M16 = M32 * ((READSIZE>16) ? 2 : 1); // access through 16-bit bus
+    static const int MSLW = M16 * 8; // this needs tuning
 
-	if(PROCNUM==ARMCPU_ARM9 && AT == MMU_AT_CODE && addr < 0x02000000)
-		return MC; // ITCM
+    if(PROCNUM==ARMCPU_ARM9 && AT == MMU_AT_CODE && addr < 0x02000000)
+        return MC; // ITCM
 
 #ifdef ACCOUNT_FOR_DATA_TCM_SPEED
-	if(TIMING && PROCNUM==ARMCPU_ARM9 && AT==MMU_AT_DATA && (addr&(~0x3FFF)) == MMU.DTCMRegion)
-		return MC; // DTCM
+    if(TIMING && PROCNUM==ARMCPU_ARM9 && AT==MMU_AT_DATA && (addr&(~0x3FFF)) == MMU.DTCMRegion)
+        return MC; // DTCM
 #endif
 
-	// for now, assume the cache is always enabled for all of main memory
-	if(AT != MMU_AT_DMA && TIMING && PROCNUM==ARMCPU_ARM9 && (addr & 0x0F000000) == 0x02000000)
-	{
+    // for now, assume the cache is always enabled for all of main memory
+    if(AT != MMU_AT_DMA && TIMING && PROCNUM==ARMCPU_ARM9 && (addr & 0x0F000000) == 0x02000000)
+    {
 #ifdef ENABLE_CACHE_CONTROLLER_EMULATION
-		bool cached = false;
-		if(AT==MMU_AT_CODE)
-			cached = MMU_timing.arm9codeCache.Cached<DIRECTION>(addr);
-		if(AT==MMU_AT_DATA)
-			cached = MMU_timing.arm9dataCache.Cached<DIRECTION>(addr);
-		if(cached)
-			return MC;
-		u32 c;
-		if(sequential && AT==MMU_AT_DATA)
-			c = M16; // bonus for sequential data access
-		else if(DIRECTION == MMU_AD_READ)
-			c = M16 * 5;
-		else
-			c = M16 * 2; // should be 4, but write buffer isn't emulated yet.
-		if(DIRECTION == MMU_AD_READ)
-		{
-			// cache miss while reading means it has to fill a whole cache line
-			// by reading 32 bytes...
-			c += 8 * M32*2;
-		}
+        bool cached = false;
+        if(AT==MMU_AT_CODE)
+            cached = MMU_timing.arm9codeCache.Cached<DIRECTION>(addr);
+        if(AT==MMU_AT_DATA)
+            cached = MMU_timing.arm9dataCache.Cached<DIRECTION>(addr);
+        if(cached)
+            return MC;
+        u32 c;
+        if(sequential && AT==MMU_AT_DATA)
+            c = M16; // bonus for sequential data access
+        else if(DIRECTION == MMU_AD_READ)
+            c = M16 * 5;
+        else
+            c = M16 * 2; // should be 4, but write buffer isn't emulated yet.
+        if(DIRECTION == MMU_AD_READ)
+        {
+            // cache miss while reading means it has to fill a whole cache line
+            // by reading 32 bytes...
+            c += 8 * M32*2;
+        }
 
-		if(CheckDebugEvent(DEBUG_EVENT_CACHE_MISS))
-		{
-			DebugEventData.addr = addr;
-			DebugEventData.size = READSIZE;
-			HandleDebugEvent(DEBUG_EVENT_CACHE_MISS);
-		}
+        if(CheckDebugEvent(DEBUG_EVENT_CACHE_MISS))
+        {
+            DebugEventData.addr = addr;
+            DebugEventData.size = READSIZE;
+            HandleDebugEvent(DEBUG_EVENT_CACHE_MISS);
+        }
 
-		return c;
+        return c;
 #elif defined(ACCOUNT_FOR_NON_SEQUENTIAL_ACCESS)
-		// this is the closest approximation I could find
-		// to the with-cache-controller timing
-		// that doesn't do any actual caching logic.
-		return sequential ? MC : M16;
+        // this is the closest approximation I could find
+        // to the with-cache-controller timing
+        // that doesn't do any actual caching logic.
+        return sequential ? MC : M16;
 #endif
-	}
+    }
 
-	static const TWaitState MMU_WAIT[16*16] = {
+    static const TWaitState MMU_WAIT[16*16] = {
         // ITCM, ITCM, MAIN, SWI, REG, VMEM, LCD, OAM,  ROM,  ROM,  RAM,   U,  U,  U,  U, BIOS
 #define X    MC,   MC,  M16, M32, M32,  M16, M16, M32, MSLW, MSLW, MSLW, M32,M32,M32,M32,  M32,
-		// duplicate it 16 times (this was somehow faster than using a mask of 0xF)
-		X X X X  X X X X  X X X X  X X X X
+        // duplicate it 16 times (this was somehow faster than using a mask of 0xF)
+        X X X X  X X X X  X X X X  X X X X
 #undef X
-	};
+    };
 
-	u32 c = MMU_WAIT[(addr >> 24)];
+    u32 c = MMU_WAIT[(addr >> 24)];
 
 #ifdef ACCOUNT_FOR_NON_SEQUENTIAL_ACCESS
-	if(TIMING && !sequential)
-	{
-		//if(c != MC || PROCNUM==ARMCPU_ARM7) // check not needed anymore because ITCM/DTCM return earlier
-		{
-			c += (PROCNUM==ARMCPU_ARM9) ? 3*2 : 1;
-		}
-	}
+    if(TIMING && !sequential)
+    {
+        //if(c != MC || PROCNUM==ARMCPU_ARM7) // check not needed anymore because ITCM/DTCM return earlier
+        {
+            c += (PROCNUM==ARMCPU_ARM9) ? 3*2 : 1;
+        }
+    }
 #endif
 
-	return c;
+    return c;
 }
 
 
@@ -367,19 +377,19 @@ FORCEINLINE u32 _MMU_accesstime(u32 addr, bool sequential)
 template<int PROCNUM, int READSIZE, MMU_ACCESS_DIRECTION DIRECTION, bool TIMING>
 FORCEINLINE u32 MMU_memAccessCycles(u32 addr)
 {
-	if(TIMING)
-		return MMU_timing.armDataFetch<PROCNUM>().template Fetch<READSIZE,DIRECTION,true>((addr)&(~((READSIZE>>3)-1)));
-	else
-		return MMU_timing.armDataFetch<PROCNUM>().template Fetch<READSIZE,DIRECTION,false>((addr)&(~((READSIZE>>3)-1)));
+    if(TIMING)
+        return MMU_timing.armDataFetch<PROCNUM>().template Fetch<READSIZE,DIRECTION,true>((addr)&(~((READSIZE>>3)-1)));
+    else
+        return MMU_timing.armDataFetch<PROCNUM>().template Fetch<READSIZE,DIRECTION,false>((addr)&(~((READSIZE>>3)-1)));
 }
 
 template<int PROCNUM, int READSIZE, MMU_ACCESS_DIRECTION DIRECTION>
 FORCEINLINE u32 MMU_memAccessCycles(u32 addr)
 {
-	if(USE_TIMING())
-		return MMU_memAccessCycles<PROCNUM,READSIZE,DIRECTION,true>(addr);
-	else
-		return MMU_memAccessCycles<PROCNUM,READSIZE,DIRECTION,false>(addr);
+    if(USE_TIMING())
+        return MMU_memAccessCycles<PROCNUM,READSIZE,DIRECTION,true>(addr);
+    else
+        return MMU_memAccessCycles<PROCNUM,READSIZE,DIRECTION,false>(addr);
 }
 
 // calculates the cycle time of a single code fetch in the FETCH stage
@@ -388,10 +398,10 @@ FORCEINLINE u32 MMU_memAccessCycles(u32 addr)
 template<int PROCNUM, int READSIZE>
 FORCEINLINE u32 MMU_codeFetchCycles(u32 addr)
 {
-	if(USE_TIMING())
-		return MMU_timing.armCodeFetch<PROCNUM>().template Fetch<READSIZE,MMU_AD_READ,true>((addr)&(~((READSIZE>>3)-1)));
-	else
-		return MMU_timing.armCodeFetch<PROCNUM>().template Fetch<READSIZE,MMU_AD_READ,false>((addr)&(~((READSIZE>>3)-1)));
+    if(USE_TIMING())
+        return MMU_timing.armCodeFetch<PROCNUM>().template Fetch<READSIZE,MMU_AD_READ,true>((addr)&(~((READSIZE>>3)-1)));
+    else
+        return MMU_timing.armCodeFetch<PROCNUM>().template Fetch<READSIZE,MMU_AD_READ,false>((addr)&(~((READSIZE>>3)-1)));
 }
 
 // calculates the cycle contribution of ALU + MEM stages (= EXECUTE)
@@ -400,21 +410,21 @@ FORCEINLINE u32 MMU_codeFetchCycles(u32 addr)
 template<int PROCNUM>
 FORCEINLINE u32 MMU_aluMemCycles(u32 aluCycles, u32 memCycles)
 {
-	if(PROCNUM==ARMCPU_ARM9)
-	{
-		// ALU and MEM are different stages of the 5-stage pipeline.
-		// we approximate the pipeline throughput using max,
-		// since simply adding the cycles of each instruction together
-		// fails to take into account the parallelism of the arm pipeline
-		// and would make the emulated system unnaturally slow.
-		return std::max(aluCycles, memCycles);
-	}
-	else
-	{
-		// ALU and MEM are part of the same stage of the 3-stage pipeline,
-		// thus they occur in sequence and we can simply add the counts together.
-		return aluCycles + memCycles;
-	}
+    if(PROCNUM==ARMCPU_ARM9)
+    {
+        // ALU and MEM are different stages of the 5-stage pipeline.
+        // we approximate the pipeline throughput using max,
+        // since simply adding the cycles of each instruction together
+        // fails to take into account the parallelism of the arm pipeline
+        // and would make the emulated system unnaturally slow.
+        return std::max(aluCycles, memCycles);
+    }
+    else
+    {
+        // ALU and MEM are part of the same stage of the 3-stage pipeline,
+        // thus they occur in sequence and we can simply add the counts together.
+        return aluCycles + memCycles;
+    }
 }
 
 // calculates the cycle contribution of ALU + MEM stages (= EXECUTE)
@@ -423,11 +433,11 @@ FORCEINLINE u32 MMU_aluMemCycles(u32 aluCycles, u32 memCycles)
 template<int PROCNUM, int READSIZE, MMU_ACCESS_DIRECTION DIRECTION>
 FORCEINLINE u32 MMU_aluMemAccessCycles(u32 aluCycles, u32 addr)
 {
-	u32 memCycles;
-	if(USE_TIMING())
-		memCycles = MMU_memAccessCycles<PROCNUM,READSIZE,DIRECTION,true>(addr);
-	else memCycles = MMU_memAccessCycles<PROCNUM,READSIZE,DIRECTION,false>(addr);
-	return MMU_aluMemCycles<PROCNUM>(aluCycles, memCycles);
+    u32 memCycles;
+    if(USE_TIMING())
+        memCycles = MMU_memAccessCycles<PROCNUM,READSIZE,DIRECTION,true>(addr);
+    else memCycles = MMU_memAccessCycles<PROCNUM,READSIZE,DIRECTION,false>(addr);
+    return MMU_aluMemCycles<PROCNUM>(aluCycles, memCycles);
 }
 
 // calculates the cycle contribution of FETCH + EXECUTE stages
@@ -437,23 +447,23 @@ FORCEINLINE u32 MMU_aluMemAccessCycles(u32 aluCycles, u32 addr)
 template<int PROCNUM>
 FORCEINLINE u32 MMU_fetchExecuteCycles(u32 executeCycles, u32 fetchCycles)
 {
-	#ifdef ACCOUNT_FOR_CODE_FETCH_CYCLES
-	const bool allow = true;
-	#else
-	const bool allow = false;
-	#endif
+#ifdef ACCOUNT_FOR_CODE_FETCH_CYCLES
+    const bool allow = true;
+#else
+    const bool allow = false;
+#endif
 
-	if(USE_TIMING() && allow)
-	{
-		// execute and fetch are different stages of the pipeline for both arm7 and arm9.
-		// again, we approximate the pipeline throughput using max.
-		return std::max(executeCycles, fetchCycles);
-		// TODO: add an option to support conflict between MEM and FETCH cycles
-		//  if they're both using the same data bus.
-		//  in the case of a conflict this should be:
-		//  return std::max(aluCycles, memCycles + fetchCycles);
-	}
-	return executeCycles;
+    if(USE_TIMING() && allow)
+    {
+        // execute and fetch are different stages of the pipeline for both arm7 and arm9.
+        // again, we approximate the pipeline throughput using max.
+        return std::max(executeCycles, fetchCycles);
+        // TODO: add an option to support conflict between MEM and FETCH cycles
+        //  if they're both using the same data bus.
+        //  in the case of a conflict this should be:
+        //  return std::max(aluCycles, memCycles + fetchCycles);
+    }
+    return executeCycles;
 }
 
 

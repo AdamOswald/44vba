@@ -34,38 +34,38 @@ class EMUFILE;
 
 typedef struct
 {
-	int movie_version;					// version of the movie format in the file
-	u32 num_frames;
-	u32 rerecord_count;
-	bool poweron;
-	u32 emu_version_used;
-	//MD5DATA md5_of_rom_used;
-	std::string name_of_rom_used;
+    int movie_version;					// version of the movie format in the file
+    u32 num_frames;
+    u32 rerecord_count;
+    bool poweron;
+    u32 emu_version_used;
+    //MD5DATA md5_of_rom_used;
+    std::string name_of_rom_used;
 
-	std::vector<std::wstring> comments;
-	std::vector<std::string> subtitles;
+    std::vector<std::wstring> comments;
+    std::vector<std::string> subtitles;
 } MOVIE_INFO;
 
 enum START_FROM
 {
-	START_BLANK = 0,
-	START_SRAM,
-	START_SAVESTATE
+    START_BLANK = 0,
+    START_SRAM,
+    START_SAVESTATE
 };
 
 enum EMOVIEMODE
 {
-	MOVIEMODE_INACTIVE = 0,
-	MOVIEMODE_RECORD   = 1,
-	MOVIEMODE_PLAY     = 2,
-	MOVIEMODE_FINISHED = 3
+    MOVIEMODE_INACTIVE = 0,
+    MOVIEMODE_RECORD   = 1,
+    MOVIEMODE_PLAY     = 2,
+    MOVIEMODE_FINISHED = 3
 };
 
 enum EMOVIECMD
 {
-	MOVIECMD_MIC   = 1,
-	MOVIECMD_RESET = 2,
-	MOVIECMD_LID   = 4
+    MOVIECMD_MIC   = 1,
+    MOVIECMD_RESET = 2,
+    MOVIECMD_LID   = 4
 };
 
 //RLDUTSBAYXWEG
@@ -75,180 +75,232 @@ class MovieRecord
 {
 
 public:
-	u16 pad;
-	
-	union {
-		struct {
-			u8 x, y;
-			u8 touch;
-			u8 micsample;
-		};
+    u16 pad;
 
-		u32 padding;
-	} touch;
-	
-	//misc commands like reset, etc.
-	//small now to save space; we might need to support more commands later.
-	//the disk format will support up to 64bit if necessary
-	u8 commands;
-	bool command_reset() const { return (commands&MOVIECMD_RESET)!=0; }
-	bool command_microphone() const { return (commands&MOVIECMD_MIC)!=0; }
-	bool command_lid() const { return (commands&MOVIECMD_LID)!=0; }
+    union {
+        struct {
+            u8 x, y;
+            u8 touch;
+            u8 micsample;
+        };
 
-	void toggleBit(int bit)
-	{
-		pad ^= mask(bit);
-	}
+        u32 padding;
+    } touch;
 
-	void setBit(int bit)
-	{
-		pad |= mask(bit);
-	}
+    //misc commands like reset, etc.
+    //small now to save space; we might need to support more commands later.
+    //the disk format will support up to 64bit if necessary
+    u8 commands;
+    bool command_reset() const {
+        return (commands&MOVIECMD_RESET)!=0;
+    }
+    bool command_microphone() const {
+        return (commands&MOVIECMD_MIC)!=0;
+    }
+    bool command_lid() const {
+        return (commands&MOVIECMD_LID)!=0;
+    }
 
-	void clearBit(int bit)
-	{
-		pad &= ~mask(bit);
-	}
+    void toggleBit(int bit)
+    {
+        pad ^= mask(bit);
+    }
 
-	void setBitValue(int bit, bool val)
-	{
-		if(val) setBit(bit);
-		else clearBit(bit);
-	}
+    void setBit(int bit)
+    {
+        pad |= mask(bit);
+    }
 
-	bool checkBit(int bit)
-	{
-		return (pad & mask(bit))!=0;
-	}
+    void clearBit(int bit)
+    {
+        pad &= ~mask(bit);
+    }
 
-	bool Compare(MovieRecord& compareRec);
-	void clear();
-	
-	void parse(EMUFILE &fp);
-	bool parseBinary(EMUFILE &fp);
-	void dump(EMUFILE &fp);
-	void dumpBinary(EMUFILE &fp);
-	void parsePad(EMUFILE &fp, u16 &outPad);
-	void dumpPad(EMUFILE &fp, u16 inPad);
-	
-	static const char mnemonics[13];
+    void setBitValue(int bit, bool val)
+    {
+        if(val) setBit(bit);
+        else clearBit(bit);
+    }
+
+    bool checkBit(int bit)
+    {
+        return (pad & mask(bit))!=0;
+    }
+
+    bool Compare(MovieRecord& compareRec);
+    void clear();
+
+    void parse(EMUFILE &fp);
+    bool parseBinary(EMUFILE &fp);
+    void dump(EMUFILE &fp);
+    void dumpBinary(EMUFILE &fp);
+    void parsePad(EMUFILE &fp, u16 &outPad);
+    void dumpPad(EMUFILE &fp, u16 inPad);
+
+    static const char mnemonics[13];
 
 private:
-	int mask(int bit) { return 1<<bit; }
+    int mask(int bit) {
+        return 1<<bit;
+    }
 };
 
 
 class MovieData
 {
 public:
-	MovieData(bool fromCurrentSettings = false);
+    MovieData(bool fromCurrentSettings = false);
 
-	int version;
-	int emuVersion;
-	//todo - somehow force mutual exclusion for poweron and reset (with an error in the parser)
-	
-	u32 romChecksum;
-	std::string romSerial;
-	std::string romFilename;
-	bool savestate;
-	std::vector<u8> sram;
-	std::vector<MovieRecord> records;
-	std::vector<std::wstring> comments;
-	std::vector<std::vector<u8> > micSamples;
-	
-	int rerecordCount;
-	Desmume_Guid guid;
+    int version;
+    int emuVersion;
+    //todo - somehow force mutual exclusion for poweron and reset (with an error in the parser)
 
-	DateTime rtcStart;
+    u32 romChecksum;
+    std::string romSerial;
+    std::string romFilename;
+    bool savestate;
+    std::vector<u8> sram;
+    std::vector<MovieRecord> records;
+    std::vector<std::wstring> comments;
+    std::vector<std::vector<u8> > micSamples;
 
-	//was the frame data stored in binary?
-	bool binaryFlag;
+    int rerecordCount;
+    Desmume_Guid guid;
 
-	int useExtBios;
-	int swiFromBios;
-	int useExtFirmware;
-	int bootFromFirmware;
+    DateTime rtcStart;
 
-	std::string firmNickname;
-	std::string firmMessage;
-	int firmFavColour;
-	int firmBirthMonth;
-	int firmBirthDay;
-	int firmLanguage;
+    //was the frame data stored in binary?
+    bool binaryFlag;
 
-	int advancedTiming;
-	int jitBlockSize;
+    int useExtBios;
+    int swiFromBios;
+    int useExtFirmware;
+    int bootFromFirmware;
 
-	int getNumRecords() { return records.size(); }
+    std::string firmNickname;
+    std::string firmMessage;
+    int firmFavColour;
+    int firmBirthMonth;
+    int firmBirthDay;
+    int firmLanguage;
 
-	class TDictionary : public std::map<std::string,std::string>
-	{
-	public:
-		bool containsKey(std::string key)
-		{
-			return find(key) != end();
-		}
+    int advancedTiming;
+    int jitBlockSize;
 
-		void tryInstallBool(std::string key, bool& val)
-		{
-			if(containsKey(key))
-				val = atoi(operator [](key).c_str())!=0;
-		}
+    int getNumRecords() {
+        return records.size();
+    }
 
-		void tryInstallString(std::string key, std::string& val)
-		{
-			if(containsKey(key))
-				val = operator [](key);
-		}
+    class TDictionary : public std::map<std::string,std::string>
+    {
+    public:
+        bool containsKey(std::string key)
+        {
+            return find(key) != end();
+        }
 
-		void tryInstallInt(std::string key, int& val)
-		{
-			if(containsKey(key))
-				val = atoi(operator [](key).c_str());
-		}
+        void tryInstallBool(std::string key, bool& val)
+        {
+            if(containsKey(key))
+                val = atoi(operator [](key).c_str())!=0;
+        }
 
-	};
+        void tryInstallString(std::string key, std::string& val)
+        {
+            if(containsKey(key))
+                val = operator [](key);
+        }
 
-	void truncateAt(int frame);
-	void installValue(std::string& key, std::string& val);
-	int dump(EMUFILE &fp, bool binary);
-	void clearRecordRange(int start, int len);
-	void insertEmpty(int at, int frames);
-	
-	static bool loadSramFrom(std::vector<u8>* buf);
-	//void TryDumpIncremental();
+        void tryInstallInt(std::string key, int& val)
+        {
+            if(containsKey(key))
+                val = atoi(operator [](key).c_str());
+        }
+
+    };
+
+    void truncateAt(int frame);
+    void installValue(std::string& key, std::string& val);
+    int dump(EMUFILE &fp, bool binary);
+    void clearRecordRange(int start, int len);
+    void insertEmpty(int at, int frames);
+
+    static bool loadSramFrom(std::vector<u8>* buf);
+    //void TryDumpIncremental();
 
 private:
-	void installVersion(std::string& key, std::string& val) { version = atoi(val.c_str()); }
-	void installEmuVersion(std::string& key, std::string& val) { emuVersion = atoi(val.c_str()); }
-	void installRerecordCount(std::string& key, std::string& val) { rerecordCount = atoi(val.c_str()); }
-	void installRomFilename(std::string& key, std::string& val) { romFilename = val; }
-	void installRomSerial(std::string& key, std::string& val) { romSerial = val; }
-	void installGuid(std::string& key, std::string& val) { guid = Desmume_Guid::fromString(val); }
-	void installRtcStartNew(std::string& key, std::string& val) { DateTime::TryParse(val.c_str(), rtcStart); }
-	void installBinary(std::string& key, std::string& val) { binaryFlag = atoi(val.c_str()) != 0; }
-	void installUseExtBios(std::string& key, std::string& val) { useExtBios = atoi(val.c_str()) != 0; }
-	void installSwiFromBios(std::string& key, std::string& val) { swiFromBios = atoi(val.c_str()) != 0; }
-	void installUseExtFirmware(std::string& key, std::string& val) { useExtFirmware = atoi(val.c_str()) != 0; }
-	void installBootFromFirmware(std::string& key, std::string& val) { bootFromFirmware = atoi(val.c_str()) != 0; }
-	void installFirmNickname(std::string& key, std::string& val) { firmNickname = val; }
-	void installFirmMessage(std::string& key, std::string& val) { firmMessage = val; }
-	void installFirmFavColour(std::string& key, std::string& val) { firmFavColour = atoi(val.c_str()); }
-	void installFirmBirthMonth(std::string& key, std::string& val) { firmBirthMonth = atoi(val.c_str()); }
-	void installFirmBirthDay(std::string& key, std::string& val) { firmBirthDay = atoi(val.c_str()); }
-	void installFirmLanguage(std::string& key, std::string& val) { firmLanguage = atoi(val.c_str()); }
-	void installAdvancedTiming(std::string& key, std::string& val) { advancedTiming = atoi(val.c_str()) != 0; }
-	void installJitBlockSize(std::string& key, std::string& val) { jitBlockSize = atoi(val.c_str()); }
-	void installSavestate(std::string& key, std::string& val) { savestate = atoi(val.c_str()) != 0; }
+    void installVersion(std::string& key, std::string& val) {
+        version = atoi(val.c_str());
+    }
+    void installEmuVersion(std::string& key, std::string& val) {
+        emuVersion = atoi(val.c_str());
+    }
+    void installRerecordCount(std::string& key, std::string& val) {
+        rerecordCount = atoi(val.c_str());
+    }
+    void installRomFilename(std::string& key, std::string& val) {
+        romFilename = val;
+    }
+    void installRomSerial(std::string& key, std::string& val) {
+        romSerial = val;
+    }
+    void installGuid(std::string& key, std::string& val) {
+        guid = Desmume_Guid::fromString(val);
+    }
+    void installRtcStartNew(std::string& key, std::string& val) {
+        DateTime::TryParse(val.c_str(), rtcStart);
+    }
+    void installBinary(std::string& key, std::string& val) {
+        binaryFlag = atoi(val.c_str()) != 0;
+    }
+    void installUseExtBios(std::string& key, std::string& val) {
+        useExtBios = atoi(val.c_str()) != 0;
+    }
+    void installSwiFromBios(std::string& key, std::string& val) {
+        swiFromBios = atoi(val.c_str()) != 0;
+    }
+    void installUseExtFirmware(std::string& key, std::string& val) {
+        useExtFirmware = atoi(val.c_str()) != 0;
+    }
+    void installBootFromFirmware(std::string& key, std::string& val) {
+        bootFromFirmware = atoi(val.c_str()) != 0;
+    }
+    void installFirmNickname(std::string& key, std::string& val) {
+        firmNickname = val;
+    }
+    void installFirmMessage(std::string& key, std::string& val) {
+        firmMessage = val;
+    }
+    void installFirmFavColour(std::string& key, std::string& val) {
+        firmFavColour = atoi(val.c_str());
+    }
+    void installFirmBirthMonth(std::string& key, std::string& val) {
+        firmBirthMonth = atoi(val.c_str());
+    }
+    void installFirmBirthDay(std::string& key, std::string& val) {
+        firmBirthDay = atoi(val.c_str());
+    }
+    void installFirmLanguage(std::string& key, std::string& val) {
+        firmLanguage = atoi(val.c_str());
+    }
+    void installAdvancedTiming(std::string& key, std::string& val) {
+        advancedTiming = atoi(val.c_str()) != 0;
+    }
+    void installJitBlockSize(std::string& key, std::string& val) {
+        jitBlockSize = atoi(val.c_str());
+    }
+    void installSavestate(std::string& key, std::string& val) {
+        savestate = atoi(val.c_str()) != 0;
+    }
 
-	void installRomChecksum(std::string& key, std::string& val);
-	void installRtcStart(std::string& key, std::string& val);
-	void installComment(std::string& key, std::string& val);
-	void installSram(std::string& key, std::string& val);
-	void installMicSample(std::string& key, std::string& val);
+    void installRomChecksum(std::string& key, std::string& val);
+    void installRtcStart(std::string& key, std::string& val);
+    void installComment(std::string& key, std::string& val);
+    void installSram(std::string& key, std::string& val);
+    void installMicSample(std::string& key, std::string& val);
 
-	typedef void(MovieData::* ivm)(std::string&,std::string&);
-	std::map<std::string, ivm> installValueMap;
+    typedef void(MovieData::* ivm)(std::string&,std::string&);
+    std::map<std::string, ivm> installValueMap;
 };
 
 extern int currFrameCounter;

@@ -36,20 +36,20 @@
 ROMReader_struct * ROMReaderInit(char ** filename)
 {
 #ifdef xHAVE_LIBZ
-	if(!strcasecmp(".gz", *filename + (strlen(*filename) - 3)))
-	{
-		(*filename)[strlen(*filename) - 3] = '\0';
-		return &GZIPROMReader;
-	}
+    if(!strcasecmp(".gz", *filename + (strlen(*filename) - 3)))
+    {
+        (*filename)[strlen(*filename) - 3] = '\0';
+        return &GZIPROMReader;
+    }
 #endif
 #ifdef HAVE_LIBZZIP
-	if (!strcasecmp(".zip", *filename + (strlen(*filename) - 4)))
-	{
-		(*filename)[strlen(*filename) - 4] = '\0';
-		return &ZIPROMReader;
-	}
+    if (!strcasecmp(".zip", *filename + (strlen(*filename) - 4)))
+    {
+        (*filename)[strlen(*filename) - 4] = '\0';
+        return &ZIPROMReader;
+    }
 #endif
-	return &STDROMReader;
+    return &STDROMReader;
 }
 
 extern u8* romBuffer;
@@ -64,73 +64,73 @@ int STDROMReaderWrite(void *, void *, u32);
 
 ROMReader_struct STDROMReader =
 {
-	ROMREADER_STD,
-	"Standard ROM Reader",
-	STDROMReaderInit,
-	STDROMReaderDeInit,
-	STDROMReaderSize,
-	STDROMReaderSeek,
-	STDROMReaderRead,
-	STDROMReaderWrite
+    ROMREADER_STD,
+    "Standard ROM Reader",
+    STDROMReaderInit,
+    STDROMReaderDeInit,
+    STDROMReaderSize,
+    STDROMReaderSeek,
+    STDROMReaderRead,
+    STDROMReaderWrite
 };
 
 struct STDROMReaderData
-{ 
-	long pos;
+{
+    long pos;
 };
 
 void* STDROMReaderInit(const char* filename)
 {
 
-	STDROMReaderData* ret = new STDROMReaderData();
-	ret->pos = 0;
-	return (void*)ret;
+    STDROMReaderData* ret = new STDROMReaderData();
+    ret->pos = 0;
+    return (void*)ret;
 }
 
 
 void STDROMReaderDeInit(void * file)
 {
-	delete ((STDROMReaderData*)file);
+    delete ((STDROMReaderData*)file);
 }
 
 u32 STDROMReaderSize(void * file)
 {
 
-	return romLen;
+    return romLen;
 }
 
 int STDROMReaderSeek(void * file, int offset, int whence)
 {
-	STDROMReaderData* data = (STDROMReaderData*)file;
+    STDROMReaderData* data = (STDROMReaderData*)file;
 
-	if (whence == SEEK_SET) {
-		data->pos = offset;
-	}
-	if (whence == SEEK_CUR) {
-		data->pos += offset;
-	}
-	if (whence == SEEK_END) {
-		data->pos = romLen + offset;
-	}
-	return 1;
+    if (whence == SEEK_SET) {
+        data->pos = offset;
+    }
+    if (whence == SEEK_CUR) {
+        data->pos += offset;
+    }
+    if (whence == SEEK_END) {
+        data->pos = romLen + offset;
+    }
+    return 1;
 }
 
 int STDROMReaderRead(void * file, void * buffer, u32 size)
 {
-	int pos = ((STDROMReaderData*)file)->pos;
-	int read = size;
-	if (pos + read > romLen)  {
-		read = romLen - pos;
-	}
-	memcpy(buffer,romBuffer + pos, read);
-	((STDROMReaderData*)file)->pos += read;
-	return read;
+    int pos = ((STDROMReaderData*)file)->pos;
+    int read = size;
+    if (pos + read > romLen)  {
+        read = romLen - pos;
+    }
+    memcpy(buffer,romBuffer + pos, read);
+    ((STDROMReaderData*)file)->pos += read;
+    return read;
 }
 
 int STDROMReaderWrite(void *, void *, u32)
 {
-	//not supported, for now
-	return 0;
+    //not supported, for now
+    return 0;
 }
 
 #ifdef xHAVE_LIBZ
@@ -143,55 +143,55 @@ int GZIPROMReaderWrite(void *, void *, u32);
 
 ROMReader_struct GZIPROMReader =
 {
-	ROMREADER_GZIP,
-	"Gzip ROM Reader",
-	GZIPROMReaderInit,
-	GZIPROMReaderDeInit,
-	GZIPROMReaderSize,
-	GZIPROMReaderSeek,
-	GZIPROMReaderRead,
-	GZIPROMReaderWrite
+    ROMREADER_GZIP,
+    "Gzip ROM Reader",
+    GZIPROMReaderInit,
+    GZIPROMReaderDeInit,
+    GZIPROMReaderSize,
+    GZIPROMReaderSeek,
+    GZIPROMReaderRead,
+    GZIPROMReaderWrite
 };
 
 void * GZIPROMReaderInit(const char * filename)
 {
-	return (void*)gzopen(filename, "rb");
+    return (void*)gzopen(filename, "rb");
 }
 
 void GZIPROMReaderDeInit(void * file)
 {
-	gzclose((gzFile)file);
+    gzclose((gzFile)file);
 }
 
 u32 GZIPROMReaderSize(void * file)
 {
-	char useless[1024];
-	u32 size = 0;
+    char useless[1024];
+    u32 size = 0;
 
-	/* FIXME this function should first save the current
-	 * position and restore it after size calculation */
-	gzrewind((gzFile)file);
-	while (gzeof ((gzFile)file) == 0)
-		size += gzread((gzFile)file, useless, 1024);
-	gzrewind((gzFile)file);
+    /* FIXME this function should first save the current
+     * position and restore it after size calculation */
+    gzrewind((gzFile)file);
+    while (gzeof ((gzFile)file) == 0)
+        size += gzread((gzFile)file, useless, 1024);
+    gzrewind((gzFile)file);
 
-	return size;
+    return size;
 }
 
 int GZIPROMReaderSeek(void * file, int offset, int whence)
 {
-	return gzseek((gzFile)file, offset, whence);
+    return gzseek((gzFile)file, offset, whence);
 }
 
 int GZIPROMReaderRead(void * file, void * buffer, u32 size)
 {
-	return gzread((gzFile)file, buffer, size);
+    return gzread((gzFile)file, buffer, size);
 }
 
 int GZIPROMReaderWrite(void *, void *, u32)
 {
-	//not supported, ever
-	return 0;
+    //not supported, ever
+    return 0;
 }
 #endif
 
@@ -205,154 +205,154 @@ int ZIPROMReaderWrite(void *, void *, u32);
 
 ROMReader_struct ZIPROMReader =
 {
-	ROMREADER_ZIP,
-	"Zip ROM Reader",
-	ZIPROMReaderInit,
-	ZIPROMReaderDeInit,
-	ZIPROMReaderSize,
-	ZIPROMReaderSeek,
-	ZIPROMReaderRead,
-	ZIPROMReaderWrite
+    ROMREADER_ZIP,
+    "Zip ROM Reader",
+    ZIPROMReaderInit,
+    ZIPROMReaderDeInit,
+    ZIPROMReaderSize,
+    ZIPROMReaderSeek,
+    ZIPROMReaderRead,
+    ZIPROMReaderWrite
 };
 
 void * ZIPROMReaderInit(const char * filename)
 {
-	ZZIP_DIR * dir = zzip_opendir(filename);
-	ZZIP_DIRENT * dirent = zzip_readdir(dir);
-	if (dir != NULL)
-	{
-		char *tmp1;
-		char tmp2[1024];
+    ZZIP_DIR * dir = zzip_opendir(filename);
+    ZZIP_DIRENT * dirent = zzip_readdir(dir);
+    if (dir != NULL)
+    {
+        char *tmp1;
+        char tmp2[1024];
 
-		memset(tmp2,0,sizeof(tmp2));
-		tmp1 = strndup(filename, strlen(filename) - 4);
-		sprintf(tmp2, "%s/%s", tmp1, dirent->d_name);
-		free(tmp1);
-		return zzip_fopen(tmp2, "rb");
-	}
-	return NULL;
+        memset(tmp2,0,sizeof(tmp2));
+        tmp1 = strndup(filename, strlen(filename) - 4);
+        sprintf(tmp2, "%s/%s", tmp1, dirent->d_name);
+        free(tmp1);
+        return zzip_fopen(tmp2, "rb");
+    }
+    return NULL;
 }
 
 void ZIPROMReaderDeInit(void * file)
 {
-	zzip_close((ZZIP_FILE*)file);
+    zzip_close((ZZIP_FILE*)file);
 }
 
 u32 ZIPROMReaderSize(void * file)
 {
-	u32 size;
+    u32 size;
 
-	zzip_seek((ZZIP_FILE*)file, 0, SEEK_END);
-	size = zzip_tell((ZZIP_FILE*)file);
-	zzip_seek((ZZIP_FILE*)file, 0, SEEK_SET);
+    zzip_seek((ZZIP_FILE*)file, 0, SEEK_END);
+    size = zzip_tell((ZZIP_FILE*)file);
+    zzip_seek((ZZIP_FILE*)file, 0, SEEK_SET);
 
-	return size;
+    return size;
 }
 
 int ZIPROMReaderSeek(void * file, int offset, int whence)
 {
-	return zzip_seek((ZZIP_FILE*)file, offset, whence);
+    return zzip_seek((ZZIP_FILE*)file, offset, whence);
 }
 
 int ZIPROMReaderRead(void * file, void * buffer, u32 size)
 {
 #ifdef ZZIP_OLD_READ
-	return zzip_read((ZZIP_FILE*)file, (char *) buffer, size);
+    return zzip_read((ZZIP_FILE*)file, (char *) buffer, size);
 #else
-	return zzip_read((ZZIP_FILE*)file, buffer, size);
+    return zzip_read((ZZIP_FILE*)file, buffer, size);
 #endif
 }
 
 int ZIPROMReaderWrite(void *, void *, u32)
 {
-	//not supported ever
-	return 0;
+    //not supported ever
+    return 0;
 }
 #endif
 
 struct {
-	void* buf;
-	int len;
-	int pos;
+    void* buf;
+    int len;
+    int pos;
 } mem;
 
 void * MemROMReaderInit(const char * filename)
 {
-	return NULL; //dummy
+    return NULL; //dummy
 }
 
 void MemROMReaderDeInit(void *)
 {
-	//nothing to do
+    //nothing to do
 }
 u32 MemROMReaderSize(void *)
 {
-	return (u32)mem.len;
+    return (u32)mem.len;
 }
 int MemROMReaderSeek(void * file, int offset, int whence)
 {
-	switch(whence) {
-	case SEEK_SET:
-		mem.pos = offset;
-		break;
-	case SEEK_CUR:
-		mem.pos += offset;
-		break;
-	case SEEK_END:
-		mem.pos = mem.len + offset;
-		break;
-	}
-	return mem.pos;
+    switch(whence) {
+    case SEEK_SET:
+        mem.pos = offset;
+        break;
+    case SEEK_CUR:
+        mem.pos += offset;
+        break;
+    case SEEK_END:
+        mem.pos = mem.len + offset;
+        break;
+    }
+    return mem.pos;
 }
 
 int MemROMReaderRead(void * file, void * buffer, u32 size)
 {
-	if(mem.pos<0) return 0;
+    if(mem.pos<0) return 0;
 
-	int todo = (int)size;
-	int remain = mem.len - mem.pos;
-	if(remain<todo)
-		todo = remain;
+    int todo = (int)size;
+    int remain = mem.len - mem.pos;
+    if(remain<todo)
+        todo = remain;
 
-	if(todo<=0)
-		return 0;
-	else if(todo==1) *(u8*)buffer = ((u8*)mem.buf)[mem.pos];
-	else memcpy(buffer,(u8*)mem.buf + mem.pos, todo);
-	mem.pos += todo;
-	return todo;
+    if(todo<=0)
+        return 0;
+    else if(todo==1) *(u8*)buffer = ((u8*)mem.buf)[mem.pos];
+    else memcpy(buffer,(u8*)mem.buf + mem.pos, todo);
+    mem.pos += todo;
+    return todo;
 }
 
 int MemROMReaderWrite(void * file, void * buffer, u32 size)
 {
-	if(mem.pos<0) return 0;
+    if(mem.pos<0) return 0;
 
-	int todo = (int)size;
-	int remain = mem.len - mem.pos;
-	if(remain<todo)
-		todo = remain;
+    int todo = (int)size;
+    int remain = mem.len - mem.pos;
+    if(remain<todo)
+        todo = remain;
 
-	if(todo==1) *(u8*)buffer = ((u8*)mem.buf)[mem.pos];
-	else memcpy((u8*)mem.buf + mem.pos,buffer, todo);
-	mem.pos += todo;
-	return todo;
+    if(todo==1) *(u8*)buffer = ((u8*)mem.buf)[mem.pos];
+    else memcpy((u8*)mem.buf + mem.pos,buffer, todo);
+    mem.pos += todo;
+    return todo;
 }
 
 static ROMReader_struct MemROMReader =
 {
-	ROMREADER_MEM,
-	"Memory ROM Reader",
-	MemROMReaderInit,
-	MemROMReaderDeInit,
-	MemROMReaderSize,
-	MemROMReaderSeek,
-	MemROMReaderRead,
-	MemROMReaderWrite,
+    ROMREADER_MEM,
+    "Memory ROM Reader",
+    MemROMReaderInit,
+    MemROMReaderDeInit,
+    MemROMReaderSize,
+    MemROMReaderSeek,
+    MemROMReaderRead,
+    MemROMReaderWrite,
 };
 
 ROMReader_struct * MemROMReaderRead_TrueInit(void* buf, int length)
 {
-	mem.buf = buf;
-	mem.len = length;
-	mem.pos = 0;
-	return &MemROMReader;
+    mem.buf = buf;
+    mem.len = length;
+    mem.pos = 0;
+    return &MemROMReader;
 }

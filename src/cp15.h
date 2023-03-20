@@ -42,89 +42,89 @@ class EMUFILE;
 struct armcp15_t
 {
 public:
-        u32 IDCode;
-        u32 cacheType;
-        u32 TCMSize;
-        u32 ctrl;
-        u32 DCConfig;
-        u32 ICConfig;
-        u32 writeBuffCtrl;
-        u32 und;
-        u32 DaccessPerm;
-        u32 IaccessPerm;
-        u32 protectBaseSize[8];
-        u32 cacheOp;
-        u32 DcacheLock;
-        u32 IcacheLock;
-        u32 ITCMRegion;
-        u32 DTCMRegion;
-        u32 processID;
-        u32 RAM_TAG;
-        u32 testState;
-        u32 cacheDbg;
-        /* calculated bitmasks for the regions to decide rights uppon */
-        /* calculation is done in the MCR instead of on mem access for performance */
-        u32 regionWriteMask_USR[8] ;
-        u32 regionWriteMask_SYS[8] ;
-        u32 regionReadMask_USR[8] ;
-        u32 regionReadMask_SYS[8] ;
-        u32 regionExecuteMask_USR[8] ;
-        u32 regionExecuteMask_SYS[8] ;
-        u32 regionWriteSet_USR[8] ;
-        u32 regionWriteSet_SYS[8] ;
-        u32 regionReadSet_USR[8] ;
-        u32 regionReadSet_SYS[8] ;
-        u32 regionExecuteSet_USR[8] ;
-        u32 regionExecuteSet_SYS[8] ;
+    u32 IDCode;
+    u32 cacheType;
+    u32 TCMSize;
+    u32 ctrl;
+    u32 DCConfig;
+    u32 ICConfig;
+    u32 writeBuffCtrl;
+    u32 und;
+    u32 DaccessPerm;
+    u32 IaccessPerm;
+    u32 protectBaseSize[8];
+    u32 cacheOp;
+    u32 DcacheLock;
+    u32 IcacheLock;
+    u32 ITCMRegion;
+    u32 DTCMRegion;
+    u32 processID;
+    u32 RAM_TAG;
+    u32 testState;
+    u32 cacheDbg;
+    /* calculated bitmasks for the regions to decide rights uppon */
+    /* calculation is done in the MCR instead of on mem access for performance */
+    u32 regionWriteMask_USR[8] ;
+    u32 regionWriteMask_SYS[8] ;
+    u32 regionReadMask_USR[8] ;
+    u32 regionReadMask_SYS[8] ;
+    u32 regionExecuteMask_USR[8] ;
+    u32 regionExecuteMask_SYS[8] ;
+    u32 regionWriteSet_USR[8] ;
+    u32 regionWriteSet_SYS[8] ;
+    u32 regionReadSet_USR[8] ;
+    u32 regionReadSet_SYS[8] ;
+    u32 regionExecuteSet_USR[8] ;
+    u32 regionExecuteSet_SYS[8] ;
 
-		void setSingleRegionAccess(u8 num, u32 mask, u32 set);
-		void maskPrecalc();
+    void setSingleRegionAccess(u8 num, u32 mask, u32 set);
+    void maskPrecalc();
 
 public:
-		armcp15_t() :	IDCode(0x41059461),
-						cacheType(0x0F0D2112),
-						TCMSize(0x00140180),
-						ctrl(0x00012078),
-						DCConfig(0),
-						ICConfig(0),
-						writeBuffCtrl(0),
-						und(0),
-						DaccessPerm(0x22222222),
-						IaccessPerm(0x22222222),
-						cacheOp(0),
-						DcacheLock(0),
-						IcacheLock(0),
-						ITCMRegion(0x0C),
-						DTCMRegion(0x0080000A),
-						processID(0),
-						RAM_TAG(0),
-						testState(0),
-						cacheDbg(0)
-		{
-			//printf("CP15 Reset\n");
-			memset(&protectBaseSize[0], 0, sizeof(protectBaseSize));
-			memset(&regionWriteMask_USR[0], 0, sizeof(regionWriteMask_USR));
-			memset(&regionWriteMask_SYS[0], 0, sizeof(regionWriteMask_SYS));
-			memset(&regionReadMask_USR[0], 0, sizeof(regionReadMask_USR));
-			memset(&regionReadMask_SYS[0], 0, sizeof(regionReadMask_SYS));
-			memset(&regionExecuteMask_USR[0], 0, sizeof(regionExecuteMask_USR));
-			memset(&regionExecuteMask_SYS[0], 0, sizeof(regionExecuteMask_SYS));
-			memset(&regionWriteSet_USR[0], 0, sizeof(regionWriteSet_USR));
-			memset(&regionWriteSet_SYS[0], 0, sizeof(regionWriteSet_SYS));
-			memset(&regionReadSet_USR[0], 0, sizeof(regionReadSet_USR));
-			memset(&regionReadSet_SYS[0], 0, sizeof(regionReadSet_SYS));
-			memset(&regionExecuteSet_USR[0], 0, sizeof(regionExecuteSet_USR));
-			memset(&regionExecuteSet_SYS[0], 0, sizeof(regionExecuteSet_SYS));
-		}
-		BOOL dataProcess(u8 CRd, u8 CRn, u8 CRm, u8 opcode1, u8 opcode2);
-		BOOL load(u8 CRd, u8 adr);
-		BOOL store(u8 CRd, u8 adr);
-		BOOL moveCP2ARM(u32 * R, u8 CRn, u8 CRm, u8 opcode1, u8 opcode2);
-		BOOL moveARM2CP(u32 val, u8 CRn, u8 CRm, u8 opcode1, u8 opcode2);
-		BOOL isAccessAllowed(u32 address,u32 access);
-		// savestate
-		void saveone(EMUFILE &os);
-		bool loadone(EMUFILE &is);
+    armcp15_t() :	IDCode(0x41059461),
+        cacheType(0x0F0D2112),
+        TCMSize(0x00140180),
+        ctrl(0x00012078),
+        DCConfig(0),
+        ICConfig(0),
+        writeBuffCtrl(0),
+        und(0),
+        DaccessPerm(0x22222222),
+        IaccessPerm(0x22222222),
+        cacheOp(0),
+        DcacheLock(0),
+        IcacheLock(0),
+        ITCMRegion(0x0C),
+        DTCMRegion(0x0080000A),
+        processID(0),
+        RAM_TAG(0),
+        testState(0),
+        cacheDbg(0)
+    {
+        //printf("CP15 Reset\n");
+        memset(&protectBaseSize[0], 0, sizeof(protectBaseSize));
+        memset(&regionWriteMask_USR[0], 0, sizeof(regionWriteMask_USR));
+        memset(&regionWriteMask_SYS[0], 0, sizeof(regionWriteMask_SYS));
+        memset(&regionReadMask_USR[0], 0, sizeof(regionReadMask_USR));
+        memset(&regionReadMask_SYS[0], 0, sizeof(regionReadMask_SYS));
+        memset(&regionExecuteMask_USR[0], 0, sizeof(regionExecuteMask_USR));
+        memset(&regionExecuteMask_SYS[0], 0, sizeof(regionExecuteMask_SYS));
+        memset(&regionWriteSet_USR[0], 0, sizeof(regionWriteSet_USR));
+        memset(&regionWriteSet_SYS[0], 0, sizeof(regionWriteSet_SYS));
+        memset(&regionReadSet_USR[0], 0, sizeof(regionReadSet_USR));
+        memset(&regionReadSet_SYS[0], 0, sizeof(regionReadSet_SYS));
+        memset(&regionExecuteSet_USR[0], 0, sizeof(regionExecuteSet_USR));
+        memset(&regionExecuteSet_SYS[0], 0, sizeof(regionExecuteSet_SYS));
+    }
+    BOOL dataProcess(u8 CRd, u8 CRn, u8 CRm, u8 opcode1, u8 opcode2);
+    BOOL load(u8 CRd, u8 adr);
+    BOOL store(u8 CRd, u8 adr);
+    BOOL moveCP2ARM(u32 * R, u8 CRn, u8 CRm, u8 opcode1, u8 opcode2);
+    BOOL moveARM2CP(u32 val, u8 CRn, u8 CRm, u8 opcode1, u8 opcode2);
+    BOOL isAccessAllowed(u32 address,u32 access);
+    // savestate
+    void saveone(EMUFILE &os);
+    bool loadone(EMUFILE &is);
 };
 
 extern armcp15_t cp15;

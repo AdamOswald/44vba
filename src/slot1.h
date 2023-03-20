@@ -28,82 +28,94 @@ class EMUFILE;
 class Slot1Info
 {
 public:
-	virtual const char* name() const = 0;
-	virtual const char* descr()const  = 0;
-	virtual const u8 id() const  = 0;
+    virtual const char* name() const = 0;
+    virtual const char* descr()const  = 0;
+    virtual const u8 id() const  = 0;
 };
 
 class Slot1InfoSimple : public Slot1Info
 {
 public:
-	Slot1InfoSimple(const char* _name, const char* _descr, const u8 _id)
-		: mName(_name)
-		, mDescr(_descr)
-		, mID(_id)
-	{
-	}
-	virtual const char* name() const { return mName; }
-	virtual const char* descr() const { return mDescr; }
-	virtual const u8 id() const { return mID; }
+    Slot1InfoSimple(const char* _name, const char* _descr, const u8 _id)
+        : mName(_name)
+        , mDescr(_descr)
+        , mID(_id)
+    {
+    }
+    virtual const char* name() const {
+        return mName;
+    }
+    virtual const char* descr() const {
+        return mDescr;
+    }
+    virtual const u8 id() const {
+        return mID;
+    }
 private:
-	const char* mName, *mDescr;
-	const u8 mID;
+    const char* mName, *mDescr;
+    const u8 mID;
 };
 
 class ISlot1Interface
 {
 public:
-   virtual ~ISlot1Interface() {}
-	//called to get info about device (description)
-	virtual Slot1Info const* info() = 0;
+    virtual ~ISlot1Interface() {}
+    //called to get info about device (description)
+    virtual Slot1Info const* info() = 0;
 
-	//called once when the emulator starts up, or when the device springs into existence
-	virtual bool init() { return true; }
-	
-	//called when the emulator connects the device
-	virtual void connect() { }
+    //called once when the emulator starts up, or when the device springs into existence
+    virtual bool init() {
+        return true;
+    }
 
-	//called when the emulator disconnects the device
-	virtual void disconnect() { }
-	
-	//called when the emulator shuts down, or when the device disappears from existence
-	virtual void shutdown() { }
+    //called when the emulator connects the device
+    virtual void connect() { }
 
-	//called then the cpu begins a new command/block on the GC bus
-	virtual void write_command(u8 PROCNUM, GC_Command command) { }
+    //called when the emulator disconnects the device
+    virtual void disconnect() { }
 
-	//called when the cpu writes to the GC bus
-	virtual void write_GCDATAIN(u8 PROCNUM, u32 val) { }
+    //called when the emulator shuts down, or when the device disappears from existence
+    virtual void shutdown() { }
 
-	//called when the cpu reads from the GC bus
-	virtual u32 read_GCDATAIN(u8 PROCNUM) { return 0xFFFFFFFF; }
+    //called then the cpu begins a new command/block on the GC bus
+    virtual void write_command(u8 PROCNUM, GC_Command command) { }
 
-	//transfers a byte to the slot-1 device via auxspi, and returns the incoming byte
-	//cpu is provided for diagnostic purposes only.. the slot-1 device wouldn't know which CPU it is.
-	virtual u8 auxspi_transaction(int PROCNUM, u8 value) { return 0x00; }
+    //called when the cpu writes to the GC bus
+    virtual void write_GCDATAIN(u8 PROCNUM, u32 val) { }
 
-	//called when the auxspi burst is ended (SPI chipselect in is going low)
-	virtual void auxspi_reset(int PROCNUM) {}
-    
-	//called when NDS_FakeBoot terminates, emulate in here the BIOS behaviour
-	virtual void post_fakeboot(int PROCNUM) {}
+    //called when the cpu reads from the GC bus
+    virtual u32 read_GCDATAIN(u8 PROCNUM) {
+        return 0xFFFFFFFF;
+    }
 
-	virtual void savestate(EMUFILE &os) {}
+    //transfers a byte to the slot-1 device via auxspi, and returns the incoming byte
+    //cpu is provided for diagnostic purposes only.. the slot-1 device wouldn't know which CPU it is.
+    virtual u8 auxspi_transaction(int PROCNUM, u8 value) {
+        return 0x00;
+    }
 
-	virtual void loadstate(EMUFILE &is) {}
-}; 
+    //called when the auxspi burst is ended (SPI chipselect in is going low)
+    virtual void auxspi_reset(int PROCNUM) {}
+
+    //called when NDS_FakeBoot terminates, emulate in here the BIOS behaviour
+    virtual void post_fakeboot(int PROCNUM) {}
+
+    virtual void savestate(EMUFILE &os) {}
+
+    virtual void loadstate(EMUFILE &is) {}
+};
 
 typedef ISlot1Interface* TISlot1InterfaceConstructor();
 
 enum NDS_SLOT1_TYPE
 {
-	NDS_SLOT1_NONE          = 0,			// 0xFF - None
-	NDS_SLOT1_RETAIL_AUTO,	            // 0xFE - autodetect which kind of retail card to use 
-	NDS_SLOT1_R4,			               // 0x03 - R4 flash card
-	NDS_SLOT1_RETAIL_NAND,	            // 0x02 - Made in Ore/WarioWare D.I.Y.
-	NDS_SLOT1_RETAIL_MCROM,	            // 0x01 - a standard MC (eeprom, flash, fram) -bearing retail card. Also supports motion, for now, because that's the way we originally coded it
-	NDS_SLOT1_RETAIL_DEBUG,	            // 0x04 - for romhacking and fan-made translations
-	NDS_SLOT1_COUNT			            //use to count addons - MUST BE LAST!!!
+    NDS_SLOT1_NONE          = 0,			// 0xFF - None
+    NDS_SLOT1_RETAIL_AUTO,	            // 0xFE - autodetect which kind of retail card to use
+    NDS_SLOT1_R4,			               // 0x03 - R4 flash card
+    NDS_SLOT1_RETAIL_NAND,	            // 0x02 - Made in Ore/WarioWare D.I.Y.
+    NDS_SLOT1_RETAIL_MCROM,	            // 0x01 - a standard MC (eeprom, flash, fram) -bearing retail card. Also supports motion, for now, because that's the way we originally coded it
+    NDS_SLOT1_RETAIL_DEBUG,	            // 0x04 - for romhacking and fan-made translations
+    NDS_SLOT1_COUNT			            //use to count addons - MUST BE LAST!!!
 };
 
 extern ISlot1Interface* slot1_device;						//the current slot1 device instance

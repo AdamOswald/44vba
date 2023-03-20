@@ -50,26 +50,36 @@
 
 #define INSTRUCTION_INDEX(i) ((((i)>>16)&0xFF0)|(((i)>>4)&0xF))
 
-inline u32 ROR(u32 i, u32 j)   { return ((((u32)(i))>>(j)) | (((u32)(i))<<(32-(j)))); }
+inline u32 ROR(u32 i, u32 j)   {
+    return ((((u32)(i))>>(j)) | (((u32)(i))<<(32-(j))));
+}
 
 template<typename T>
-inline T UNSIGNED_OVERFLOW(T a,T b,T c) { return BIT31(((a)&(b)) | (((a)|(b))&(~c))); }
+inline T UNSIGNED_OVERFLOW(T a,T b,T c) {
+    return BIT31(((a)&(b)) | (((a)|(b))&(~c)));
+}
 
 template<typename T>
-inline T UNSIGNED_UNDERFLOW(T a,T b,T c) { return BIT31(((~a)&(b)) | (((~a)|(b))&(c))); }
+inline T UNSIGNED_UNDERFLOW(T a,T b,T c) {
+    return BIT31(((~a)&(b)) | (((~a)|(b))&(c)));
+}
 
 template<typename T>
-inline T SIGNED_OVERFLOW(T a,T b,T c) { return BIT31(((a)&(b)&(~c)) | ((~a)&(~(b))&(c))); }
+inline T SIGNED_OVERFLOW(T a,T b,T c) {
+    return BIT31(((a)&(b)&(~c)) | ((~a)&(~(b))&(c)));
+}
 
 template<typename T>
-inline T SIGNED_UNDERFLOW(T a,T b,T c) { return BIT31(((a)&(~(b))&(~c)) | ((~a)&(b)&(c))); }
+inline T SIGNED_UNDERFLOW(T a,T b,T c) {
+    return BIT31(((a)&(~(b))&(~c)) | ((~a)&(b)&(c)));
+}
 
 #if !defined(bswap32)
 #define bswap32(val) \
 			( (val << 24) & 0xFF000000) | \
 			( (val <<  8) & 0x00FF0000) | \
 			( (val >>  8) & 0x0000FF00) | \
-			( (val >> 24) & 0x000000FF) 
+			( (val >> 24) & 0x000000FF)
 #endif
 
 #if !defined(bswap64)
@@ -81,32 +91,32 @@ inline T SIGNED_UNDERFLOW(T a,T b,T c) { return BIT31(((a)&(~(b))&(~c)) | ((~a)&
 			( (x >>  8) & 0x00000000ff000000ULL ) | \
 			( (x >> 24) & 0x0000000000ff0000ULL ) | \
 			( (x >> 40) & 0x000000000000ff00ULL ) | \
-			( (x >> 56) & 0x00000000000000ffULL ) 
+			( (x >> 56) & 0x00000000000000ffULL )
 #endif
 
 // ============================= CPRS flags funcs
 inline bool CarryFrom(s32 left, s32 right)
 {
-  u32 res  = (0xFFFFFFFFU - (u32)left);
+    u32 res  = (0xFFFFFFFFU - (u32)left);
 
-  return ((u32)right > res);
+    return ((u32)right > res);
 }
 
 inline bool BorrowFrom(s32 left, s32 right)
 {
-  return ((u32)right > (u32)left);
+    return ((u32)right > (u32)left);
 }
 
 inline bool OverflowFromADD(s32 alu_out, s32 left, s32 right)
 {
     return ((left >= 0 && right >= 0) || (left < 0 && right < 0))
-			&& ((left < 0 && alu_out >= 0) || (left >= 0 && alu_out < 0));
+           && ((left < 0 && alu_out >= 0) || (left >= 0 && alu_out < 0));
 }
 
 inline bool OverflowFromSUB(s32 alu_out, s32 left, s32 right)
 {
     return ((left < 0 && right >= 0) || (left >= 0 && right < 0))
-			&& ((left < 0 && alu_out >= 0) || (left >= 0 && alu_out < 0));
+           && ((left < 0 && alu_out >= 0) || (left >= 0 && alu_out < 0));
 }
 
 //zero 15-feb-2009 - these werent getting used and they were getting in my way
@@ -182,44 +192,44 @@ static const u8 arm_cond_table[16*16] = {
 
 enum Mode
 {
-	USR = 0x10,
-	FIQ = 0x11,
-	IRQ = 0x12,
-	SVC = 0x13,
-	ABT = 0x17,
-	UND = 0x1B,
-	SYS = 0x1F
+    USR = 0x10,
+    FIQ = 0x11,
+    IRQ = 0x12,
+    SVC = 0x13,
+    ABT = 0x17,
+    UND = 0x1B,
+    SYS = 0x1F
 };
 
 typedef union
 {
-	struct
-	{
+    struct
+    {
 #ifdef MSB_FIRST
-		u32 N : 1,
-		Z : 1,
-		C : 1,
-		V : 1,
-		Q : 1,
-		RAZ : 19,
-		I : 1,
-		F : 1,
-		T : 1,
-      mode : 5;
+        u32 N : 1,
+            Z : 1,
+            C : 1,
+            V : 1,
+            Q : 1,
+            RAZ : 19,
+            I : 1,
+            F : 1,
+            T : 1,
+            mode : 5;
 #else
-      u32 mode : 5,
-		T : 1,
-		F : 1,
-		I : 1,
-		RAZ : 19,
-		Q : 1,
-		V : 1,
-		C : 1,
-		Z : 1,
-		N : 1;
+        u32 mode : 5,
+            T : 1,
+            F : 1,
+            I : 1,
+            RAZ : 19,
+            Q : 1,
+            V : 1,
+            C : 1,
+            Z : 1,
+            N : 1;
 #endif
-	} bits;
-   u32 val;
+    } bits;
+    u32 val;
 } Status_Reg;
 
 /**
@@ -227,28 +237,28 @@ typedef union
  */
 struct armcpu_ctrl_iface
 {
-  /** stall the processor */
-  void (*stall)( void *instance);
+    /** stall the processor */
+    void (*stall)( void *instance);
 
-  /** unstall the processor */
-  void (*unstall)( void *instance);
+    /** unstall the processor */
+    void (*unstall)( void *instance);
 
-  /** read a register value */
-  u32 (*read_reg)( void *instance, u32 reg_num);
+    /** read a register value */
+    u32 (*read_reg)( void *instance, u32 reg_num);
 
-  /** set a register value */
-  void (*set_reg)( void *instance, u32 reg_num, u32 value);
+    /** set a register value */
+    void (*set_reg)( void *instance, u32 reg_num, u32 value);
 
-  /** install the post execute function */
-  void (*install_post_ex_fn)( void *instance,
-                              void (*fn)( void *, u32 adr, int thumb),
-                              void *fn_data);
+    /** install the post execute function */
+    void (*install_post_ex_fn)( void *instance,
+                                void (*fn)( void *, u32 adr, int thumb),
+                                void *fn_data);
 
-  /** remove the post execute function */
-  void (*remove_post_ex_fn)( void *instance);
+    /** remove the post execute function */
+    void (*remove_post_ex_fn)( void *instance);
 
-  /** the private data passed to all interface functions */
-  void *data;
+    /** the private data passed to all interface functions */
+    void *data;
 };
 
 
@@ -256,84 +266,84 @@ typedef void* armcp_t;
 
 struct armcpu_t
 {
-	u32 proc_ID;
-	u32 instruction; //4
-	u32 instruct_adr; //8
-	u32 next_instruction; //12
+    u32 proc_ID;
+    u32 instruction; //4
+    u32 instruct_adr; //8
+    u32 next_instruction; //12
 
-	u32 R[16]; //16
-	Status_Reg CPSR;  //80
-	Status_Reg SPSR;
-	
-	void SetControlInterface(const armcpu_ctrl_iface *theCtrlInterface);
-	armcpu_ctrl_iface* GetControlInterface();
-	void SetControlInterfaceData(void *theData);
-	void* GetControlInterfaceData();
-	
-	void SetCurrentMemoryInterface(armcpu_memory_iface *theMemInterface);
-	armcpu_memory_iface* GetCurrentMemoryInterface();
-	void SetCurrentMemoryInterfaceData(void *theData);
-	void* GetCurrentMemoryInterfaceData();
-	
-	void SetBaseMemoryInterface(const armcpu_memory_iface *theMemInterface);
-	armcpu_memory_iface* GetBaseMemoryInterface();
-	void SetBaseMemoryInterfaceData(void *theData);
-	void* GetBaseMemoryInterfaceData();
-	
-	void ResetMemoryInterfaceToBase();
-	
-	void changeCPSR();
+    u32 R[16]; //16
+    Status_Reg CPSR;  //80
+    Status_Reg SPSR;
 
-	u32 R13_usr, R14_usr;
-	u32 R13_svc, R14_svc;
-	u32 R13_abt, R14_abt;
-	u32 R13_und, R14_und;
-	u32 R13_irq, R14_irq;
-	u32 R8_fiq, R9_fiq, R10_fiq, R11_fiq, R12_fiq, R13_fiq, R14_fiq;
-	Status_Reg SPSR_svc, SPSR_abt, SPSR_und, SPSR_irq, SPSR_fiq;
+    void SetControlInterface(const armcpu_ctrl_iface *theCtrlInterface);
+    armcpu_ctrl_iface* GetControlInterface();
+    void SetControlInterfaceData(void *theData);
+    void* GetControlInterfaceData();
 
-	u32 intVector;
-	u8 LDTBit;  //1 : ARMv5 style 0 : non ARMv5 (earlier)
-	
-	u32 freeze;
-	//BOOL waitIRQ;
-	//BOOL halt_IE_and_IF; 
+    void SetCurrentMemoryInterface(armcpu_memory_iface *theMemInterface);
+    armcpu_memory_iface* GetCurrentMemoryInterface();
+    void SetCurrentMemoryInterfaceData(void *theData);
+    void* GetCurrentMemoryInterfaceData();
 
-	u8 intrWaitARM_state;
+    void SetBaseMemoryInterface(const armcpu_memory_iface *theMemInterface);
+    armcpu_memory_iface* GetBaseMemoryInterface();
+    void SetBaseMemoryInterfaceData(void *theData);
+    void* GetBaseMemoryInterfaceData();
 
-	BOOL BIOS_loaded;
+    void ResetMemoryInterfaceToBase();
 
-	u32 (* *swi_tab)();
+    void changeCPSR();
 
-	// flag indicating if the processor is stalled (for debugging)
-	int stalled;
+    u32 R13_usr, R14_usr;
+    u32 R13_svc, R14_svc;
+    u32 R13_abt, R14_abt;
+    u32 R13_und, R14_und;
+    u32 R13_irq, R14_irq;
+    u32 R8_fiq, R9_fiq, R10_fiq, R11_fiq, R12_fiq, R13_fiq, R14_fiq;
+    Status_Reg SPSR_svc, SPSR_abt, SPSR_und, SPSR_irq, SPSR_fiq;
+
+    u32 intVector;
+    u8 LDTBit;  //1 : ARMv5 style 0 : non ARMv5 (earlier)
+
+    u32 freeze;
+    //BOOL waitIRQ;
+    //BOOL halt_IE_and_IF;
+
+    u8 intrWaitARM_state;
+
+    BOOL BIOS_loaded;
+
+    u32 (* *swi_tab)();
+
+    // flag indicating if the processor is stalled (for debugging)
+    int stalled;
 
 #if defined(_M_X64) || defined(__x86_64__)
-	u8 cond_table[16*16];
+    u8 cond_table[16*16];
 #endif
-	
-	/** there is a pending irq for the cpu */
-	int irq_flag;
-	
-	/** the post executed function (if installed) */
-	void (*post_ex_fn)( void *, u32 adr, int thumb);
-	
-	/** data for the post executed function */
-	void *post_ex_fn_data;
-	
-	/** the memory interface */
-	armcpu_memory_iface *mem_if;		// This is the memory interface currently in use.
-	armcpu_memory_iface base_mem_if;	// This is the CPU's base memory interface.
-	
-	/** the ctrl interface */
-	armcpu_ctrl_iface ctrl_iface;
 
-	// debugging stuff
-	int runToRetTmp;
-	bool runToRet;
-	int stepOverBreak;
-	std::vector<int> breakPoints;
-	bool debugStep;
+    /** there is a pending irq for the cpu */
+    int irq_flag;
+
+    /** the post executed function (if installed) */
+    void (*post_ex_fn)( void *, u32 adr, int thumb);
+
+    /** data for the post executed function */
+    void *post_ex_fn_data;
+
+    /** the memory interface */
+    armcpu_memory_iface *mem_if;		// This is the memory interface currently in use.
+    armcpu_memory_iface base_mem_if;	// This is the CPU's base memory interface.
+
+    /** the ctrl interface */
+    armcpu_ctrl_iface ctrl_iface;
+
+    // debugging stuff
+    int runToRetTmp;
+    bool runToRet;
+    int stepOverBreak;
+    std::vector<int> breakPoints;
+    bool debugStep;
 };
 
 int armcpu_new( armcpu_t *armcpu, u32 id);
@@ -360,7 +370,7 @@ void setIF(int PROCNUM, u32 flag);
 
 static INLINE void NDS_makeIrq(int PROCNUM, u32 num)
 {
-	setIF(PROCNUM,1<<num);
+    setIF(PROCNUM,1<<num);
 }
 
 #endif
