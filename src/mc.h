@@ -22,8 +22,8 @@
 #define __MC_H__
 
 #include <stdio.h>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "types.h"
 
@@ -52,18 +52,18 @@
 class EMUFILE;
 
 struct BackupDeviceFileInfo {
-    u32 size;
-    u32 padSize;
-    u32 type;
-    u32 addr_size;
-    u32 mem_size;
+  u32 size;
+  u32 padSize;
+  u32 type;
+  u32 addr_size;
+  u32 mem_size;
 };
 typedef struct BackupDeviceFileInfo BackupDeviceFileInfo;
 
 struct BackupDeviceFileSaveFooter {
-    BackupDeviceFileInfo info;
-    u32 version;
-    char cookie[16];
+  BackupDeviceFileInfo info;
+  u32 version;
+  char cookie[16];
 };
 typedef struct BackupDeviceFileSaveFooter BackupDeviceFileSaveFooter;
 
@@ -74,149 +74,145 @@ typedef struct BackupDeviceFileSaveFooter BackupDeviceFileSaveFooter;
 // core-managed BackupDevice to access it for the running software.
 class BackupDevice {
 public:
-    EMUFILE *fpMC;
+  EMUFILE *fpMC;
 
-    BackupDevice();
-    ~BackupDevice();
+  BackupDevice();
+  ~BackupDevice();
 
-    // signals the save system that we are in MOVIE mode. doesnt load up a rom,
-    // and never saves it. initializes for that case.
-    void movie_mode();
-    void reset();
-    void close_rom();
-    void forceManualBackupType();
-    void reset_hardware();
-    std::string getFilename() {
-        return this->_fileName;
-    }
+  // signals the save system that we are in MOVIE mode. doesnt load up a rom,
+  // and never saves it. initializes for that case.
+  void movie_mode();
+  void reset();
+  void close_rom();
+  void forceManualBackupType();
+  void reset_hardware();
+  std::string getFilename() { return this->_fileName; }
 
-    u8 readByte(u32 addr, const u8 init);
-    u16 readWord(u32 addr, const u16 init);
-    u32 readLong(u32 addr, const u32 init);
+  u8 readByte(u32 addr, const u8 init);
+  u16 readWord(u32 addr, const u16 init);
+  u32 readLong(u32 addr, const u32 init);
 
-    u8 readByte(const u8 init);
-    u16 readWord(const u16 init);
-    u32 readLong(const u32 init);
+  u8 readByte(const u8 init);
+  u16 readWord(const u16 init);
+  u32 readLong(const u32 init);
 
-    void writeByte(u32 addr, u8 val);
-    void writeWord(u32 addr, u16 val);
-    void writeLong(u32 addr, u32 val);
+  void writeByte(u32 addr, u8 val);
+  void writeWord(u32 addr, u16 val);
+  void writeLong(u32 addr, u32 val);
 
-    void writeByte(u8 val);
-    void writeWord(u16 val);
-    void writeLong(u32 val);
+  void writeByte(u8 val);
+  void writeWord(u16 val);
+  void writeLong(u32 val);
 
-    void seek(u32 pos);
+  void seek(u32 pos);
 
-    void flushBackup();
+  void flushBackup();
 
-    u8 searchFileSaveType(u32 size);
+  u8 searchFileSaveType(u32 size);
 
-    bool save_state(EMUFILE &os);
-    bool load_state(EMUFILE &is);
+  bool save_state(EMUFILE &os);
+  bool load_state(EMUFILE &is);
 
-    // commands from mmu
-    void reset_command() {
-        reset_command_state = true;
-    };
-    u8 data_command(u8, u8);
+  // commands from mmu
+  void reset_command() { reset_command_state = true; };
+  u8 data_command(u8, u8);
 
-    // this info was saved before the last reset (used for savestate
-    // compatibility)
-    struct SavedInfo {
-        u32 addr_size;
-    } savedInfo;
+  // this info was saved before the last reset (used for savestate
+  // compatibility)
+  struct SavedInfo {
+    u32 addr_size;
+  } savedInfo;
 
-    void ensure(u32 addr, EMUFILE *fpOut = NULL);
-    void ensure(u32 addr, u8 val, EMUFILE *fpOut = NULL);
+  void ensure(u32 addr, EMUFILE *fpOut = NULL);
+  void ensure(u32 addr, u8 val, EMUFILE *fpOut = NULL);
 
-    // and these are used by old savestates
-    void load_old_state(u32 addr_size, u8 *data, u32 datasize);
-    static u32 addr_size_for_old_save_size(int bupmem_size);
-    static u32 addr_size_for_old_save_type(int bupmem_type);
+  // and these are used by old savestates
+  void load_old_state(u32 addr_size, u8 *data, u32 datasize);
+  static u32 addr_size_for_old_save_size(int bupmem_size);
+  static u32 addr_size_for_old_save_type(int bupmem_type);
 
-    static u32 pad_up_size(u32 startSize);
-    void raw_applyUserSettings(u32 &size, bool manual = false);
+  static u32 pad_up_size(u32 startSize);
+  void raw_applyUserSettings(u32 &size, bool manual = false);
 
-    u32 trim(void *buf, u32 size);
-    u32 fillLeft(u32 size);
+  u32 trim(void *buf, u32 size);
+  u32 fillLeft(u32 size);
 
-    u32 get_save_duc_size(const char *filename);
-    u32 get_save_nogba_size(const char *filename);
-    u32 get_save_nogba_size(u8 *data);
-    u32 get_save_raw_size(const char *filename);
-    bool import_duc(const char *filename, u32 force_size = 0);
-    bool import_no_gba(const char *fname, u32 force_size = 0);
-    bool import_raw(const char *filename, u32 force_size = 0);
-    bool import_dsv(const char *filename);
-    bool export_no_gba(const char *fname);
-    bool export_raw(const char *filename);
-    bool no_gba_unpack(u8 *&buf, u32 &size);
+  u32 get_save_duc_size(const char *filename);
+  u32 get_save_nogba_size(const char *filename);
+  u32 get_save_nogba_size(u8 *data);
+  u32 get_save_raw_size(const char *filename);
+  bool import_duc(const char *filename, u32 force_size = 0);
+  bool import_no_gba(const char *fname, u32 force_size = 0);
+  bool import_raw(const char *filename, u32 force_size = 0);
+  bool import_dsv(const char *filename);
+  bool export_no_gba(const char *fname);
+  bool export_raw(const char *filename);
+  bool no_gba_unpack(u8 *&buf, u32 &size);
 
-    bool load_movie(EMUFILE *is);
-    void load_movie_blank();
+  bool load_movie(EMUFILE *is);
+  void load_movie_blank();
 
-    u32 importDataSize(const char *filename);
-    bool importData(const char *filename, u32 force_size = 0);
-    bool exportData(const char *filename);
+  u32 importDataSize(const char *filename);
+  bool importData(const char *filename, u32 force_size = 0);
+  bool exportData(const char *filename);
 
-    BackupDeviceFileInfo GetFileInfo();
+  BackupDeviceFileInfo GetFileInfo();
 
-    static size_t GetDSVFooterSize();
-    static bool GetDSVFileInfo(FILE *inFileDSV,
-                               BackupDeviceFileSaveFooter *outFooter,
-                               size_t *outFileSize);
+  static size_t GetDSVFooterSize();
+  static bool GetDSVFileInfo(FILE *inFileDSV,
+                             BackupDeviceFileSaveFooter *outFooter,
+                             size_t *outFileSize);
 
-    // the value contained in memory when shipped from factory (before user
-    // program ever writes to it). more details commented elsewhere.
-    u8 uninitializedValue;
+  // the value contained in memory when shipped from factory (before user
+  // program ever writes to it). more details commented elsewhere.
+  u8 uninitializedValue;
 
 private:
-    std::string _fileName;
-    u32 fsize;
-    BackupDeviceFileInfo _info;
-    int readFooter();
-    bool write(u8 val);
-    u8 read();
-    bool saveBuffer(u8 *data, u32 size, bool _rewind, bool _truncate = false);
+  std::string _fileName;
+  u32 fsize;
+  BackupDeviceFileInfo _info;
+  int readFooter();
+  bool write(u8 val);
+  u8 read();
+  bool saveBuffer(u8 *data, u32 size, bool _rewind, bool _truncate = false);
 
-    bool write_enable;
-    bool reset_command_state;
-    u32 com; // persistent command actually handled
-    u32 addr_size, addr_counter;
-    u32 addr;
-    u8 write_protect;
+  bool write_enable;
+  bool reset_command_state;
+  u32 com; // persistent command actually handled
+  u32 addr_size, addr_counter;
+  u32 addr;
+  u8 write_protect;
 
-    std::vector<u8> data_autodetect;
-    enum STATE { DETECTING = 0, RUNNING = 1 } state;
+  std::vector<u8> data_autodetect;
+  enum STATE { DETECTING = 0, RUNNING = 1 } state;
 
-    enum MOTION_INIT_STATE {
-        MOTION_INIT_STATE_IDLE,
-        MOTION_INIT_STATE_RECEIVED_4,
-        MOTION_INIT_STATE_RECEIVED_4_B,
-        MOTION_INIT_STATE_FE,
-        MOTION_INIT_STATE_FD,
-        MOTION_INIT_STATE_FB
-    };
-    enum MOTION_FLAG {
-        MOTION_FLAG_NONE = 0,
-        MOTION_FLAG_ENABLED = 1,
-        MOTION_FLAG_SENSORMODE = 2
-    };
-    u8 motionInitState, motionFlag;
+  enum MOTION_INIT_STATE {
+    MOTION_INIT_STATE_IDLE,
+    MOTION_INIT_STATE_RECEIVED_4,
+    MOTION_INIT_STATE_RECEIVED_4_B,
+    MOTION_INIT_STATE_FE,
+    MOTION_INIT_STATE_FD,
+    MOTION_INIT_STATE_FB
+  };
+  enum MOTION_FLAG {
+    MOTION_FLAG_NONE = 0,
+    MOTION_FLAG_ENABLED = 1,
+    MOTION_FLAG_SENSORMODE = 2
+  };
+  u8 motionInitState, motionFlag;
 
-    void checkReset();
-    void detect();
+  void checkReset();
+  void detect();
 };
 
 void backup_setManualBackupType(int type);
 void backup_forceManualBackupType();
 
 struct SAVE_TYPE {
-    const char *descr;
-    int media_type;
-    int size;
-    int addr_size;
+  const char *descr;
+  int media_type;
+  int size;
+  int addr_size;
 };
 
 extern const SAVE_TYPE save_types[];
