@@ -190,7 +190,7 @@ may be found in DeSmuME > Preferences.
         3D Rendering:
             3D Rendering Engine - SoftRasterizer
             Rendering Threads - Automatic
-    
+
     Emulation:
         Advanced Bus Level Timing - Off (May cause glitches)
         Rigourous 3D Rendering Timing - On (May cause graphical glitches)
@@ -239,7 +239,7 @@ However, keep in mind that there are a few of rules that you need to follow:
 - Do not ask us to provide ROMs, BIOS files, or any other copyrighted stuff.
   We don't want to have to deal with any legal issues that could get us in
   trouble, or worse, completely shut down.
-  
+
 - When contacting us, please use the appropriate means to do it. For example,
   if you simply want to tell us how much you love or hate us, then use the
   comments on the official webpage. Another example: If you want to post on the
