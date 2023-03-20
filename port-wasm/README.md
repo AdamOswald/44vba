@@ -1,7 +1,8 @@
-# WebAssembly port
+# wasm-port
 
-
-Hint: Latest HTML/JS source code could be downloaded in https://gba.44670.org .
+Latest HTML/JS/CSS source code is hosted on https://ds.44670.org .
 
 You may need a https-enabled web server to run the code.
+
+nds.js, nds.wasm files are built from this repo, with Emscripten.
 
