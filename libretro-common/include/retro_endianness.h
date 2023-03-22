@@ -65,17 +65,17 @@
  **/
 static INLINE uint8_t is_little_endian(void) {
 #if defined(__x86_64) || defined(__i386) || defined(_M_IX86) || defined(_M_X64)
-    return 1;
+  return 1;
 #elif defined(MSB_FIRST)
-    return 0;
+  return 0;
 #else
-    union {
-        uint16_t x;
-        uint8_t y[2];
-    } u;
+  union {
+    uint16_t x;
+    uint8_t y[2];
+  } u;
 
-    u.x = 1;
-    return u.y[0];
+  u.x = 1;
+  return u.y[0];
 #endif
 }
 
@@ -89,9 +89,9 @@ static INLINE uint8_t is_little_endian(void) {
  * otherwise returns same value.
  **/
 static INLINE uint64_t swap_if_big64(uint64_t val) {
-    if (is_little_endian())
-        return val;
-    return SWAP64(val);
+  if (is_little_endian())
+    return val;
+  return SWAP64(val);
 }
 
 /**
@@ -104,9 +104,9 @@ static INLINE uint64_t swap_if_big64(uint64_t val) {
  * otherwise returns same value.
  **/
 static INLINE uint32_t swap_if_big32(uint32_t val) {
-    if (is_little_endian())
-        return val;
-    return SWAP32(val);
+  if (is_little_endian())
+    return val;
+  return SWAP32(val);
 }
 
 /**
@@ -119,9 +119,9 @@ static INLINE uint32_t swap_if_big32(uint32_t val) {
  * otherwise returns same value.
  **/
 static INLINE uint64_t swap_if_little64(uint64_t val) {
-    if (is_little_endian())
-        return SWAP64(val);
-    return val;
+  if (is_little_endian())
+    return SWAP64(val);
+  return val;
 }
 
 /**
@@ -134,9 +134,9 @@ static INLINE uint64_t swap_if_little64(uint64_t val) {
  * otherwise returns same value.
  **/
 static INLINE uint32_t swap_if_little32(uint32_t val) {
-    if (is_little_endian())
-        return SWAP32(val);
-    return val;
+  if (is_little_endian())
+    return SWAP32(val);
+  return val;
 }
 
 /**
@@ -149,9 +149,9 @@ static INLINE uint32_t swap_if_little32(uint32_t val) {
  * otherwise returns same value.
  **/
 static INLINE uint16_t swap_if_big16(uint16_t val) {
-    if (is_little_endian())
-        return val;
-    return SWAP16(val);
+  if (is_little_endian())
+    return val;
+  return SWAP16(val);
 }
 
 /**
@@ -164,9 +164,9 @@ static INLINE uint16_t swap_if_big16(uint16_t val) {
  * otherwise returns same value.
  **/
 static INLINE uint16_t swap_if_little16(uint16_t val) {
-    if (is_little_endian())
-        return SWAP16(val);
-    return val;
+  if (is_little_endian())
+    return SWAP16(val);
+  return val;
 }
 
 /**
@@ -178,7 +178,7 @@ static INLINE uint16_t swap_if_little16(uint16_t val) {
  * first if necessary before storing it.
  **/
 static INLINE void store32be(uint32_t *addr, uint32_t data) {
-    *addr = swap_if_little32(data);
+  *addr = swap_if_little32(data);
 }
 
 /**
@@ -190,7 +190,7 @@ static INLINE void store32be(uint32_t *addr, uint32_t data) {
  * Returns: value from address, byte-swapped if necessary.
  **/
 static INLINE uint32_t load32be(const uint32_t *addr) {
-    return swap_if_little32(*addr);
+  return swap_if_little32(*addr);
 }
 
 #endif

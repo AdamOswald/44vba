@@ -41,11 +41,11 @@
  * Returns: a clamped value of initial float value @val.
  */
 static INLINE float clamp_float(float val, float lower, float upper) {
-    if (val < lower)
-        return lower;
-    if (val > upper)
-        return upper;
-    return val;
+  if (val < lower)
+    return lower;
+  if (val > upper)
+    return upper;
+  return val;
 }
 
 /**
@@ -57,11 +57,11 @@ static INLINE float clamp_float(float val, float lower, float upper) {
  * Returns: a clamped value of initial unsigned 8-bit value @val.
  */
 static INLINE uint8_t clamp_8bit(int val) {
-    if (val > 255)
-        return 255;
-    if (val < 0)
-        return 0;
-    return (uint8_t)val;
+  if (val > 255)
+    return 255;
+  if (val < 0)
+    return 0;
+  return (uint8_t)val;
 }
 
 #endif
