@@ -62,11 +62,8 @@ def find_gl_symbols(lines):
         m = re.search(r"^typedef.+PFN(\S+)PROC.+$", line)
         g = re.search(r"^.+(gl\S+)\W*\(.+\).*$", line)
         if m and noext(m[1]):
-            typedefs.append(
-                m[0]
-                .replace("PFN", "RGLSYM")
-                .replace("GLDEBUGPROC", "RGLGENGLDEBUGPROC")
-            )
+            typedefs.append(m[0].replace("PFN", "RGLSYM").replace(
+                "GLDEBUGPROC", "RGLGENGLDEBUGPROC"))
         if g and noext(g[1]):
             syms.append(g[1])
     return (typedefs, syms)
