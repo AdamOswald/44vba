@@ -20,9 +20,9 @@ struct rtga {
 typedef struct {
   int (*read)(void *user, char *data,
               int size); /* fill 'data' with 'size' bytes.  return number of
-                  bytes actually read */
+                bytes actually read */
   void (*skip)(void *user, int n); /* skip the next 'n' bytes, or 'unget' the
-                            last -n bytes if negative */
+                          last -n bytes if negative */
   int (*eof)(void *user); /* returns nonzero if we are at end of file/data */
 } rtga_io_callbacks;
 
