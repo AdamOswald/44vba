@@ -30,6 +30,7 @@
 #include <assert.h>
 
 #ifdef RARCH_INTERNAL
+#include <stdio.h>
 #define retro_assert(cond)                                                     \
   do {                                                                         \
     if (!(cond)) {                                                             \
