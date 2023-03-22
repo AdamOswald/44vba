@@ -37,8 +37,8 @@
 RETRO_BEGIN_DECLS
 
 enum CodePage {
-    CODEPAGE_LOCAL = 0,   /* CP_ACP */
-    CODEPAGE_UTF8 = 65001 /* CP_UTF8 */
+  CODEPAGE_LOCAL = 0,   /* CP_ACP */
+  CODEPAGE_UTF8 = 65001 /* CP_UTF8 */
 };
 
 size_t utf8_conv_utf32(uint32_t *out, size_t out_chars, const char *in,

@@ -37,21 +37,21 @@ RETRO_BEGIN_DECLS
 #include <boolean.h>
 
 struct item_file {
-    char *path;
-    char *label;
-    char *alt;
-    unsigned type;
-    size_t directory_ptr;
-    size_t entry_idx;
-    void *userdata;
-    void *actiondata;
+  char *path;
+  char *label;
+  char *alt;
+  unsigned type;
+  size_t directory_ptr;
+  size_t entry_idx;
+  void *userdata;
+  void *actiondata;
 };
 
 typedef struct file_list {
-    struct item_file *list;
+  struct item_file *list;
 
-    size_t capacity;
-    size_t size;
+  size_t capacity;
+  size_t size;
 } file_list_t;
 
 void *file_list_get_userdata_at_offset(const file_list_t *list, size_t index);
