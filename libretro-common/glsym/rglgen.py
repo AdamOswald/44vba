@@ -22,6 +22,7 @@
 import os
 import re
 import sys
+
 banned_ext = [
     "AMD",
     "APPLE",
@@ -66,9 +67,10 @@ def find_gl_symbols(lines):
         g = re.search(r"^.+(gl\S+)\W*\(.+\).*$", line)
         if m and noext(m.group(1)):
             typedefs.append(
-                m.group(0).replace("PFN",
-                                   "RGLSYM").replace("GLDEBUGPROC",
-                                                     "RGLGENGLDEBUGPROC"))
+                m.group(0)
+                .replace("PFN", "RGLSYM")
+                .replace("GLDEBUGPROC", "RGLGENGLDEBUGPROC")
+            )
         if g and noext(g.group(1)):
             syms.append(g.group(1))
     return (typedefs, syms)
@@ -82,9 +84,7 @@ def generate_defines(gl_syms):
 
 
 def generate_declarations(gl_syms):
-    return [
-        "RGLSYM" + x.upper() + "PROC " + "__rglgen_" + x + ";" for x in gl_syms
-    ]
+    return ["RGLSYM" + x.upper() + "PROC " + "__rglgen_" + x + ";" for x in gl_syms]
 
 
 def generate_macros(gl_syms):
@@ -142,8 +142,7 @@ if __name__ == "__main__":
         f.write("typedef void *GLeglImageOES;\n")
         f.write("#endif\n")
 
-        f.write(
-            "#if !defined(GL_OES_fixed_point) && !defined(HAVE_OPENGLES2)\n")
+        f.write("#if !defined(GL_OES_fixed_point) && !defined(HAVE_OPENGLES2)\n")
         f.write("typedef GLint GLfixed;\n")
         f.write("#endif\n")
 
