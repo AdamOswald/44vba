@@ -22,6 +22,7 @@
 import os
 import re
 import sys
+
 banned_ext = [
     "AMD",
     "APPLE",
@@ -62,8 +63,11 @@ def find_gl_symbols(lines):
         m = re.search(r"^typedef.+PFN(\S+)PROC.+$", line)
         g = re.search(r"^.+(gl\S+)\W*\(.+\).*$", line)
         if m and noext(m[1]):
-            typedefs.append(m[0].replace("PFN", "RGLSYM").replace(
-                "GLDEBUGPROC", "RGLGENGLDEBUGPROC"))
+            typedefs.append(
+                m[0]
+                .replace("PFN", "RGLSYM")
+                .replace("GLDEBUGPROC", "RGLGENGLDEBUGPROC")
+            )
         if g and noext(g[1]):
             syms.append(g[1])
     return (typedefs, syms)
@@ -135,8 +139,7 @@ if __name__ == "__main__":
         f.write("typedef void *GLeglImageOES;\n")
         f.write("#endif\n")
 
-        f.write(
-            "#if !defined(GL_OES_fixed_point) && !defined(HAVE_OPENGLES2)\n")
+        f.write("#if !defined(GL_OES_fixed_point) && !defined(HAVE_OPENGLES2)\n")
         f.write("typedef GLint GLfixed;\n")
         f.write("#endif\n")
 
