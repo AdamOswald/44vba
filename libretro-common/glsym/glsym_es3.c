@@ -1,6 +1,7 @@
 #include "glsym/glsym.h"
 #include <stddef.h>
-#define SYM(x) { "gl" #x, &(gl##x) }
+#define SYM(x)                                                                 \
+  { "gl" #x, &(gl##x) }
 const struct rglgen_sym_map rglgen_symbol_map[] = {
     SYM(BlendBarrierKHR),
     SYM(DebugMessageControlKHR),
@@ -68,7 +69,7 @@ const struct rglgen_sym_map rglgen_symbol_map[] = {
     SYM(FramebufferTextureMultiviewOVR),
     SYM(FramebufferTextureMultisampleMultiviewOVR),
 
-    { NULL, NULL },
+    {NULL, NULL},
 };
 RGLSYMGLBLENDBARRIERKHRPROC __rglgen_glBlendBarrierKHR;
 RGLSYMGLDEBUGMESSAGECONTROLKHRPROC __rglgen_glDebugMessageControlKHR;
@@ -88,7 +89,8 @@ RGLSYMGLGETNUNIFORMFVKHRPROC __rglgen_glGetnUniformfvKHR;
 RGLSYMGLGETNUNIFORMIVKHRPROC __rglgen_glGetnUniformivKHR;
 RGLSYMGLGETNUNIFORMUIVKHRPROC __rglgen_glGetnUniformuivKHR;
 RGLSYMGLEGLIMAGETARGETTEXTURE2DOESPROC __rglgen_glEGLImageTargetTexture2DOES;
-RGLSYMGLEGLIMAGETARGETRENDERBUFFERSTORAGEOESPROC __rglgen_glEGLImageTargetRenderbufferStorageOES;
+RGLSYMGLEGLIMAGETARGETRENDERBUFFERSTORAGEOESPROC
+    __rglgen_glEGLImageTargetRenderbufferStorageOES;
 RGLSYMGLCOPYIMAGESUBDATAOESPROC __rglgen_glCopyImageSubDataOES;
 RGLSYMGLENABLEIOESPROC __rglgen_glEnableiOES;
 RGLSYMGLDISABLEIOESPROC __rglgen_glDisableiOES;
@@ -99,9 +101,12 @@ RGLSYMGLBLENDFUNCSEPARATEIOESPROC __rglgen_glBlendFuncSeparateiOES;
 RGLSYMGLCOLORMASKIOESPROC __rglgen_glColorMaskiOES;
 RGLSYMGLISENABLEDIOESPROC __rglgen_glIsEnablediOES;
 RGLSYMGLDRAWELEMENTSBASEVERTEXOESPROC __rglgen_glDrawElementsBaseVertexOES;
-RGLSYMGLDRAWRANGEELEMENTSBASEVERTEXOESPROC __rglgen_glDrawRangeElementsBaseVertexOES;
-RGLSYMGLDRAWELEMENTSINSTANCEDBASEVERTEXOESPROC __rglgen_glDrawElementsInstancedBaseVertexOES;
-RGLSYMGLMULTIDRAWELEMENTSBASEVERTEXOESPROC __rglgen_glMultiDrawElementsBaseVertexOES;
+RGLSYMGLDRAWRANGEELEMENTSBASEVERTEXOESPROC
+    __rglgen_glDrawRangeElementsBaseVertexOES;
+RGLSYMGLDRAWELEMENTSINSTANCEDBASEVERTEXOESPROC
+    __rglgen_glDrawElementsInstancedBaseVertexOES;
+RGLSYMGLMULTIDRAWELEMENTSBASEVERTEXOESPROC
+    __rglgen_glMultiDrawElementsBaseVertexOES;
 RGLSYMGLFRAMEBUFFERTEXTUREOESPROC __rglgen_glFramebufferTextureOES;
 RGLSYMGLGETPROGRAMBINARYOESPROC __rglgen_glGetProgramBinaryOES;
 RGLSYMGLPROGRAMBINARYOESPROC __rglgen_glProgramBinaryOES;
@@ -133,6 +138,7 @@ RGLSYMGLBINDVERTEXARRAYOESPROC __rglgen_glBindVertexArrayOES;
 RGLSYMGLDELETEVERTEXARRAYSOESPROC __rglgen_glDeleteVertexArraysOES;
 RGLSYMGLGENVERTEXARRAYSOESPROC __rglgen_glGenVertexArraysOES;
 RGLSYMGLISVERTEXARRAYOESPROC __rglgen_glIsVertexArrayOES;
-RGLSYMGLFRAMEBUFFERTEXTUREMULTIVIEWOVRPROC __rglgen_glFramebufferTextureMultiviewOVR;
-RGLSYMGLFRAMEBUFFERTEXTUREMULTISAMPLEMULTIVIEWOVRPROC __rglgen_glFramebufferTextureMultisampleMultiviewOVR;
-
+RGLSYMGLFRAMEBUFFERTEXTUREMULTIVIEWOVRPROC
+    __rglgen_glFramebufferTextureMultiviewOVR;
+RGLSYMGLFRAMEBUFFERTEXTUREMULTISAMPLEMULTIVIEWOVRPROC
+    __rglgen_glFramebufferTextureMultisampleMultiviewOVR;

@@ -1,30 +1,36 @@
 /* Copyright (C) 2010-2015 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
- * The following license statement only applies to this libretro SDK code part (glsym).
+ * The following license statement only applies to this libretro SDK code part
+ * (glsym).
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #include <stddef.h>
 
 #include <glsym/glsym.h>
 
-#define SYM(x) { "gl" #x, &(gl##x) }
+#define SYM(x)                                                                 \
+  { "gl" #x, &(gl##x) }
 
 const struct rglgen_sym_map rglgen_symbol_map[] = {
     SYM(DrawRangeElements),
@@ -1053,7 +1059,7 @@ const struct rglgen_sym_map rglgen_symbol_map[] = {
     SYM(GetImageTransformParameterivHP),
     SYM(GetImageTransformParameterfvHP),
 
-    { NULL, NULL },
+    {NULL, NULL},
 };
 RGLSYMGLDRAWRANGEELEMENTSPROC __rglgen_glDrawRangeElements;
 RGLSYMGLTEXIMAGE3DPROC __rglgen_glTexImage3D;
@@ -1343,10 +1349,12 @@ RGLSYMGLFRAMEBUFFERTEXTURE1DPROC __rglgen_glFramebufferTexture1D;
 RGLSYMGLFRAMEBUFFERTEXTURE2DPROC __rglgen_glFramebufferTexture2D;
 RGLSYMGLFRAMEBUFFERTEXTURE3DPROC __rglgen_glFramebufferTexture3D;
 RGLSYMGLFRAMEBUFFERRENDERBUFFERPROC __rglgen_glFramebufferRenderbuffer;
-RGLSYMGLGETFRAMEBUFFERATTACHMENTPARAMETERIVPROC __rglgen_glGetFramebufferAttachmentParameteriv;
+RGLSYMGLGETFRAMEBUFFERATTACHMENTPARAMETERIVPROC
+    __rglgen_glGetFramebufferAttachmentParameteriv;
 RGLSYMGLGENERATEMIPMAPPROC __rglgen_glGenerateMipmap;
 RGLSYMGLBLITFRAMEBUFFERPROC __rglgen_glBlitFramebuffer;
-RGLSYMGLRENDERBUFFERSTORAGEMULTISAMPLEPROC __rglgen_glRenderbufferStorageMultisample;
+RGLSYMGLRENDERBUFFERSTORAGEMULTISAMPLEPROC
+    __rglgen_glRenderbufferStorageMultisample;
 RGLSYMGLFRAMEBUFFERTEXTURELAYERPROC __rglgen_glFramebufferTextureLayer;
 RGLSYMGLMAPBUFFERRANGEPROC __rglgen_glMapBufferRange;
 RGLSYMGLFLUSHMAPPEDBUFFERRANGEPROC __rglgen_glFlushMappedBufferRange;
@@ -1368,7 +1376,8 @@ RGLSYMGLGETACTIVEUNIFORMBLOCKNAMEPROC __rglgen_glGetActiveUniformBlockName;
 RGLSYMGLUNIFORMBLOCKBINDINGPROC __rglgen_glUniformBlockBinding;
 RGLSYMGLDRAWELEMENTSBASEVERTEXPROC __rglgen_glDrawElementsBaseVertex;
 RGLSYMGLDRAWRANGEELEMENTSBASEVERTEXPROC __rglgen_glDrawRangeElementsBaseVertex;
-RGLSYMGLDRAWELEMENTSINSTANCEDBASEVERTEXPROC __rglgen_glDrawElementsInstancedBaseVertex;
+RGLSYMGLDRAWELEMENTSINSTANCEDBASEVERTEXPROC
+    __rglgen_glDrawElementsInstancedBaseVertex;
 RGLSYMGLMULTIDRAWELEMENTSBASEVERTEXPROC __rglgen_glMultiDrawElementsBaseVertex;
 RGLSYMGLPROVOKINGVERTEXPROC __rglgen_glProvokingVertex;
 RGLSYMGLFENCESYNCPROC __rglgen_glFenceSync;
@@ -1468,10 +1477,13 @@ RGLSYMGLUNIFORMMATRIX3X4DVPROC __rglgen_glUniformMatrix3x4dv;
 RGLSYMGLUNIFORMMATRIX4X2DVPROC __rglgen_glUniformMatrix4x2dv;
 RGLSYMGLUNIFORMMATRIX4X3DVPROC __rglgen_glUniformMatrix4x3dv;
 RGLSYMGLGETUNIFORMDVPROC __rglgen_glGetUniformdv;
-RGLSYMGLGETSUBROUTINEUNIFORMLOCATIONPROC __rglgen_glGetSubroutineUniformLocation;
+RGLSYMGLGETSUBROUTINEUNIFORMLOCATIONPROC
+    __rglgen_glGetSubroutineUniformLocation;
 RGLSYMGLGETSUBROUTINEINDEXPROC __rglgen_glGetSubroutineIndex;
-RGLSYMGLGETACTIVESUBROUTINEUNIFORMIVPROC __rglgen_glGetActiveSubroutineUniformiv;
-RGLSYMGLGETACTIVESUBROUTINEUNIFORMNAMEPROC __rglgen_glGetActiveSubroutineUniformName;
+RGLSYMGLGETACTIVESUBROUTINEUNIFORMIVPROC
+    __rglgen_glGetActiveSubroutineUniformiv;
+RGLSYMGLGETACTIVESUBROUTINEUNIFORMNAMEPROC
+    __rglgen_glGetActiveSubroutineUniformName;
 RGLSYMGLGETACTIVESUBROUTINENAMEPROC __rglgen_glGetActiveSubroutineName;
 RGLSYMGLUNIFORMSUBROUTINESUIVPROC __rglgen_glUniformSubroutinesuiv;
 RGLSYMGLGETUNIFORMSUBROUTINEUIVPROC __rglgen_glGetUniformSubroutineuiv;
@@ -1577,18 +1589,24 @@ RGLSYMGLDEPTHRANGEARRAYVPROC __rglgen_glDepthRangeArrayv;
 RGLSYMGLDEPTHRANGEINDEXEDPROC __rglgen_glDepthRangeIndexed;
 RGLSYMGLGETFLOATI_VPROC __rglgen_glGetFloati_v;
 RGLSYMGLGETDOUBLEI_VPROC __rglgen_glGetDoublei_v;
-RGLSYMGLDRAWARRAYSINSTANCEDBASEINSTANCEPROC __rglgen_glDrawArraysInstancedBaseInstance;
-RGLSYMGLDRAWELEMENTSINSTANCEDBASEINSTANCEPROC __rglgen_glDrawElementsInstancedBaseInstance;
-RGLSYMGLDRAWELEMENTSINSTANCEDBASEVERTEXBASEINSTANCEPROC __rglgen_glDrawElementsInstancedBaseVertexBaseInstance;
+RGLSYMGLDRAWARRAYSINSTANCEDBASEINSTANCEPROC
+    __rglgen_glDrawArraysInstancedBaseInstance;
+RGLSYMGLDRAWELEMENTSINSTANCEDBASEINSTANCEPROC
+    __rglgen_glDrawElementsInstancedBaseInstance;
+RGLSYMGLDRAWELEMENTSINSTANCEDBASEVERTEXBASEINSTANCEPROC
+    __rglgen_glDrawElementsInstancedBaseVertexBaseInstance;
 RGLSYMGLGETINTERNALFORMATIVPROC __rglgen_glGetInternalformativ;
-RGLSYMGLGETACTIVEATOMICCOUNTERBUFFERIVPROC __rglgen_glGetActiveAtomicCounterBufferiv;
+RGLSYMGLGETACTIVEATOMICCOUNTERBUFFERIVPROC
+    __rglgen_glGetActiveAtomicCounterBufferiv;
 RGLSYMGLBINDIMAGETEXTUREPROC __rglgen_glBindImageTexture;
 RGLSYMGLMEMORYBARRIERPROC __rglgen_glMemoryBarrier;
 RGLSYMGLTEXSTORAGE1DPROC __rglgen_glTexStorage1D;
 RGLSYMGLTEXSTORAGE2DPROC __rglgen_glTexStorage2D;
 RGLSYMGLTEXSTORAGE3DPROC __rglgen_glTexStorage3D;
-RGLSYMGLDRAWTRANSFORMFEEDBACKINSTANCEDPROC __rglgen_glDrawTransformFeedbackInstanced;
-RGLSYMGLDRAWTRANSFORMFEEDBACKSTREAMINSTANCEDPROC __rglgen_glDrawTransformFeedbackStreamInstanced;
+RGLSYMGLDRAWTRANSFORMFEEDBACKINSTANCEDPROC
+    __rglgen_glDrawTransformFeedbackInstanced;
+RGLSYMGLDRAWTRANSFORMFEEDBACKSTREAMINSTANCEDPROC
+    __rglgen_glDrawTransformFeedbackStreamInstanced;
 RGLSYMGLCLEARBUFFERDATAPROC __rglgen_glClearBufferData;
 RGLSYMGLCLEARBUFFERSUBDATAPROC __rglgen_glClearBufferSubData;
 RGLSYMGLDISPATCHCOMPUTEPROC __rglgen_glDispatchCompute;
@@ -1610,7 +1628,8 @@ RGLSYMGLGETPROGRAMRESOURCEINDEXPROC __rglgen_glGetProgramResourceIndex;
 RGLSYMGLGETPROGRAMRESOURCENAMEPROC __rglgen_glGetProgramResourceName;
 RGLSYMGLGETPROGRAMRESOURCEIVPROC __rglgen_glGetProgramResourceiv;
 RGLSYMGLGETPROGRAMRESOURCELOCATIONPROC __rglgen_glGetProgramResourceLocation;
-RGLSYMGLGETPROGRAMRESOURCELOCATIONINDEXPROC __rglgen_glGetProgramResourceLocationIndex;
+RGLSYMGLGETPROGRAMRESOURCELOCATIONINDEXPROC
+    __rglgen_glGetProgramResourceLocationIndex;
 RGLSYMGLSHADERSTORAGEBLOCKBINDINGPROC __rglgen_glShaderStorageBlockBinding;
 RGLSYMGLTEXBUFFERRANGEPROC __rglgen_glTexBufferRange;
 RGLSYMGLTEXSTORAGE2DMULTISAMPLEPROC __rglgen_glTexStorage2DMultisample;
@@ -1643,15 +1662,19 @@ RGLSYMGLBINDIMAGETEXTURESPROC __rglgen_glBindImageTextures;
 RGLSYMGLBINDVERTEXBUFFERSPROC __rglgen_glBindVertexBuffers;
 RGLSYMGLGETTEXTUREHANDLEARBPROC __rglgen_glGetTextureHandleARB;
 RGLSYMGLGETTEXTURESAMPLERHANDLEARBPROC __rglgen_glGetTextureSamplerHandleARB;
-RGLSYMGLMAKETEXTUREHANDLERESIDENTARBPROC __rglgen_glMakeTextureHandleResidentARB;
-RGLSYMGLMAKETEXTUREHANDLENONRESIDENTARBPROC __rglgen_glMakeTextureHandleNonResidentARB;
+RGLSYMGLMAKETEXTUREHANDLERESIDENTARBPROC
+    __rglgen_glMakeTextureHandleResidentARB;
+RGLSYMGLMAKETEXTUREHANDLENONRESIDENTARBPROC
+    __rglgen_glMakeTextureHandleNonResidentARB;
 RGLSYMGLGETIMAGEHANDLEARBPROC __rglgen_glGetImageHandleARB;
 RGLSYMGLMAKEIMAGEHANDLERESIDENTARBPROC __rglgen_glMakeImageHandleResidentARB;
-RGLSYMGLMAKEIMAGEHANDLENONRESIDENTARBPROC __rglgen_glMakeImageHandleNonResidentARB;
+RGLSYMGLMAKEIMAGEHANDLENONRESIDENTARBPROC
+    __rglgen_glMakeImageHandleNonResidentARB;
 RGLSYMGLUNIFORMHANDLEUI64ARBPROC __rglgen_glUniformHandleui64ARB;
 RGLSYMGLUNIFORMHANDLEUI64VARBPROC __rglgen_glUniformHandleui64vARB;
 RGLSYMGLPROGRAMUNIFORMHANDLEUI64ARBPROC __rglgen_glProgramUniformHandleui64ARB;
-RGLSYMGLPROGRAMUNIFORMHANDLEUI64VARBPROC __rglgen_glProgramUniformHandleui64vARB;
+RGLSYMGLPROGRAMUNIFORMHANDLEUI64VARBPROC
+    __rglgen_glProgramUniformHandleui64vARB;
 RGLSYMGLISTEXTUREHANDLERESIDENTARBPROC __rglgen_glIsTextureHandleResidentARB;
 RGLSYMGLISIMAGEHANDLERESIDENTARBPROC __rglgen_glIsImageHandleResidentARB;
 RGLSYMGLVERTEXATTRIBL1UI64ARBPROC __rglgen_glVertexAttribL1ui64ARB;
@@ -1685,8 +1708,10 @@ RGLSYMGLPROGRAMLOCALPARAMETER4FARBPROC __rglgen_glProgramLocalParameter4fARB;
 RGLSYMGLPROGRAMLOCALPARAMETER4FVARBPROC __rglgen_glProgramLocalParameter4fvARB;
 RGLSYMGLGETPROGRAMENVPARAMETERDVARBPROC __rglgen_glGetProgramEnvParameterdvARB;
 RGLSYMGLGETPROGRAMENVPARAMETERFVARBPROC __rglgen_glGetProgramEnvParameterfvARB;
-RGLSYMGLGETPROGRAMLOCALPARAMETERDVARBPROC __rglgen_glGetProgramLocalParameterdvARB;
-RGLSYMGLGETPROGRAMLOCALPARAMETERFVARBPROC __rglgen_glGetProgramLocalParameterfvARB;
+RGLSYMGLGETPROGRAMLOCALPARAMETERDVARBPROC
+    __rglgen_glGetProgramLocalParameterdvARB;
+RGLSYMGLGETPROGRAMLOCALPARAMETERFVARBPROC
+    __rglgen_glGetProgramLocalParameterfvARB;
 RGLSYMGLGETPROGRAMIVARBPROC __rglgen_glGetProgramivARB;
 RGLSYMGLGETPROGRAMSTRINGARBPROC __rglgen_glGetProgramStringARB;
 RGLSYMGLISPROGRAMARBPROC __rglgen_glIsProgramARB;
@@ -1726,8 +1751,10 @@ RGLSYMGLHISTOGRAMPROC __rglgen_glHistogram;
 RGLSYMGLMINMAXPROC __rglgen_glMinmax;
 RGLSYMGLRESETHISTOGRAMPROC __rglgen_glResetHistogram;
 RGLSYMGLRESETMINMAXPROC __rglgen_glResetMinmax;
-RGLSYMGLMULTIDRAWARRAYSINDIRECTCOUNTARBPROC __rglgen_glMultiDrawArraysIndirectCountARB;
-RGLSYMGLMULTIDRAWELEMENTSINDIRECTCOUNTARBPROC __rglgen_glMultiDrawElementsIndirectCountARB;
+RGLSYMGLMULTIDRAWARRAYSINDIRECTCOUNTARBPROC
+    __rglgen_glMultiDrawArraysIndirectCountARB;
+RGLSYMGLMULTIDRAWELEMENTSINDIRECTCOUNTARBPROC
+    __rglgen_glMultiDrawElementsIndirectCountARB;
 RGLSYMGLVERTEXATTRIBDIVISORARBPROC __rglgen_glVertexAttribDivisorARB;
 RGLSYMGLCURRENTPALETTEMATRIXARBPROC __rglgen_glCurrentPaletteMatrixARB;
 RGLSYMGLMATRIXINDEXUBVARBPROC __rglgen_glMatrixIndexubvARB;
@@ -2013,7 +2040,8 @@ RGLSYMGLEVALCOORD1XVOESPROC __rglgen_glEvalCoord1xvOES;
 RGLSYMGLEVALCOORD2XOESPROC __rglgen_glEvalCoord2xOES;
 RGLSYMGLEVALCOORD2XVOESPROC __rglgen_glEvalCoord2xvOES;
 RGLSYMGLFEEDBACKBUFFERXOESPROC __rglgen_glFeedbackBufferxOES;
-RGLSYMGLGETCONVOLUTIONPARAMETERXVOESPROC __rglgen_glGetConvolutionParameterxvOES;
+RGLSYMGLGETCONVOLUTIONPARAMETERXVOESPROC
+    __rglgen_glGetConvolutionParameterxvOES;
 RGLSYMGLGETHISTOGRAMPARAMETERXVOESPROC __rglgen_glGetHistogramParameterxvOES;
 RGLSYMGLGETLIGHTXOESPROC __rglgen_glGetLightxOES;
 RGLSYMGLGETMAPXVOESPROC __rglgen_glGetMapxvOES;
@@ -2078,6 +2106,7 @@ RGLSYMGLIMAGETRANSFORMPARAMETERIHPPROC __rglgen_glImageTransformParameteriHP;
 RGLSYMGLIMAGETRANSFORMPARAMETERFHPPROC __rglgen_glImageTransformParameterfHP;
 RGLSYMGLIMAGETRANSFORMPARAMETERIVHPPROC __rglgen_glImageTransformParameterivHP;
 RGLSYMGLIMAGETRANSFORMPARAMETERFVHPPROC __rglgen_glImageTransformParameterfvHP;
-RGLSYMGLGETIMAGETRANSFORMPARAMETERIVHPPROC __rglgen_glGetImageTransformParameterivHP;
-RGLSYMGLGETIMAGETRANSFORMPARAMETERFVHPPROC __rglgen_glGetImageTransformParameterfvHP;
-
+RGLSYMGLGETIMAGETRANSFORMPARAMETERIVHPPROC
+    __rglgen_glGetImageTransformParameterivHP;
+RGLSYMGLGETIMAGETRANSFORMPARAMETERFVHPPROC
+    __rglgen_glGetImageTransformParameterfvHP;
