@@ -30,46 +30,46 @@
 #include <gfx/math/vector_3.h>
 
 float vec3_dot(const float *a, const float *b) {
-    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
 void vec3_cross(float *dst, const float *a, const float *b) {
-    dst[0] = a[1] * b[2] - a[2] * b[1];
-    dst[1] = a[2] * b[0] - a[0] * b[2];
-    dst[2] = a[0] * b[1] - a[1] * b[0];
+  dst[0] = a[1] * b[2] - a[2] * b[1];
+  dst[1] = a[2] * b[0] - a[0] * b[2];
+  dst[2] = a[0] * b[1] - a[1] * b[0];
 }
 
 float vec3_length(const float *a) {
-    float length_sq = vec3_dot(a, a);
-    float length = sqrtf(length_sq);
-    return length;
+  float length_sq = vec3_dot(a, a);
+  float length = sqrtf(length_sq);
+  return length;
 }
 
 void vec3_add(float *dst, const float *src) {
-    dst[0] += src[0];
-    dst[1] += src[1];
-    dst[2] += src[2];
+  dst[0] += src[0];
+  dst[1] += src[1];
+  dst[2] += src[2];
 }
 
 void vec3_subtract(float *dst, const float *src) {
-    dst[0] -= src[0];
-    dst[1] -= src[1];
-    dst[2] -= src[2];
+  dst[0] -= src[0];
+  dst[1] -= src[1];
+  dst[2] -= src[2];
 }
 
 void vec3_scale(float *dst, const float scale) {
-    dst[0] *= scale;
-    dst[1] *= scale;
-    dst[2] *= scale;
+  dst[0] *= scale;
+  dst[1] *= scale;
+  dst[2] *= scale;
 }
 
 void vec3_copy(float *dst, const float *src) {
-    dst[0] = src[0];
-    dst[1] = src[1];
-    dst[2] = src[2];
+  dst[0] = src[0];
+  dst[1] = src[1];
+  dst[2] = src[2];
 }
 
 void vec3_normalize(float *dst) {
-    float length = vec3_length(dst);
-    vec3_scale(dst, 1.0f / length);
+  float length = vec3_length(dst);
+  vec3_scale(dst, 1.0f / length);
 }

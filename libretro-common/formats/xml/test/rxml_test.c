@@ -28,38 +28,38 @@
 #include <stdio.h>
 
 static void print_siblings(struct rxml_node *node, unsigned level) {
-    fprintf(stderr, "\n%*sName: %s\n", level * 4, "", node->name);
-    if (node->data)
-        fprintf(stderr, "%*sData: %s\n", level * 4, "", node->data);
+  fprintf(stderr, "\n%*sName: %s\n", level * 4, "", node->name);
+  if (node->data)
+    fprintf(stderr, "%*sData: %s\n", level * 4, "", node->data);
 
-    for (const struct rxml_attrib_node *attrib = node->attrib; attrib;
-            attrib = attrib->next)
-        fprintf(stderr, "%*s  Attrib: %s = %s\n", level * 4, "", attrib->attrib,
-                attrib->value);
+  for (const struct rxml_attrib_node *attrib = node->attrib; attrib;
+       attrib = attrib->next)
+    fprintf(stderr, "%*s  Attrib: %s = %s\n", level * 4, "", attrib->attrib,
+            attrib->value);
 
-    if (node->children)
-        print_siblings(node->children, level + 1);
+  if (node->children)
+    print_siblings(node->children, level + 1);
 
-    if (node->next)
-        print_siblings(node->next, level);
+  if (node->next)
+    print_siblings(node->next, level);
 }
 
 static void rxml_log_document(const char *path) {
-    rxml_document_t *doc = rxml_load_document(path);
-    if (!doc) {
-        fprintf(stderr, "rxml: Failed to load document: %s\n", path);
-        return;
-    }
+  rxml_document_t *doc = rxml_load_document(path);
+  if (!doc) {
+    fprintf(stderr, "rxml: Failed to load document: %s\n", path);
+    return;
+  }
 
-    print_siblings(rxml_root_node(doc), 0);
-    rxml_free_document(doc);
+  print_siblings(rxml_root_node(doc), 0);
+  rxml_free_document(doc);
 }
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s <path>\n", argv[0]);
-        return 1;
-    }
+  if (argc != 2) {
+    fprintf(stderr, "Usage: %s <path>\n", argv[0]);
+    return 1;
+  }
 
-    rxml_log_document(argv[1]);
+  rxml_log_document(argv[1]);
 }
