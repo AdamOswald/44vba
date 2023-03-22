@@ -167,18 +167,9 @@ CHEATSEXPORT *cheatsExport = NULL;
 
 int emuLastError = 0;
 
-EM_JS(int, aa, (const char* str), {
-  return eval(UTF8ToString(str));
-});
+EM_JS(int, aa, (const char *str), { return eval(UTF8ToString(str)); });
 
-
-
-
-extern "C" 
-int bb(int a0, int a1, int a2, int a3) {
-  return 0;
-}
-
+extern "C" int bb(int a0, int a1, int a2, int a3) { return 0; }
 
 int DESMUME_SAMPLE_RATE = 48000;
 extern double samples_per_hline;
@@ -231,7 +222,8 @@ u8 Mic_ReadSample() {
   if (fakeMicEnabled) {
     ret = fakeMic[fakeMicPos] >> 1;
     fakeMicPos++;
-    if (fakeMicPos >= sizeof(fakeMic)) fakeMicPos = 0;
+    if (fakeMicPos >= sizeof(fakeMic))
+      fakeMicPos = 0;
     return ret;
   }
   if (micFifoLen <= 0) {
@@ -429,7 +421,7 @@ int fillAudioBuffer(int bufLenToFill) {
     //printf("should not happen...\n");
     AudioOut_Resample(samplesBuffer, samplesRead, audioBuffer, bufLenToFill);
   }
-*/
+  */
   return samplesRead;
 }
 
@@ -457,8 +449,8 @@ const char *chtGetList() {
   int itemCount = cheatsExport->getCheatsNum();
   printf("Cheat list size: %d\n", itemCount);
   for (int i = 0; i < itemCount; i++) {
-    //strcat(buf, lst[i].description);
-    //strcat(buf, "-c!@");
+    // strcat(buf, lst[i].description);
+    // strcat(buf, "-c!@");
     cheatListStr += lst[i].description;
     cheatListStr += "-c!@";
   }
@@ -494,9 +486,9 @@ int micWriteSamples(uint8_t *buffer, int len) {
 }
 
 int emuSetOpt(int k, int v) {
-    if (k == 0) {
-      CommonSettings.fwConfig.language = v;
-    }
-    return 0;
+  if (k == 0) {
+    CommonSettings.fwConfig.language = v;
+  }
+  return 0;
 }
 }
