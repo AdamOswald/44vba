@@ -94,8 +94,8 @@ struct internal_state;
 
 typedef struct z_stream_s {
   z_const Bytef *next_in; /* next input byte */
-  uInt     avail_in;  /* number of bytes available at next_in */
-  uLong    total_in;  /* total number of input bytes read so far */
+  uInt avail_in;          /* number of bytes available at next_in */
+  uLong total_in;         /* total number of input bytes read so far */
   uInt avail_in;          /* number of bytes available at next_in */
   uLong total_in;         /* total number of input bytes read so far */
 
@@ -135,7 +135,7 @@ typedef struct gz_header_s {
   uInt comm_max;  /* space at comment (only when reading header) */
   int hcrc;       /* true if there was or will be a header crc */
   int done;       /* true when done reading gzip header (not used
-                     when writing a gzip file) */
+                   when writing a gzip file) */
 } gz_header;
 
 typedef gz_header FAR *gz_headerp;
@@ -1684,29 +1684,13 @@ ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off64_t));
 #define z_gzoffset z_gzoffset64
 #define z_adler32_combine z_adler32_combine64
 #define z_crc32_combine z_crc32_combine64
-#  ifdef Z_PREFIX_SET
-#    define z_gzopen z_gzopen64
-#    define z_gzseek z_gzseek64
-#    define z_gztell z_gztell64
-#    define z_gzoffset z_gzoffset64
-#    define z_adler32_combine z_adler32_combine64
-#    define z_crc32_combine z_crc32_combine64
-#  else
-#    define gzopen gzopen64
-#    define gzseek gzseek64
-#    define gztell gztell64
-#    define gzoffset gzoffset64
-#    define adler32_combine adler32_combine64
-#    define crc32_combine crc32_combine64
-#  endif
-#  ifndef Z_LARGE64
-     ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));
-     ZEXTERN z_off_t ZEXPORT gzseek64 OF((gzFile, z_off_t, int));
-     ZEXTERN z_off_t ZEXPORT gztell64 OF((gzFile));
-     ZEXTERN z_off_t ZEXPORT gzoffset64 OF((gzFile));
-     ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off_t));
-     ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off_t));
-#  endif
+#ifdef Z_PREFIX_SET
+#define z_gzopen z_gzopen64
+#define z_gzseek z_gzseek64
+#define z_gztell z_gztell64
+#define z_gzoffset z_gzoffset64
+#define z_adler32_combine z_adler32_combine64
+#define z_crc32_combine z_crc32_combine64
 #else
 #define gzopen gzopen64
 #define gzseek gzseek64
@@ -1714,12 +1698,28 @@ ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off64_t));
 #define gzoffset gzoffset64
 #define adler32_combine adler32_combine64
 #define crc32_combine crc32_combine64
-   ZEXTERN gzFile ZEXPORT gzopen OF((const char *, const char *));
-   ZEXTERN z_off_t ZEXPORT gzseek OF((gzFile, z_off_t, int));
-   ZEXTERN z_off_t ZEXPORT gztell OF((gzFile));
-   ZEXTERN z_off_t ZEXPORT gzoffset OF((gzFile));
-   ZEXTERN uLong ZEXPORT adler32_combine OF((uLong, uLong, z_off_t));
-   ZEXTERN uLong ZEXPORT crc32_combine OF((uLong, uLong, z_off_t));
+#endif
+#ifndef Z_LARGE64
+ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));
+ZEXTERN z_off_t ZEXPORT gzseek64 OF((gzFile, z_off_t, int));
+ZEXTERN z_off_t ZEXPORT gztell64 OF((gzFile));
+ZEXTERN z_off_t ZEXPORT gzoffset64 OF((gzFile));
+ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off_t));
+ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off_t));
+#endif
+#else
+#define gzopen gzopen64
+#define gzseek gzseek64
+#define gztell gztell64
+#define gzoffset gzoffset64
+#define adler32_combine adler32_combine64
+#define crc32_combine crc32_combine64
+ZEXTERN gzFile ZEXPORT gzopen OF((const char *, const char *));
+ZEXTERN z_off_t ZEXPORT gzseek OF((gzFile, z_off_t, int));
+ZEXTERN z_off_t ZEXPORT gztell OF((gzFile));
+ZEXTERN z_off_t ZEXPORT gzoffset OF((gzFile));
+ZEXTERN uLong ZEXPORT adler32_combine OF((uLong, uLong, z_off_t));
+ZEXTERN uLong ZEXPORT crc32_combine OF((uLong, uLong, z_off_t));
 #endif
 #ifndef Z_LARGE64
 ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));
