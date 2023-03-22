@@ -91,7 +91,7 @@ void emuRunFrame(int key) {
   frameDrawn = 0;
   while (!frameDrawn) {
     CPULoop();
- }
+  }
 }
 
 int emuUpdateSavChangeFlag() {
