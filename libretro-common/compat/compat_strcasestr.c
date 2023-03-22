@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2015 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (compat_strcasestr.c).
@@ -43,6 +43,9 @@ static int casencmp(const char *a, const char *b, size_t n)
 
 char *strcasestr_retro__(const char *haystack, const char *needle)
 {
+   size_t i, search_off;
+   size_t hay_len    = strlen(haystack);
+   size_t needle_len = strlen(needle);
    size_t i, hay_len, needle_len, search_off;
 
    hay_len = strlen(haystack);
