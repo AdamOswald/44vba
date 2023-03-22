@@ -5,182 +5,182 @@
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 #ifdef _WIN32
 #include <io.h>
 #else
 #include <unistd.h>
 #endif
-#include <rhash.h>
-#include <retro_miscellaneous.h>
 #include <retro_endianness.h>
+#include <retro_miscellaneous.h>
+#include <rhash.h>
 #include <streams/file_stream.h>
 
 #define LSL32(x, n) ((uint32_t)(x) << (n))
 #define LSR32(x, n) ((uint32_t)(x) >> (n))
 #define ROR32(x, n) (LSR32(x, n) | LSL32(x, 32 - (n)))
 
-/* First 32 bits of the fractional parts of the square roots of the first 8 primes 2..19 */
+/* First 32 bits of the fractional parts of the square roots of the first 8
+ * primes 2..19 */
 static const uint32_t T_H[8] = {
-    0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
+    0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+    0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
 };
 
-/* First 32 bits of the fractional parts of the cube roots of the first 64 primes 2..311 */
+/* First 32 bits of the fractional parts of the cube roots of the first 64
+ * primes 2..311 */
 static const uint32_t T_K[64] = {
-    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
-    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
-    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
-    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
-    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
-    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
-    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
-    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
+    0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
+    0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786,
+    0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
+    0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
+    0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b,
+    0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a,
+    0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
+    0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
 };
 
 /* SHA256 implementation from bSNES. Written by valditx. */
 
-struct sha256_ctx
-{
-    union
-    {
-        uint8_t u8[64];
-        uint32_t u32[16];
-    } in;
-    unsigned inlen;
+struct sha256_ctx {
+  union {
+    uint8_t u8[64];
+    uint32_t u32[16];
+  } in;
+  unsigned inlen;
 
-    uint32_t w[64];
-    uint32_t h[8];
-    uint64_t len;
+  uint32_t w[64];
+  uint32_t h[8];
+  uint64_t len;
 };
 
-static void sha256_init(struct sha256_ctx *p)
-{
-    memset(p, 0, sizeof(struct sha256_ctx));
-    memcpy(p->h, T_H, sizeof(T_H));
+static void sha256_init(struct sha256_ctx *p) {
+  memset(p, 0, sizeof(struct sha256_ctx));
+  memcpy(p->h, T_H, sizeof(T_H));
 }
 
-static void sha256_block(struct sha256_ctx *p)
-{
-    unsigned i;
-    uint32_t s0, s1;
-    uint32_t a, b, c, d, e, f, g, h;
+static void sha256_block(struct sha256_ctx *p) {
+  unsigned i;
+  uint32_t s0, s1;
+  uint32_t a, b, c, d, e, f, g, h;
 
-    for (i = 0; i < 16; i++)
-        p->w[i] = load32be(p->in.u32 + i);
+  for (i = 0; i < 16; i++)
+    p->w[i] = load32be(p->in.u32 + i);
 
-    for (i = 16; i < 64; i++)
-    {
-        s0 = ROR32(p->w[i - 15],  7) ^ ROR32(p->w[i - 15], 18) ^ LSR32(p->w[i - 15],  3);
-        s1 = ROR32(p->w[i -  2], 17) ^ ROR32(p->w[i -  2], 19) ^ LSR32(p->w[i -  2], 10);
-        p->w[i] = p->w[i - 16] + s0 + p->w[i - 7] + s1;
-    }
+  for (i = 16; i < 64; i++) {
+    s0 = ROR32(p->w[i - 15], 7) ^ ROR32(p->w[i - 15], 18) ^
+         LSR32(p->w[i - 15], 3);
+    s1 = ROR32(p->w[i - 2], 17) ^ ROR32(p->w[i - 2], 19) ^
+         LSR32(p->w[i - 2], 10);
+    p->w[i] = p->w[i - 16] + s0 + p->w[i - 7] + s1;
+  }
 
-    a = p->h[0];
-    b = p->h[1];
-    c = p->h[2];
-    d = p->h[3];
-    e = p->h[4];
-    f = p->h[5];
-    g = p->h[6];
-    h = p->h[7];
+  a = p->h[0];
+  b = p->h[1];
+  c = p->h[2];
+  d = p->h[3];
+  e = p->h[4];
+  f = p->h[5];
+  g = p->h[6];
+  h = p->h[7];
 
-    for (i = 0; i < 64; i++)
-    {
-        uint32_t t1, t2, maj, ch;
+  for (i = 0; i < 64; i++) {
+    uint32_t t1, t2, maj, ch;
 
-        s0 = ROR32(a, 2) ^ ROR32(a, 13) ^ ROR32(a, 22);
-        maj = (a & b) ^ (a & c) ^ (b & c);
-        t2  = s0 + maj;
-        s1  = ROR32(e, 6) ^ ROR32(e, 11) ^ ROR32(e, 25);
-        ch  = (e & f) ^ (~e & g);
-        t1  = h + s1 + ch + T_K[i] + p->w[i];
+    s0 = ROR32(a, 2) ^ ROR32(a, 13) ^ ROR32(a, 22);
+    maj = (a & b) ^ (a & c) ^ (b & c);
+    t2 = s0 + maj;
+    s1 = ROR32(e, 6) ^ ROR32(e, 11) ^ ROR32(e, 25);
+    ch = (e & f) ^ (~e & g);
+    t1 = h + s1 + ch + T_K[i] + p->w[i];
 
-        h   = g;
-        g   = f;
-        f   = e;
-        e   = d + t1;
-        d   = c;
-        c   = b;
-        b   = a;
-        a   = t1 + t2;
-    }
+    h = g;
+    g = f;
+    f = e;
+    e = d + t1;
+    d = c;
+    c = b;
+    b = a;
+    a = t1 + t2;
+  }
 
-    p->h[0] += a;
-    p->h[1] += b;
-    p->h[2] += c;
-    p->h[3] += d;
-    p->h[4] += e;
-    p->h[5] += f;
-    p->h[6] += g;
-    p->h[7] += h;
+  p->h[0] += a;
+  p->h[1] += b;
+  p->h[2] += c;
+  p->h[3] += d;
+  p->h[4] += e;
+  p->h[5] += f;
+  p->h[6] += g;
+  p->h[7] += h;
 
-    /* Next block */
-    p->inlen = 0;
+  /* Next block */
+  p->inlen = 0;
 }
 
-static void sha256_chunk(struct sha256_ctx *p,
-                         const uint8_t *s, unsigned len)
-{
-    p->len += len;
+static void sha256_chunk(struct sha256_ctx *p, const uint8_t *s, unsigned len) {
+  p->len += len;
 
-    while (len)
-    {
-        unsigned l = 64 - p->inlen;
+  while (len) {
+    unsigned l = 64 - p->inlen;
 
-        if (len < l)
-            l       = len;
+    if (len < l)
+      l = len;
 
-        memcpy(p->in.u8 + p->inlen, s, l);
+    memcpy(p->in.u8 + p->inlen, s, l);
 
-        s         += l;
-        p->inlen  += l;
-        len       -= l;
+    s += l;
+    p->inlen += l;
+    len -= l;
 
-        if (p->inlen == 64)
-            sha256_block(p);
-    }
+    if (p->inlen == 64)
+      sha256_block(p);
+  }
 }
 
-static void sha256_final(struct sha256_ctx *p)
-{
-    uint64_t len;
-    p->in.u8[p->inlen++] = 0x80;
+static void sha256_final(struct sha256_ctx *p) {
+  uint64_t len;
+  p->in.u8[p->inlen++] = 0x80;
 
-    if (p->inlen > 56)
-    {
-        memset(p->in.u8 + p->inlen, 0, 64 - p->inlen);
-        sha256_block(p);
-    }
-
-    memset(p->in.u8 + p->inlen, 0, 56 - p->inlen);
-
-    len = p->len << 3;
-    store32be(p->in.u32 + 14, (uint32_t)(len >> 32));
-    store32be(p->in.u32 + 15, (uint32_t)len);
+  if (p->inlen > 56) {
+    memset(p->in.u8 + p->inlen, 0, 64 - p->inlen);
     sha256_block(p);
+  }
+
+  memset(p->in.u8 + p->inlen, 0, 56 - p->inlen);
+
+  len = p->len << 3;
+  store32be(p->in.u32 + 14, (uint32_t)(len >> 32));
+  store32be(p->in.u32 + 15, (uint32_t)len);
+  sha256_block(p);
 }
 
-static void sha256_subhash(struct sha256_ctx *p, uint32_t *t)
-{
-    unsigned i;
-    for (i = 0; i < 8; i++)
-        store32be(t++, p->h[i]);
+static void sha256_subhash(struct sha256_ctx *p, uint32_t *t) {
+  unsigned i;
+  for (i = 0; i < 8; i++)
+    store32be(t++, p->h[i]);
 }
 
 /**
@@ -191,24 +191,22 @@ static void sha256_subhash(struct sha256_ctx *p, uint32_t *t)
  *
  * Hashes SHA256 and outputs a human readable string.
  **/
-void sha256_hash(char *s, const uint8_t *in, size_t size)
-{
-    unsigned i;
-    struct sha256_ctx sha;
+void sha256_hash(char *s, const uint8_t *in, size_t size) {
+  unsigned i;
+  struct sha256_ctx sha;
 
-    union
-    {
-        uint32_t u32[8];
-        uint8_t u8[32];
-    } shahash;
+  union {
+    uint32_t u32[8];
+    uint8_t u8[32];
+  } shahash;
 
-    sha256_init(&sha);
-    sha256_chunk(&sha, in, size);
-    sha256_final(&sha);
-    sha256_subhash(&sha, shahash.u32);
+  sha256_init(&sha);
+  sha256_chunk(&sha, in, size);
+  sha256_final(&sha);
+  sha256_subhash(&sha, shahash.u32);
 
-    for (i = 0; i < 32; i++)
-        snprintf(s + 2 * i, 3, "%02x", (unsigned)shahash.u8[i]);
+  for (i = 0; i < 32; i++)
+    snprintf(s + 2 * i, 3, "%02x", (unsigned)shahash.u8[i]);
 }
 
 #ifndef HAVE_ZLIB
@@ -256,21 +254,19 @@ static const uint32_t crc32_table[256] = {
     0x40df0b66, 0x37d83bf0, 0xa9bcae53, 0xdebb9ec5, 0x47b2cf7f, 0x30b5ffe9,
     0xbdbdf21c, 0xcabac28a, 0x53b39330, 0x24b4a3a6, 0xbad03605, 0xcdd70693,
     0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94,
-    0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d
-};
+    0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d};
 
-uint32_t crc32_adjust(uint32_t checksum, uint8_t input)
-{
-    return ((checksum >> 8) & 0x00ffffff) ^ crc32_table[(checksum ^ input) & 0xff];
+uint32_t crc32_adjust(uint32_t checksum, uint8_t input) {
+  return ((checksum >> 8) & 0x00ffffff) ^
+         crc32_table[(checksum ^ input) & 0xff];
 }
 
-uint32_t crc32_calculate(const uint8_t *data, size_t length)
-{
-    size_t i;
-    uint32_t checksum = ~0;
-    for (i = 0; i < length; i++)
-        checksum = crc32_adjust(checksum, data[i]);
-    return ~checksum;
+uint32_t crc32_calculate(const uint8_t *data, size_t length) {
+  size_t i;
+  uint32_t checksum = ~0;
+  for (i = 0; i < length; i++)
+    checksum = crc32_adjust(checksum, data[i]);
+  return ~checksum;
 }
 #endif
 
@@ -317,253 +313,222 @@ uint32_t crc32_calculate(const uint8_t *data, size_t length)
  */
 
 /* Define the circular shift macro */
-#define SHA1CircularShift(bits,word) ((((word) << (bits)) & 0xFFFFFFFF) | ((word) >> (32-(bits))))
+#define SHA1CircularShift(bits, word)                                          \
+  ((((word) << (bits)) & 0xFFFFFFFF) | ((word) >> (32 - (bits))))
 
-static void SHA1Reset(SHA1Context *context)
-{
-    if (!context)
-        return;
+static void SHA1Reset(SHA1Context *context) {
+  if (!context)
+    return;
 
-    context->Length_Low             = 0;
-    context->Length_High            = 0;
-    context->Message_Block_Index    = 0;
+  context->Length_Low = 0;
+  context->Length_High = 0;
+  context->Message_Block_Index = 0;
 
-    context->Message_Digest[0]      = 0x67452301;
-    context->Message_Digest[1]      = 0xEFCDAB89;
-    context->Message_Digest[2]      = 0x98BADCFE;
-    context->Message_Digest[3]      = 0x10325476;
-    context->Message_Digest[4]      = 0xC3D2E1F0;
+  context->Message_Digest[0] = 0x67452301;
+  context->Message_Digest[1] = 0xEFCDAB89;
+  context->Message_Digest[2] = 0x98BADCFE;
+  context->Message_Digest[3] = 0x10325476;
+  context->Message_Digest[4] = 0xC3D2E1F0;
 
-    context->Computed   = 0;
-    context->Corrupted  = 0;
+  context->Computed = 0;
+  context->Corrupted = 0;
 }
 
-static void SHA1ProcessMessageBlock(SHA1Context *context)
-{
-    const unsigned K[] =            /* Constants defined in SHA-1   */
-    {
-        0x5A827999,
-        0x6ED9EBA1,
-        0x8F1BBCDC,
-        0xCA62C1D6
-    };
-    int         t;                  /* Loop counter                 */
-    unsigned    temp;               /* Temporary word value         */
-    unsigned    W[80];              /* Word sequence                */
-    unsigned    A, B, C, D, E;      /* Word buffers                 */
+static void SHA1ProcessMessageBlock(SHA1Context *context) {
+  const unsigned K[] = /* Constants defined in SHA-1   */
+      {0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xCA62C1D6};
+  int t;                  /* Loop counter                 */
+  unsigned temp;          /* Temporary word value         */
+  unsigned W[80];         /* Word sequence                */
+  unsigned A, B, C, D, E; /* Word buffers                 */
 
-    /* Initialize the first 16 words in the array W */
-    for(t = 0; t < 16; t++)
-    {
-        W[t] = ((unsigned) context->Message_Block[t * 4]) << 24;
-        W[t] |= ((unsigned) context->Message_Block[t * 4 + 1]) << 16;
-        W[t] |= ((unsigned) context->Message_Block[t * 4 + 2]) << 8;
-        W[t] |= ((unsigned) context->Message_Block[t * 4 + 3]);
-    }
+  /* Initialize the first 16 words in the array W */
+  for (t = 0; t < 16; t++) {
+    W[t] = ((unsigned)context->Message_Block[t * 4]) << 24;
+    W[t] |= ((unsigned)context->Message_Block[t * 4 + 1]) << 16;
+    W[t] |= ((unsigned)context->Message_Block[t * 4 + 2]) << 8;
+    W[t] |= ((unsigned)context->Message_Block[t * 4 + 3]);
+  }
 
-    for(t = 16; t < 80; t++)
-        W[t] = SHA1CircularShift(1,W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16]);
+  for (t = 16; t < 80; t++)
+    W[t] = SHA1CircularShift(1, W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16]);
 
-    A = context->Message_Digest[0];
-    B = context->Message_Digest[1];
-    C = context->Message_Digest[2];
-    D = context->Message_Digest[3];
-    E = context->Message_Digest[4];
+  A = context->Message_Digest[0];
+  B = context->Message_Digest[1];
+  C = context->Message_Digest[2];
+  D = context->Message_Digest[3];
+  E = context->Message_Digest[4];
 
-    for(t = 0; t < 20; t++)
-    {
-        temp  =  SHA1CircularShift(5,A) +
-                 ((B & C) | ((~B) & D)) + E + W[t] + K[0];
-        temp &= 0xFFFFFFFF;
-        E     = D;
-        D     = C;
-        C     = SHA1CircularShift(30,B);
-        B     = A;
-        A     = temp;
-    }
+  for (t = 0; t < 20; t++) {
+    temp = SHA1CircularShift(5, A) + ((B & C) | ((~B) & D)) + E + W[t] + K[0];
+    temp &= 0xFFFFFFFF;
+    E = D;
+    D = C;
+    C = SHA1CircularShift(30, B);
+    B = A;
+    A = temp;
+  }
 
-    for(t = 20; t < 40; t++)
-    {
-        temp  = SHA1CircularShift(5,A) + (B ^ C ^ D) + E + W[t] + K[1];
-        temp &= 0xFFFFFFFF;
-        E     = D;
-        D     = C;
-        C     = SHA1CircularShift(30,B);
-        B     = A;
-        A     = temp;
-    }
+  for (t = 20; t < 40; t++) {
+    temp = SHA1CircularShift(5, A) + (B ^ C ^ D) + E + W[t] + K[1];
+    temp &= 0xFFFFFFFF;
+    E = D;
+    D = C;
+    C = SHA1CircularShift(30, B);
+    B = A;
+    A = temp;
+  }
 
-    for(t = 40; t < 60; t++)
-    {
-        temp  = SHA1CircularShift(5,A) +
-                ((B & C) | (B & D) | (C & D)) + E + W[t] + K[2];
-        temp &= 0xFFFFFFFF;
-        E     = D;
-        D     = C;
-        C     = SHA1CircularShift(30,B);
-        B     = A;
-        A     = temp;
-    }
+  for (t = 40; t < 60; t++) {
+    temp = SHA1CircularShift(5, A) + ((B & C) | (B & D) | (C & D)) + E + W[t] +
+           K[2];
+    temp &= 0xFFFFFFFF;
+    E = D;
+    D = C;
+    C = SHA1CircularShift(30, B);
+    B = A;
+    A = temp;
+  }
 
-    for(t = 60; t < 80; t++)
-    {
-        temp = SHA1CircularShift(5,A) + (B ^ C ^ D) + E + W[t] + K[3];
-        temp &= 0xFFFFFFFF;
-        E = D;
-        D = C;
-        C = SHA1CircularShift(30,B);
-        B = A;
-        A = temp;
-    }
+  for (t = 60; t < 80; t++) {
+    temp = SHA1CircularShift(5, A) + (B ^ C ^ D) + E + W[t] + K[3];
+    temp &= 0xFFFFFFFF;
+    E = D;
+    D = C;
+    C = SHA1CircularShift(30, B);
+    B = A;
+    A = temp;
+  }
 
-    context->Message_Digest[0] =
-        (context->Message_Digest[0] + A) & 0xFFFFFFFF;
-    context->Message_Digest[1] =
-        (context->Message_Digest[1] + B) & 0xFFFFFFFF;
-    context->Message_Digest[2] =
-        (context->Message_Digest[2] + C) & 0xFFFFFFFF;
-    context->Message_Digest[3] =
-        (context->Message_Digest[3] + D) & 0xFFFFFFFF;
-    context->Message_Digest[4] =
-        (context->Message_Digest[4] + E) & 0xFFFFFFFF;
+  context->Message_Digest[0] = (context->Message_Digest[0] + A) & 0xFFFFFFFF;
+  context->Message_Digest[1] = (context->Message_Digest[1] + B) & 0xFFFFFFFF;
+  context->Message_Digest[2] = (context->Message_Digest[2] + C) & 0xFFFFFFFF;
+  context->Message_Digest[3] = (context->Message_Digest[3] + D) & 0xFFFFFFFF;
+  context->Message_Digest[4] = (context->Message_Digest[4] + E) & 0xFFFFFFFF;
 
-    context->Message_Block_Index = 0;
+  context->Message_Block_Index = 0;
 }
 
-static void SHA1PadMessage(SHA1Context *context)
-{
-    if (!context)
-        return;
+static void SHA1PadMessage(SHA1Context *context) {
+  if (!context)
+    return;
 
-    /*
-     *  Check to see if the current message block is too small to hold
-     *  the initial padding bits and length.  If so, we will pad the
-     *  block, process it, and then continue padding into a second
-     *  block.
-     */
-    context->Message_Block[context->Message_Block_Index++] = 0x80;
+  /*
+   *  Check to see if the current message block is too small to hold
+   *  the initial padding bits and length.  If so, we will pad the
+   *  block, process it, and then continue padding into a second
+   *  block.
+   */
+  context->Message_Block[context->Message_Block_Index++] = 0x80;
 
-    if (context->Message_Block_Index > 55)
-    {
-        while(context->Message_Block_Index < 64)
-            context->Message_Block[context->Message_Block_Index++] = 0;
-
-        SHA1ProcessMessageBlock(context);
-    }
-
-    while(context->Message_Block_Index < 56)
-        context->Message_Block[context->Message_Block_Index++] = 0;
-
-    /*  Store the message length as the last 8 octets */
-    context->Message_Block[56] = (context->Length_High >> 24) & 0xFF;
-    context->Message_Block[57] = (context->Length_High >> 16) & 0xFF;
-    context->Message_Block[58] = (context->Length_High >> 8) & 0xFF;
-    context->Message_Block[59] = (context->Length_High) & 0xFF;
-    context->Message_Block[60] = (context->Length_Low >> 24) & 0xFF;
-    context->Message_Block[61] = (context->Length_Low >> 16) & 0xFF;
-    context->Message_Block[62] = (context->Length_Low >> 8) & 0xFF;
-    context->Message_Block[63] = (context->Length_Low) & 0xFF;
+  if (context->Message_Block_Index > 55) {
+    while (context->Message_Block_Index < 64)
+      context->Message_Block[context->Message_Block_Index++] = 0;
 
     SHA1ProcessMessageBlock(context);
+  }
+
+  while (context->Message_Block_Index < 56)
+    context->Message_Block[context->Message_Block_Index++] = 0;
+
+  /*  Store the message length as the last 8 octets */
+  context->Message_Block[56] = (context->Length_High >> 24) & 0xFF;
+  context->Message_Block[57] = (context->Length_High >> 16) & 0xFF;
+  context->Message_Block[58] = (context->Length_High >> 8) & 0xFF;
+  context->Message_Block[59] = (context->Length_High) & 0xFF;
+  context->Message_Block[60] = (context->Length_Low >> 24) & 0xFF;
+  context->Message_Block[61] = (context->Length_Low >> 16) & 0xFF;
+  context->Message_Block[62] = (context->Length_Low >> 8) & 0xFF;
+  context->Message_Block[63] = (context->Length_Low) & 0xFF;
+
+  SHA1ProcessMessageBlock(context);
 }
 
-static int SHA1Result(SHA1Context *context)
-{
-    if (context->Corrupted)
-        return 0;
-
-    if (!context->Computed)
-    {
-        SHA1PadMessage(context);
-        context->Computed = 1;
-    }
-
-    return 1;
-}
-
-static void SHA1Input(SHA1Context *context,
-                      const unsigned char *message_array,
-                      unsigned length)
-{
-    if (!length)
-        return;
-
-    if (context->Computed || context->Corrupted)
-    {
-        context->Corrupted = 1;
-        return;
-    }
-
-    while(length-- && !context->Corrupted)
-    {
-        context->Message_Block[context->Message_Block_Index++] =
-            (*message_array & 0xFF);
-
-        context->Length_Low += 8;
-        /* Force it to 32 bits */
-        context->Length_Low &= 0xFFFFFFFF;
-        if (context->Length_Low == 0)
-        {
-            context->Length_High++;
-            /* Force it to 32 bits */
-            context->Length_High &= 0xFFFFFFFF;
-            if (context->Length_High == 0)
-                context->Corrupted = 1; /* Message is too long */
-        }
-
-        if (context->Message_Block_Index == 64)
-            SHA1ProcessMessageBlock(context);
-
-        message_array++;
-    }
-}
-
-int sha1_calculate(const char *path, char *result)
-{
-    unsigned char buff[4096] = {0};
-    SHA1Context sha;
-    int rv = 1;
-    RFILE *fd = filestream_open(path, RFILE_MODE_READ, -1);
-
-    if (!fd)
-        goto error;
-
-    SHA1Reset(&sha);
-
-    do
-    {
-        rv = filestream_read(fd, buff, 4096);
-        if (rv < 0)
-            goto error;
-
-        SHA1Input(&sha, buff, rv);
-    } while(rv);
-
-    if (!SHA1Result(&sha))
-        goto error;
-
-    sprintf(result, "%08X%08X%08X%08X%08X",
-            sha.Message_Digest[0],
-            sha.Message_Digest[1],
-            sha.Message_Digest[2],
-            sha.Message_Digest[3], sha.Message_Digest[4]);
-
-    filestream_close(fd);
+static int SHA1Result(SHA1Context *context) {
+  if (context->Corrupted)
     return 0;
 
-error:
-    if (fd)
-        filestream_close(fd);
-    return -1;
+  if (!context->Computed) {
+    SHA1PadMessage(context);
+    context->Computed = 1;
+  }
+
+  return 1;
 }
 
-uint32_t djb2_calculate(const char *str)
-{
-    const unsigned char *aux = (const unsigned char*)str;
-    uint32_t            hash = 5381;
+static void SHA1Input(SHA1Context *context, const unsigned char *message_array,
+                      unsigned length) {
+  if (!length)
+    return;
 
-    while ( *aux )
-        hash = ( hash << 5 ) + hash + *aux++;
+  if (context->Computed || context->Corrupted) {
+    context->Corrupted = 1;
+    return;
+  }
 
-    return hash;
+  while (length-- && !context->Corrupted) {
+    context->Message_Block[context->Message_Block_Index++] =
+        (*message_array & 0xFF);
+
+    context->Length_Low += 8;
+    /* Force it to 32 bits */
+    context->Length_Low &= 0xFFFFFFFF;
+    if (context->Length_Low == 0) {
+      context->Length_High++;
+      /* Force it to 32 bits */
+      context->Length_High &= 0xFFFFFFFF;
+      if (context->Length_High == 0)
+        context->Corrupted = 1; /* Message is too long */
+    }
+
+    if (context->Message_Block_Index == 64)
+      SHA1ProcessMessageBlock(context);
+
+    message_array++;
+  }
+}
+
+int sha1_calculate(const char *path, char *result) {
+  unsigned char buff[4096] = {0};
+  SHA1Context sha;
+  int rv = 1;
+  RFILE *fd = filestream_open(path, RFILE_MODE_READ, -1);
+
+  if (!fd)
+    goto error;
+
+  SHA1Reset(&sha);
+
+  do {
+    rv = filestream_read(fd, buff, 4096);
+    if (rv < 0)
+      goto error;
+
+    SHA1Input(&sha, buff, rv);
+  } while (rv);
+
+  if (!SHA1Result(&sha))
+    goto error;
+
+  sprintf(result, "%08X%08X%08X%08X%08X", sha.Message_Digest[0],
+          sha.Message_Digest[1], sha.Message_Digest[2], sha.Message_Digest[3],
+          sha.Message_Digest[4]);
+
+  filestream_close(fd);
+  return 0;
+
+error:
+  if (fd)
+    filestream_close(fd);
+  return -1;
+}
+
+uint32_t djb2_calculate(const char *str) {
+  const unsigned char *aux = (const unsigned char *)str;
+  uint32_t hash = 5381;
+
+  while (*aux)
+    hash = (hash << 5) + hash + *aux++;
+
+  return hash;
 }

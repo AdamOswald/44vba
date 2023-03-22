@@ -5,19 +5,23 @@
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #ifndef LIBRETRO_SDK_NETPLAY_COMPAT_H__
@@ -38,20 +42,19 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-#include <winsock2.h>
 #include <windows.h>
+#include <winsock2.h>
 #include <ws2tcpip.h>
 
 #ifndef MSG_NOSIGNAL
 #define MSG_NOSIGNAL 0
 #endif
 
-
 #elif defined(_XBOX)
 
 #define NOD3D
-#include <xtl.h>
 #include <io.h>
+#include <xtl.h>
 
 #elif defined(GEKKO)
 
@@ -66,7 +69,7 @@
 #define sockaddr SceNetSockaddr
 #define sendto sceNetSendto
 #define recvfrom sceNetRecvfrom
-#define socket(a,b,c) sceNetSocket("unknown",a,b,c)
+#define socket(a, b, c) sceNetSocket("unknown", a, b, c)
 #define bind sceNetBind
 #define accept sceNetAccept
 #define setsockopt sceNetSetsockopt
@@ -91,34 +94,33 @@
 #define htons sceNetHtons
 #define socklen_t unsigned int
 
-struct hostent
-{
-    char *h_name;
-    char **h_aliases;
-    int  h_addrtype;
-    int  h_length;
-    char **h_addr_list;
-    char *h_addr;
+struct hostent {
+  char *h_name;
+  char **h_aliases;
+  int h_addrtype;
+  int h_length;
+  char **h_addr_list;
+  char *h_addr;
 };
 
 #else
-#include <sys/select.h>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/select.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 
 #ifndef __PSL1GHT__
 #include <netinet/tcp.h>
 #endif
 
 #include <arpa/inet.h>
-#include <netdb.h>
 #include <fcntl.h>
+#include <netdb.h>
 
 #if defined(__CELLOS_LV2__) && !defined(__PSL1GHT__)
 #include <cell/sysmodule.h>
-#include <netex/net.h>
 #include <netex/libnetctl.h>
+#include <netex/net.h>
 #include <sys/timer.h>
 
 #ifndef EWOULDBLOCK
@@ -134,22 +136,23 @@ struct hostent
 #include <errno.h>
 
 #ifdef GEKKO
-#define sendto(s, msg, len, flags, addr, tolen) net_sendto(s, msg, len, 0, addr, 8)
+#define sendto(s, msg, len, flags, addr, tolen)                                \
+  net_sendto(s, msg, len, 0, addr, 8)
 #define socket(domain, type, protocol) net_socket(domain, type, protocol)
 #endif
 
-static INLINE bool isagain(int bytes)
-{
+static INLINE bool isagain(int bytes) {
 #if defined(_WIN32)
-    if (bytes != SOCKET_ERROR)
-        return false;
-    if (WSAGetLastError() != WSAEWOULDBLOCK)
-        return false;
-    return true;
+  if (bytes != SOCKET_ERROR)
+    return false;
+  if (WSAGetLastError() != WSAEWOULDBLOCK)
+    return false;
+  return true;
 #elif defined(VITA)
-    return (bytes<0 && (bytes == SCE_NET_ERROR_EAGAIN || bytes == SCE_NET_ERROR_EWOULDBLOCK));
+  return (bytes < 0 && (bytes == SCE_NET_ERROR_EAGAIN ||
+                        bytes == SCE_NET_ERROR_EWOULDBLOCK));
 #else
-    return (bytes < 0 && (errno == EAGAIN || errno == EWOULDBLOCK));
+  return (bytes < 0 && (errno == EAGAIN || errno == EWOULDBLOCK));
 #endif
 }
 
@@ -183,16 +186,15 @@ static INLINE bool isagain(int bytes)
 #define sockaddr_storage sockaddr_in
 #define addrinfo addrinfo_retro__
 
-struct addrinfo
-{
-    int ai_flags;
-    int ai_family;
-    int ai_socktype;
-    int ai_protocol;
-    size_t ai_addrlen;
-    struct sockaddr *ai_addr;
-    char *ai_canonname;
-    struct addrinfo *ai_next;
+struct addrinfo {
+  int ai_flags;
+  int ai_family;
+  int ai_socktype;
+  int ai_protocol;
+  size_t ai_addrlen;
+  struct sockaddr *ai_addr;
+  char *ai_canonname;
+  struct addrinfo *ai_next;
 };
 
 #ifndef AI_PASSIVE

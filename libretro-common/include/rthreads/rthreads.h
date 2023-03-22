@@ -5,19 +5,23 @@
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #ifndef __LIBRETRO_SDK_RTHREADS_H__
@@ -26,9 +30,9 @@
 #include <retro_common_api.h>
 
 #include <boolean.h>
-#include <stdint.h>
 #include <retro_inline.h>
 #include <retro_miscellaneous.h>
+#include <stdint.h>
 
 RETRO_BEGIN_DECLS
 
@@ -47,7 +51,7 @@ typedef struct scond scond_t;
  *
  * Returns: pointer to new thread if successful, otherwise NULL.
  */
-sthread_t *sthread_create(void (*thread_func)(void*), void *userdata);
+sthread_t *sthread_create(void (*thread_func)(void *), void *userdata);
 
 /**
  * sthread_create_with_priority:
@@ -64,7 +68,8 @@ sthread_t *sthread_create(void (*thread_func)(void*), void *userdata);
  *
  * Returns: pointer to new thread if successful, otherwise NULL.
  */
-sthread_t *sthread_create_with_priority(void (*thread_func)(void*), void *userdata, int thread_priority);
+sthread_t *sthread_create_with_priority(void (*thread_func)(void *),
+                                        void *userdata, int thread_priority);
 
 /**
  * sthread_detach:
@@ -138,7 +143,7 @@ void slock_free(slock_t *lock);
  * Locks a mutex. If a mutex is already locked by
  * another thread, the calling thread shall block until
  * the mutex becomes available.
-**/
+ **/
 void slock_lock(slock_t *lock);
 
 /**
@@ -165,7 +170,7 @@ scond_t *scond_new(void);
  * @cond                    : pointer to condition variable object
  *
  * Frees a condition variable.
-**/
+ **/
 void scond_free(scond_t *cond);
 
 /**

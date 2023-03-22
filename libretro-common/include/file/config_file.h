@@ -5,21 +5,24 @@
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 
 #ifndef __LIBRETRO_SDK_CONFIG_FILE_H
 #define __LIBRETRO_SDK_CONFIG_FILE_H
@@ -28,29 +31,32 @@
 
 RETRO_BEGIN_DECLS
 
-#include <stdio.h>
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
 
 #include <boolean.h>
 
-#define CONFIG_GET_BOOL_BASE(conf, base, var, key) do { \
-   bool tmp = false; \
-   if (config_get_bool(conf, key, &tmp)) \
-      base->var = tmp; \
-} while(0)
+#define CONFIG_GET_BOOL_BASE(conf, base, var, key)                             \
+  do {                                                                         \
+    bool tmp = false;                                                          \
+    if (config_get_bool(conf, key, &tmp))                                      \
+      base->var = tmp;                                                         \
+  } while (0)
 
-#define CONFIG_GET_INT_BASE(conf, base, var, key) do { \
-   int tmp = 0; \
-   if (config_get_int(conf, key, &tmp)) \
-      base->var = tmp; \
-} while(0)
+#define CONFIG_GET_INT_BASE(conf, base, var, key)                              \
+  do {                                                                         \
+    int tmp = 0;                                                               \
+    if (config_get_int(conf, key, &tmp))                                       \
+      base->var = tmp;                                                         \
+  } while (0)
 
-#define CONFIG_GET_FLOAT_BASE(conf, base, var, key) do { \
-   float tmp = 0.0f; \
-   if (config_get_float(conf, key, &tmp)) \
-      base->var = tmp; \
-} while(0)
+#define CONFIG_GET_FLOAT_BASE(conf, base, var, key)                            \
+  do {                                                                         \
+    float tmp = 0.0f;                                                          \
+    if (config_get_float(conf, key, &tmp))                                     \
+      base->var = tmp;                                                         \
+  } while (0)
 
 typedef struct config_file config_file_t;
 
@@ -60,8 +66,9 @@ typedef struct config_file config_file_t;
  * - Value can be wrapped inside "" for multiword strings. (foo = "hai u")
  * - #include includes a config file in-place.
  *
- * Path is relative to where config file was loaded unless an absolute path is chosen.
- * Key/value pairs from an #include are read-only, and cannot be modified.
+ * Path is relative to where config file was loaded unless an absolute path is
+ * chosen. Key/value pairs from an #include are read-only, and cannot be
+ * modified.
  */
 
 /* Loads a config file. Returns NULL if file doesn't exist.
@@ -84,15 +91,15 @@ bool config_append_file(config_file_t *conf, const char *path);
 bool config_entry_exists(config_file_t *conf, const char *entry);
 
 struct config_entry_list;
-struct config_file_entry
-{
-    const char *key;
-    const char *value;
-    /* Used intentionally. Opaque here. */
-    const struct config_entry_list *next;
+struct config_file_entry {
+  const char *key;
+  const char *value;
+  /* Used intentionally. Opaque here. */
+  const struct config_entry_list *next;
 };
 
-bool config_get_entry_list_head(config_file_t *conf, struct config_file_entry *entry);
+bool config_get_entry_list_head(config_file_t *conf,
+                                struct config_file_entry *entry);
 bool config_get_entry_list_next(struct config_file_entry *entry);
 
 /* Extracts a double from config file. */
@@ -107,7 +114,7 @@ bool config_get_int(config_file_t *conf, const char *entry, int *in);
 /* Extracts an uint from config file. */
 bool config_get_uint(config_file_t *conf, const char *entry, unsigned *in);
 
-#if defined(__STDC_VERSION__) && __STDC_VERSION__>=199901L
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 /* Extracts an uint64 from config file. */
 bool config_get_uint64(config_file_t *conf, const char *entry, uint64_t *in);
 #endif
@@ -124,11 +131,13 @@ bool config_get_char(config_file_t *conf, const char *entry, char *in);
 bool config_get_string(config_file_t *conf, const char *entry, char **in);
 
 /* Extracts a string to a preallocated buffer. Avoid memory allocation. */
-bool config_get_array(config_file_t *conf, const char *entry, char *s, size_t len);
+bool config_get_array(config_file_t *conf, const char *entry, char *s,
+                      size_t len);
 
 /* Extracts a string to a preallocated buffer. Avoid memory allocation.
  * Recognized magic like ~/. Similar to config_get_array() otherwise. */
-bool config_get_path(config_file_t *conf, const char *entry, char *s, size_t len);
+bool config_get_path(config_file_t *conf, const char *entry, char *s,
+                     size_t len);
 
 /* Extracts a string to a preallocated buffer. Avoid memory allocation. */
 bool config_get_config_path(config_file_t *conf, char *s, size_t len);
@@ -161,4 +170,3 @@ void config_file_dump(config_file_t *conf, FILE *file);
 RETRO_END_DECLS
 
 #endif
-

@@ -5,27 +5,31 @@
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #ifndef __LIBRETRO_SDK_FILE_PATH_H
 #define __LIBRETRO_SDK_FILE_PATH_H
 
-#include <stdio.h>
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
 #include <sys/types.h>
 
 #include <retro_common_api.h>
@@ -37,16 +41,14 @@ RETRO_BEGIN_DECLS
 
 /* Order in this enum is equivalent to negative sort order in filelist
  *  (i.e. DIRECTORY is on top of PLAIN_FILE) */
-enum
-{
-    RARCH_FILETYPE_UNSET,
-    RARCH_PLAIN_FILE,
-    RARCH_COMPRESSED_FILE_IN_ARCHIVE,
-    RARCH_COMPRESSED_ARCHIVE,
-    RARCH_DIRECTORY,
-    RARCH_FILE_UNSUPPORTED
+enum {
+  RARCH_FILETYPE_UNSET,
+  RARCH_PLAIN_FILE,
+  RARCH_COMPRESSED_FILE_IN_ARCHIVE,
+  RARCH_COMPRESSED_ARCHIVE,
+  RARCH_DIRECTORY,
+  RARCH_FILE_UNSUPPORTED
 };
-
 
 /**
  * path_is_compressed_file:
@@ -176,8 +178,8 @@ bool path_is_absolute(const char *path);
  * E.g.: in_path = "/foo/bar/baz/boo.c", replace = ""     =>
  * out_path = "/foo/bar/baz/boo"
  */
-void fill_pathname(char *out_path, const char *in_path,
-                   const char *replace, size_t size);
+void fill_pathname(char *out_path, const char *in_path, const char *replace,
+                   size_t size);
 
 /**
  * fill_dated_filename:
@@ -191,8 +193,7 @@ void fill_pathname(char *out_path, const char *in_path,
  * E.g.:
  * out_filename = "RetroArch-{month}{day}-{Hours}{Minutes}.{@ext}"
  **/
-void fill_dated_filename(char *out_filename,
-                         const char *ext, size_t size);
+void fill_dated_filename(char *out_filename, const char *ext, size_t size);
 
 /**
  * fill_pathname_noext:
@@ -251,11 +252,9 @@ void fill_pathname_dir(char *in_dir, const char *in_basename,
  **/
 void fill_pathname_base(char *out_path, const char *in_path, size_t size);
 
-void fill_pathname_base_noext(char *out_dir,
-                              const char *in_path, size_t size);
+void fill_pathname_base_noext(char *out_dir, const char *in_path, size_t size);
 
-void fill_pathname_base_ext(char *out,
-                            const char *in_path, const char *ext,
+void fill_pathname_base_ext(char *out, const char *in_path, const char *ext,
                             size_t size);
 
 /**
@@ -270,8 +269,8 @@ void fill_pathname_base_ext(char *out,
  **/
 void fill_pathname_basedir(char *out_path, const char *in_path, size_t size);
 
-void fill_pathname_basedir_noext(char *out_dir,
-                                 const char *in_path, size_t size);
+void fill_pathname_basedir_noext(char *out_dir, const char *in_path,
+                                 size_t size);
 
 /**
  * fill_pathname_parent_dir:
@@ -282,8 +281,7 @@ void fill_pathname_basedir_noext(char *out_dir,
  * Copies parent directory of @in_dir into @out_dir.
  * Assumes @in_dir is a directory. Keeps trailing '/'.
  **/
-void fill_pathname_parent_dir(char *out_dir,
-                              const char *in_dir, size_t size);
+void fill_pathname_parent_dir(char *out_dir, const char *in_dir, size_t size);
 
 /**
  * fill_pathname_resolve_relative:
@@ -311,21 +309,19 @@ void fill_pathname_resolve_relative(char *out_path, const char *in_refpath,
  * Makes sure not to get  two consecutive slashes
  * between directory and path.
  **/
-void fill_pathname_join(char *out_path, const char *dir,
-                        const char *path, size_t size);
+void fill_pathname_join(char *out_path, const char *dir, const char *path,
+                        size_t size);
 
-void fill_pathname_join_special_ext(char *out_path,
-                                    const char *dir,  const char *path,
-                                    const char *last, const char *ext,
-                                    size_t size);
+void fill_pathname_join_special_ext(char *out_path, const char *dir,
+                                    const char *path, const char *last,
+                                    const char *ext, size_t size);
 
-void fill_pathname_join_concat(char *out_path,
-                               const char *dir, const char *path,
-                               const char *concat,
+void fill_pathname_join_concat(char *out_path, const char *dir,
+                               const char *path, const char *concat,
                                size_t size);
 
-void fill_pathname_join_noext(char *out_path,
-                              const char *dir, const char *path, size_t size);
+void fill_pathname_join_noext(char *out_path, const char *dir, const char *path,
+                              size_t size);
 
 /**
  * fill_pathname_join_delim:
@@ -338,12 +334,12 @@ void fill_pathname_join_noext(char *out_path,
  * Joins a directory (@dir) and path (@path) together
  * using the given delimiter (@delim).
  **/
-void fill_pathname_join_delim(char *out_path, const char *dir,
-                              const char *path, const char delim, size_t size);
+void fill_pathname_join_delim(char *out_path, const char *dir, const char *path,
+                              const char delim, size_t size);
 
 void fill_pathname_join_delim_concat(char *out_path, const char *dir,
-                                     const char *path, const char delim, const char *concat,
-                                     size_t size);
+                                     const char *path, const char delim,
+                                     const char *concat, size_t size);
 
 /**
  * fill_short_pathname_representation:
@@ -353,24 +349,24 @@ void fill_pathname_join_delim_concat(char *out_path, const char *dir,
  *
  * Generates a short representation of path. It should only
  * be used for displaying the result; the output representation is not
- * binding in any meaningful way (for a normal path, this is the same as basename)
- * In case of more complex URLs, this should cut everything except for
+ * binding in any meaningful way (for a normal path, this is the same as
+ * basename) In case of more complex URLs, this should cut everything except for
  * the main image file.
  *
  * E.g.: "/path/to/game.img" -> game.img
  *       "/path/to/myarchive.7z#folder/to/game.img" -> game.img
  */
-void fill_short_pathname_representation(char* out_rep,
-                                        const char *in_path, size_t size);
+void fill_short_pathname_representation(char *out_rep, const char *in_path,
+                                        size_t size);
 
-void fill_short_pathname_representation_noext(char* out_rep,
-        const char *in_path, size_t size);
+void fill_short_pathname_representation_noext(char *out_rep,
+                                              const char *in_path, size_t size);
 
-void fill_pathname_expand_special(char *out_path,
-                                  const char *in_path, size_t size);
+void fill_pathname_expand_special(char *out_path, const char *in_path,
+                                  size_t size);
 
-void fill_pathname_abbreviate_special(char *out_path,
-                                      const char *in_path, size_t size);
+void fill_pathname_abbreviate_special(char *out_path, const char *in_path,
+                                      size_t size);
 
 /**
  * path_char_is_slash:
@@ -380,12 +376,11 @@ void fill_pathname_abbreviate_special(char *out_path,
  *
  * Returns: true (1) if character is a slash, otherwise false (0).
  */
-static INLINE bool path_char_is_slash(char c)
-{
+static INLINE bool path_char_is_slash(char c) {
 #ifdef _WIN32
-    return (c == '/') || (c == '\\');
+  return (c == '/') || (c == '\\');
 #else
-    return (c == '/');
+  return (c == '/');
 #endif
 }
 
@@ -396,12 +391,11 @@ static INLINE bool path_char_is_slash(char c)
  *
  * Returns: default slash separator.
  */
-static INLINE const char *path_default_slash(void)
-{
+static INLINE const char *path_default_slash(void) {
 #ifdef _WIN32
-    return "\\";
+  return "\\";
 #else
-    return "/";
+  return "/";
 #endif
 }
 

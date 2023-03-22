@@ -5,19 +5,23 @@
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #ifndef __LIBRETRO_SDK_FORMAT_RXML_H__
 #define __LIBRETRO_SDK_FORMAT_RXML_H__
@@ -39,25 +43,23 @@ RETRO_BEGIN_DECLS
 
 typedef struct rxml_document rxml_document_t;
 
-struct rxml_attrib_node
-{
-    char *attrib;
-    char *value;
-    struct rxml_attrib_node *next;
+struct rxml_attrib_node {
+  char *attrib;
+  char *value;
+  struct rxml_attrib_node *next;
 };
 
-struct rxml_node
-{
-    char *name;
-    char *data;
-    struct rxml_attrib_node *attrib;
+struct rxml_node {
+  char *name;
+  char *data;
+  struct rxml_attrib_node *attrib;
 
-    struct rxml_node *children;
-    struct rxml_node *next;
+  struct rxml_node *children;
+  struct rxml_node *next;
 
-    /* Dummy. Used by libxml2 compat.
-     * Is always set to 0, so XML_ELEMENT_NODE check goes through. */
-    int type;
+  /* Dummy. Used by libxml2 compat.
+   * Is always set to 0, so XML_ELEMENT_NODE check goes through. */
+  int type;
 };
 
 rxml_document_t *rxml_load_document(const char *path);
@@ -79,7 +81,7 @@ typedef struct rxml_node *xmlNodePtr;
 typedef void *xmlParserCtxtPtr;
 typedef rxml_document_t *xmlDocPtr;
 #define XML_ELEMENT_NODE (0)
-#define xmlNewParserCtxt() ((void*)-1)
+#define xmlNewParserCtxt() ((void *)-1)
 #define xmlCtxtReadFile(ctx, path, a, b) rxml_load_document(path)
 #define xmlGetProp(node, prop) rxml_node_attrib(node, prop)
 #define xmlFree(p) ((void)0)
@@ -92,4 +94,3 @@ typedef rxml_document_t *xmlDocPtr;
 RETRO_END_DECLS
 
 #endif
-
