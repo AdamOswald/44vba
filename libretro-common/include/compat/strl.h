@@ -30,6 +30,7 @@
 #include <stddef.h>
 #include <string.h>
 
+#if defined(RARCH_INTERNAL) && defined(HAVE_CONFIG_H)
 #ifdef HAVE_CONFIG_H
 #include "../../../config.h"
 #endif
