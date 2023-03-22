@@ -92,10 +92,10 @@ bool config_entry_exists(config_file_t *conf, const char *entry);
 
 struct config_entry_list;
 struct config_file_entry {
-  const char *key;
-  const char *value;
-  /* Used intentionally. Opaque here. */
-  const struct config_entry_list *next;
+    const char *key;
+    const char *value;
+    /* Used intentionally. Opaque here. */
+    const struct config_entry_list *next;
 };
 
 bool config_get_entry_list_head(config_file_t *conf,

@@ -33,48 +33,48 @@
 #include <boolean.h>
 
 enum file_archive_transfer_type {
-  ZLIB_TRANSFER_NONE = 0,
-  ZLIB_TRANSFER_INIT,
-  ZLIB_TRANSFER_ITERATE,
-  ZLIB_TRANSFER_DEINIT,
-  ZLIB_TRANSFER_DEINIT_ERROR
+    ZLIB_TRANSFER_NONE = 0,
+    ZLIB_TRANSFER_INIT,
+    ZLIB_TRANSFER_ITERATE,
+    ZLIB_TRANSFER_DEINIT,
+    ZLIB_TRANSFER_DEINIT_ERROR
 };
 
 typedef struct file_archive_handle {
-  void *stream;
-  uint8_t *data;
-  uint32_t real_checksum;
-  const struct file_archive_file_backend *backend;
+    void *stream;
+    uint8_t *data;
+    uint32_t real_checksum;
+    const struct file_archive_file_backend *backend;
 } file_archive_file_handle_t;
 
 struct file_archive_file_backend {
-  void *(*stream_new)(void);
-  void (*stream_free)(void *);
-  void (*stream_set)(void *, uint32_t, uint32_t, const uint8_t *, uint8_t *);
-  uint32_t (*stream_get_avail_in)(void *);
-  uint32_t (*stream_get_avail_out)(void *);
-  uint64_t (*stream_get_total_out)(void *);
-  void (*stream_decrement_total_out)(void *, unsigned);
-  bool (*stream_decompress_init)(void *);
-  bool (*stream_decompress_data_to_file_init)(file_archive_file_handle_t *,
-                                              const uint8_t *, uint32_t,
-                                              uint32_t);
-  int (*stream_decompress_data_to_file_iterate)(void *);
-  void (*stream_compress_init)(void *, int);
-  void (*stream_compress_free)(void *);
-  int (*stream_compress_data_to_file)(void *);
-  uint32_t (*stream_crc_calculate)(uint32_t, const uint8_t *, size_t);
-  const char *ident;
+    void *(*stream_new)(void);
+    void (*stream_free)(void *);
+    void (*stream_set)(void *, uint32_t, uint32_t, const uint8_t *, uint8_t *);
+    uint32_t (*stream_get_avail_in)(void *);
+    uint32_t (*stream_get_avail_out)(void *);
+    uint64_t (*stream_get_total_out)(void *);
+    void (*stream_decrement_total_out)(void *, unsigned);
+    bool (*stream_decompress_init)(void *);
+    bool (*stream_decompress_data_to_file_init)(file_archive_file_handle_t *,
+            const uint8_t *, uint32_t,
+            uint32_t);
+    int (*stream_decompress_data_to_file_iterate)(void *);
+    void (*stream_compress_init)(void *, int);
+    void (*stream_compress_free)(void *);
+    int (*stream_compress_data_to_file)(void *);
+    uint32_t (*stream_crc_calculate)(uint32_t, const uint8_t *, size_t);
+    const char *ident;
 };
 
 typedef struct file_archive_transfer {
-  void *handle;
-  const uint8_t *footer;
-  const uint8_t *directory;
-  const uint8_t *data;
-  int32_t zip_size;
-  enum file_archive_transfer_type type;
-  const struct file_archive_file_backend *backend;
+    void *handle;
+    const uint8_t *footer;
+    const uint8_t *directory;
+    const uint8_t *data;
+    int32_t zip_size;
+    enum file_archive_transfer_type type;
+    const struct file_archive_file_backend *backend;
 } file_archive_transfer_t;
 
 /* Returns true when parsing should continue. False to stop. */
@@ -106,10 +106,10 @@ int file_archive_parse_file_progress(file_archive_transfer_t *state);
  * Returns : true (1) on success, otherwise false (0).
  **/
 bool file_archive_extract_first_content_file(char *zip_path,
-                                             size_t zip_path_size,
-                                             const char *valid_exts,
-                                             const char *extraction_dir,
-                                             char *out_path, size_t len);
+        size_t zip_path_size,
+        const char *valid_exts,
+        const char *extraction_dir,
+        char *out_path, size_t len);
 
 /**
  * file_archive_get_file_list:
@@ -120,7 +120,7 @@ bool file_archive_extract_first_content_file(char *zip_path,
  * Returns: string listing of files from archive on success, otherwise NULL.
  **/
 struct string_list *file_archive_get_file_list(const char *path,
-                                               const char *valid_exts);
+        const char *valid_exts);
 
 bool file_archive_perform_mode(const char *name, const char *valid_exts,
                                const uint8_t *cdata, unsigned cmode,
@@ -128,7 +128,7 @@ bool file_archive_perform_mode(const char *name, const char *valid_exts,
                                void *userdata);
 
 struct string_list *compressed_file_list_new(const char *filename,
-                                             const char *ext);
+        const char *ext);
 
 void file_archive_deflate_init(void *data, int level);
 

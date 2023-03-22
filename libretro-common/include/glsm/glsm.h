@@ -92,41 +92,41 @@ typedef GLclampf GLclampd;
 #define MAX_ATTRIB 8
 
 enum {
-  SGL_DEPTH_TEST = 0,
-  SGL_BLEND,
-  SGL_POLYGON_OFFSET_FILL,
-  SGL_FOG,
-  SGL_CULL_FACE,
-  SGL_ALPHA_TEST,
-  SGL_SCISSOR_TEST,
-  SGL_STENCIL_TEST,
+    SGL_DEPTH_TEST = 0,
+    SGL_BLEND,
+    SGL_POLYGON_OFFSET_FILL,
+    SGL_FOG,
+    SGL_CULL_FACE,
+    SGL_ALPHA_TEST,
+    SGL_SCISSOR_TEST,
+    SGL_STENCIL_TEST,
 #if !defined(HAVE_OPENGLES)
-  SGL_DEPTH_CLAMP,
-  SGL_CLIP_DISTANCE0,
+    SGL_DEPTH_CLAMP,
+    SGL_CLIP_DISTANCE0,
 #endif
-  SGL_DITHER,
-  SGL_SAMPLE_ALPHA_TO_COVERAGE,
-  SGL_SAMPLE_COVERAGE,
+    SGL_DITHER,
+    SGL_SAMPLE_ALPHA_TO_COVERAGE,
+    SGL_SAMPLE_COVERAGE,
 #ifndef HAVE_OPENGLES
-  SGL_COLOR_LOGIC_OP,
+    SGL_COLOR_LOGIC_OP,
 #endif
-  SGL_CAP_MAX
+    SGL_CAP_MAX
 };
 
 enum glsm_state_ctl {
-  GLSM_CTL_NONE = 0,
-  GLSM_CTL_STATE_SETUP,
-  GLSM_CTL_STATE_BIND,
-  GLSM_CTL_STATE_UNBIND,
-  GLSM_CTL_STATE_CONTEXT_RESET,
-  GLSM_CTL_STATE_CONTEXT_DESTROY,
-  GLSM_CTL_STATE_CONTEXT_INIT,
-  GLSM_CTL_IS_IMM_VBO,
-  GLSM_CTL_SET_IMM_VBO,
-  GLSM_CTL_UNSET_IMM_VBO,
-  GLSM_CTL_IMM_VBO_DISABLE,
-  GLSM_CTL_IMM_VBO_DRAW,
-  GLSM_CTL_PROC_ADDRESS_GET
+    GLSM_CTL_NONE = 0,
+    GLSM_CTL_STATE_SETUP,
+    GLSM_CTL_STATE_BIND,
+    GLSM_CTL_STATE_UNBIND,
+    GLSM_CTL_STATE_CONTEXT_RESET,
+    GLSM_CTL_STATE_CONTEXT_DESTROY,
+    GLSM_CTL_STATE_CONTEXT_INIT,
+    GLSM_CTL_IS_IMM_VBO,
+    GLSM_CTL_SET_IMM_VBO,
+    GLSM_CTL_UNSET_IMM_VBO,
+    GLSM_CTL_IMM_VBO_DISABLE,
+    GLSM_CTL_IMM_VBO_DRAW,
+    GLSM_CTL_PROC_ADDRESS_GET
 };
 
 typedef bool (*glsm_imm_vbo_draw)(void *);
@@ -134,19 +134,19 @@ typedef bool (*glsm_imm_vbo_disable)(void *);
 typedef bool (*glsm_framebuffer_lock)(void *);
 
 typedef struct glsm_ctx_proc_address {
-  retro_get_proc_address_t addr;
+    retro_get_proc_address_t addr;
 } glsm_ctx_proc_address_t;
 
 typedef struct glsm_ctx_params {
-  glsm_framebuffer_lock framebuffer_lock;
-  glsm_imm_vbo_draw imm_vbo_draw;
-  glsm_imm_vbo_disable imm_vbo_disable;
-  retro_hw_context_reset_t context_reset;
-  retro_hw_context_reset_t context_destroy;
-  retro_environment_t environ_cb;
-  bool stencil;
-  unsigned major;
-  unsigned minor;
+    glsm_framebuffer_lock framebuffer_lock;
+    glsm_imm_vbo_draw imm_vbo_draw;
+    glsm_imm_vbo_disable imm_vbo_disable;
+    retro_hw_context_reset_t context_reset;
+    retro_hw_context_reset_t context_destroy;
+    retro_environment_t environ_cb;
+    bool stencil;
+    unsigned major;
+    unsigned minor;
 } glsm_ctx_params_t;
 
 GLuint glsm_get_current_framebuffer(void);

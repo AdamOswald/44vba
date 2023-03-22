@@ -38,22 +38,22 @@ RETRO_BEGIN_DECLS
 enum socket_domain { SOCKET_DOMAIN_INET = 0 };
 
 enum socket_type {
-  SOCKET_TYPE_DATAGRAM = 0,
-  SOCKET_TYPE_STREAM,
-  SOCKET_TYPE_SEQPACKET
+    SOCKET_TYPE_DATAGRAM = 0,
+    SOCKET_TYPE_STREAM,
+    SOCKET_TYPE_SEQPACKET
 };
 
 enum socket_protocol {
-  SOCKET_PROTOCOL_NONE = 0,
-  SOCKET_PROTOCOL_TCP,
-  SOCKET_PROTOCOL_UDP
+    SOCKET_PROTOCOL_NONE = 0,
+    SOCKET_PROTOCOL_TCP,
+    SOCKET_PROTOCOL_UDP
 };
 
 typedef struct socket_target {
-  unsigned port;
-  const char *server;
-  enum socket_domain domain;
-  enum socket_protocol prot;
+    unsigned port;
+    const char *server;
+    enum socket_domain domain;
+    enum socket_protocol prot;
 } socket_target_t;
 
 int socket_init(void **address, uint16_t port, const char *server,

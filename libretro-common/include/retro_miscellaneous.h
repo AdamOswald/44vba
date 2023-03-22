@@ -93,22 +93,22 @@
  **/
 static INLINE void retro_sleep(unsigned msec) {
 #if defined(__CELLOS_LV2__) && !defined(__PSL1GHT__)
-  sys_timer_usleep(1000 * msec);
+    sys_timer_usleep(1000 * msec);
 #elif defined(PSP) || defined(VITA)
-  sceKernelDelayThread(1000 * msec);
+    sceKernelDelayThread(1000 * msec);
 #elif defined(_3DS)
-  svcSleepThread(1000000 * (s64)msec);
+    svcSleepThread(1000000 * (s64)msec);
 #elif defined(_WIN32)
-  Sleep(msec);
+    Sleep(msec);
 #elif defined(XENON)
-  udelay(1000 * msec);
+    udelay(1000 * msec);
 #elif defined(GEKKO) || defined(__PSL1GHT__) || defined(__QNX__)
-  usleep(1000 * msec);
+    usleep(1000 * msec);
 #else
-  struct timespec tv = {0};
-  tv.tv_sec = msec / 1000;
-  tv.tv_nsec = (msec % 1000) * 1000000;
-  nanosleep(&tv, NULL);
+    struct timespec tv = {0};
+    tv.tv_sec = msec / 1000;
+    tv.tv_nsec = (msec % 1000) * 1000000;
+    nanosleep(&tv, NULL);
 #endif
 }
 
@@ -121,14 +121,14 @@ static INLINE void retro_sleep(unsigned msec) {
  * Returns: next power of 2 value (derived from @v).
  **/
 static INLINE uint32_t next_pow2(uint32_t v) {
-  v--;
-  v |= v >> 1;
-  v |= v >> 2;
-  v |= v >> 4;
-  v |= v >> 8;
-  v |= v >> 16;
-  v++;
-  return v;
+    v--;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    v++;
+    return v;
 }
 
 /**
@@ -140,12 +140,12 @@ static INLINE uint32_t next_pow2(uint32_t v) {
  * Returns: previous power of 2 value (derived from @v).
  **/
 static INLINE uint32_t prev_pow2(uint32_t v) {
-  v |= v >> 1;
-  v |= v >> 2;
-  v |= v >> 4;
-  v |= v >> 8;
-  v |= v >> 16;
-  return v - (v >> 1);
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    return v - (v >> 1);
 }
 
 /**
@@ -156,13 +156,15 @@ static INLINE uint32_t prev_pow2(uint32_t v) {
  *
  * Returns: voltage gain value.
  **/
-static INLINE float db_to_gain(float db) { return powf(10.0f, db / 20.0f); }
+static INLINE float db_to_gain(float db) {
+    return powf(10.0f, db / 20.0f);
+}
 
 /* Helper macros and struct to keep track of many booleans.
  * To check for multiple bits, use &&, not &.
  * For OR, | can be used. */
 typedef struct {
-  uint32_t data[8];
+    uint32_t data[8];
 } retro_bits_t;
 
 #define BIT_SET(a, bit) ((a)[(bit) >> 3] |= (1 << ((bit)&7)))
