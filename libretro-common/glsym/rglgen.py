@@ -22,9 +22,9 @@
 """
 
 
-import sys
 import os
 import re
+import sys
 
 banned_ext = [
     "AMD",
