@@ -1,7 +1,7 @@
-/* Copyright  (C) 2010-2015 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
- * The following license statement only applies to this file (compat.c).
+ * The following license statement only applies to these files (compat_posix_string.c) and (compat.c).
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
