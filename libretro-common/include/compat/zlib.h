@@ -135,7 +135,7 @@ typedef struct gz_header_s {
   uInt comm_max;  /* space at comment (only when reading header) */
   int hcrc;       /* true if there was or will be a header crc */
   int done;       /* true when done reading gzip header (not used
-               when writing a gzip file) */
+             when writing a gzip file) */
 } gz_header;
 
 typedef gz_header FAR *gz_headerp;
