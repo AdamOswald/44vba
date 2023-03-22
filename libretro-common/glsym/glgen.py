@@ -22,6 +22,7 @@
 import os
 import re
 import sys
+
 banned_ext = [
     "AMD",
     "APPLE",
@@ -138,8 +139,7 @@ if __name__ == "__main__":
         f.write("typedef void *GLeglImageOES;\n")
         f.write("#endif\n")
 
-        f.write(
-            "#if !defined(GL_OES_fixed_point) && !defined(HAVE_OPENGLES2)\n")
+        f.write("#if !defined(GL_OES_fixed_point) && !defined(HAVE_OPENGLES2)\n")
         f.write("typedef GLint GLfixed;\n")
         f.write("#endif\n")
 
