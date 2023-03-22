@@ -236,25 +236,25 @@ extern "C" {
 
 /* Id values for LANGUAGE */
 enum retro_language {
-  RETRO_LANGUAGE_ENGLISH = 0,
-  RETRO_LANGUAGE_JAPANESE = 1,
-  RETRO_LANGUAGE_FRENCH = 2,
-  RETRO_LANGUAGE_SPANISH = 3,
-  RETRO_LANGUAGE_GERMAN = 4,
-  RETRO_LANGUAGE_ITALIAN = 5,
-  RETRO_LANGUAGE_DUTCH = 6,
-  RETRO_LANGUAGE_PORTUGUESE = 7,
-  RETRO_LANGUAGE_RUSSIAN = 8,
-  RETRO_LANGUAGE_KOREAN = 9,
-  RETRO_LANGUAGE_CHINESE_TRADITIONAL = 10,
-  RETRO_LANGUAGE_CHINESE_SIMPLIFIED = 11,
-  RETRO_LANGUAGE_ESPERANTO = 12,
-  RETRO_LANGUAGE_POLISH = 13,
-  RETRO_LANGUAGE_VIETNAMESE = 14,
-  RETRO_LANGUAGE_LAST,
+    RETRO_LANGUAGE_ENGLISH = 0,
+    RETRO_LANGUAGE_JAPANESE = 1,
+    RETRO_LANGUAGE_FRENCH = 2,
+    RETRO_LANGUAGE_SPANISH = 3,
+    RETRO_LANGUAGE_GERMAN = 4,
+    RETRO_LANGUAGE_ITALIAN = 5,
+    RETRO_LANGUAGE_DUTCH = 6,
+    RETRO_LANGUAGE_PORTUGUESE = 7,
+    RETRO_LANGUAGE_RUSSIAN = 8,
+    RETRO_LANGUAGE_KOREAN = 9,
+    RETRO_LANGUAGE_CHINESE_TRADITIONAL = 10,
+    RETRO_LANGUAGE_CHINESE_SIMPLIFIED = 11,
+    RETRO_LANGUAGE_ESPERANTO = 12,
+    RETRO_LANGUAGE_POLISH = 13,
+    RETRO_LANGUAGE_VIETNAMESE = 14,
+    RETRO_LANGUAGE_LAST,
 
-  /* Ensure sizeof(enum) == sizeof(int) */
-  RETRO_LANGUAGE_DUMMY = INT_MAX
+    /* Ensure sizeof(enum) == sizeof(int) */
+    RETRO_LANGUAGE_DUMMY = INT_MAX
 };
 
 /* Passed to retro_get_memory_data/size().
@@ -283,167 +283,167 @@ enum retro_language {
 
 /* Keysyms used for ID in input state callback when polling RETRO_KEYBOARD. */
 enum retro_key {
-  RETROK_UNKNOWN = 0,
-  RETROK_FIRST = 0,
-  RETROK_BACKSPACE = 8,
-  RETROK_TAB = 9,
-  RETROK_CLEAR = 12,
-  RETROK_RETURN = 13,
-  RETROK_PAUSE = 19,
-  RETROK_ESCAPE = 27,
-  RETROK_SPACE = 32,
-  RETROK_EXCLAIM = 33,
-  RETROK_QUOTEDBL = 34,
-  RETROK_HASH = 35,
-  RETROK_DOLLAR = 36,
-  RETROK_AMPERSAND = 38,
-  RETROK_QUOTE = 39,
-  RETROK_LEFTPAREN = 40,
-  RETROK_RIGHTPAREN = 41,
-  RETROK_ASTERISK = 42,
-  RETROK_PLUS = 43,
-  RETROK_COMMA = 44,
-  RETROK_MINUS = 45,
-  RETROK_PERIOD = 46,
-  RETROK_SLASH = 47,
-  RETROK_0 = 48,
-  RETROK_1 = 49,
-  RETROK_2 = 50,
-  RETROK_3 = 51,
-  RETROK_4 = 52,
-  RETROK_5 = 53,
-  RETROK_6 = 54,
-  RETROK_7 = 55,
-  RETROK_8 = 56,
-  RETROK_9 = 57,
-  RETROK_COLON = 58,
-  RETROK_SEMICOLON = 59,
-  RETROK_LESS = 60,
-  RETROK_EQUALS = 61,
-  RETROK_GREATER = 62,
-  RETROK_QUESTION = 63,
-  RETROK_AT = 64,
-  RETROK_LEFTBRACKET = 91,
-  RETROK_BACKSLASH = 92,
-  RETROK_RIGHTBRACKET = 93,
-  RETROK_CARET = 94,
-  RETROK_UNDERSCORE = 95,
-  RETROK_BACKQUOTE = 96,
-  RETROK_a = 97,
-  RETROK_b = 98,
-  RETROK_c = 99,
-  RETROK_d = 100,
-  RETROK_e = 101,
-  RETROK_f = 102,
-  RETROK_g = 103,
-  RETROK_h = 104,
-  RETROK_i = 105,
-  RETROK_j = 106,
-  RETROK_k = 107,
-  RETROK_l = 108,
-  RETROK_m = 109,
-  RETROK_n = 110,
-  RETROK_o = 111,
-  RETROK_p = 112,
-  RETROK_q = 113,
-  RETROK_r = 114,
-  RETROK_s = 115,
-  RETROK_t = 116,
-  RETROK_u = 117,
-  RETROK_v = 118,
-  RETROK_w = 119,
-  RETROK_x = 120,
-  RETROK_y = 121,
-  RETROK_z = 122,
-  RETROK_DELETE = 127,
+    RETROK_UNKNOWN = 0,
+    RETROK_FIRST = 0,
+    RETROK_BACKSPACE = 8,
+    RETROK_TAB = 9,
+    RETROK_CLEAR = 12,
+    RETROK_RETURN = 13,
+    RETROK_PAUSE = 19,
+    RETROK_ESCAPE = 27,
+    RETROK_SPACE = 32,
+    RETROK_EXCLAIM = 33,
+    RETROK_QUOTEDBL = 34,
+    RETROK_HASH = 35,
+    RETROK_DOLLAR = 36,
+    RETROK_AMPERSAND = 38,
+    RETROK_QUOTE = 39,
+    RETROK_LEFTPAREN = 40,
+    RETROK_RIGHTPAREN = 41,
+    RETROK_ASTERISK = 42,
+    RETROK_PLUS = 43,
+    RETROK_COMMA = 44,
+    RETROK_MINUS = 45,
+    RETROK_PERIOD = 46,
+    RETROK_SLASH = 47,
+    RETROK_0 = 48,
+    RETROK_1 = 49,
+    RETROK_2 = 50,
+    RETROK_3 = 51,
+    RETROK_4 = 52,
+    RETROK_5 = 53,
+    RETROK_6 = 54,
+    RETROK_7 = 55,
+    RETROK_8 = 56,
+    RETROK_9 = 57,
+    RETROK_COLON = 58,
+    RETROK_SEMICOLON = 59,
+    RETROK_LESS = 60,
+    RETROK_EQUALS = 61,
+    RETROK_GREATER = 62,
+    RETROK_QUESTION = 63,
+    RETROK_AT = 64,
+    RETROK_LEFTBRACKET = 91,
+    RETROK_BACKSLASH = 92,
+    RETROK_RIGHTBRACKET = 93,
+    RETROK_CARET = 94,
+    RETROK_UNDERSCORE = 95,
+    RETROK_BACKQUOTE = 96,
+    RETROK_a = 97,
+    RETROK_b = 98,
+    RETROK_c = 99,
+    RETROK_d = 100,
+    RETROK_e = 101,
+    RETROK_f = 102,
+    RETROK_g = 103,
+    RETROK_h = 104,
+    RETROK_i = 105,
+    RETROK_j = 106,
+    RETROK_k = 107,
+    RETROK_l = 108,
+    RETROK_m = 109,
+    RETROK_n = 110,
+    RETROK_o = 111,
+    RETROK_p = 112,
+    RETROK_q = 113,
+    RETROK_r = 114,
+    RETROK_s = 115,
+    RETROK_t = 116,
+    RETROK_u = 117,
+    RETROK_v = 118,
+    RETROK_w = 119,
+    RETROK_x = 120,
+    RETROK_y = 121,
+    RETROK_z = 122,
+    RETROK_DELETE = 127,
 
-  RETROK_KP0 = 256,
-  RETROK_KP1 = 257,
-  RETROK_KP2 = 258,
-  RETROK_KP3 = 259,
-  RETROK_KP4 = 260,
-  RETROK_KP5 = 261,
-  RETROK_KP6 = 262,
-  RETROK_KP7 = 263,
-  RETROK_KP8 = 264,
-  RETROK_KP9 = 265,
-  RETROK_KP_PERIOD = 266,
-  RETROK_KP_DIVIDE = 267,
-  RETROK_KP_MULTIPLY = 268,
-  RETROK_KP_MINUS = 269,
-  RETROK_KP_PLUS = 270,
-  RETROK_KP_ENTER = 271,
-  RETROK_KP_EQUALS = 272,
+    RETROK_KP0 = 256,
+    RETROK_KP1 = 257,
+    RETROK_KP2 = 258,
+    RETROK_KP3 = 259,
+    RETROK_KP4 = 260,
+    RETROK_KP5 = 261,
+    RETROK_KP6 = 262,
+    RETROK_KP7 = 263,
+    RETROK_KP8 = 264,
+    RETROK_KP9 = 265,
+    RETROK_KP_PERIOD = 266,
+    RETROK_KP_DIVIDE = 267,
+    RETROK_KP_MULTIPLY = 268,
+    RETROK_KP_MINUS = 269,
+    RETROK_KP_PLUS = 270,
+    RETROK_KP_ENTER = 271,
+    RETROK_KP_EQUALS = 272,
 
-  RETROK_UP = 273,
-  RETROK_DOWN = 274,
-  RETROK_RIGHT = 275,
-  RETROK_LEFT = 276,
-  RETROK_INSERT = 277,
-  RETROK_HOME = 278,
-  RETROK_END = 279,
-  RETROK_PAGEUP = 280,
-  RETROK_PAGEDOWN = 281,
+    RETROK_UP = 273,
+    RETROK_DOWN = 274,
+    RETROK_RIGHT = 275,
+    RETROK_LEFT = 276,
+    RETROK_INSERT = 277,
+    RETROK_HOME = 278,
+    RETROK_END = 279,
+    RETROK_PAGEUP = 280,
+    RETROK_PAGEDOWN = 281,
 
-  RETROK_F1 = 282,
-  RETROK_F2 = 283,
-  RETROK_F3 = 284,
-  RETROK_F4 = 285,
-  RETROK_F5 = 286,
-  RETROK_F6 = 287,
-  RETROK_F7 = 288,
-  RETROK_F8 = 289,
-  RETROK_F9 = 290,
-  RETROK_F10 = 291,
-  RETROK_F11 = 292,
-  RETROK_F12 = 293,
-  RETROK_F13 = 294,
-  RETROK_F14 = 295,
-  RETROK_F15 = 296,
+    RETROK_F1 = 282,
+    RETROK_F2 = 283,
+    RETROK_F3 = 284,
+    RETROK_F4 = 285,
+    RETROK_F5 = 286,
+    RETROK_F6 = 287,
+    RETROK_F7 = 288,
+    RETROK_F8 = 289,
+    RETROK_F9 = 290,
+    RETROK_F10 = 291,
+    RETROK_F11 = 292,
+    RETROK_F12 = 293,
+    RETROK_F13 = 294,
+    RETROK_F14 = 295,
+    RETROK_F15 = 296,
 
-  RETROK_NUMLOCK = 300,
-  RETROK_CAPSLOCK = 301,
-  RETROK_SCROLLOCK = 302,
-  RETROK_RSHIFT = 303,
-  RETROK_LSHIFT = 304,
-  RETROK_RCTRL = 305,
-  RETROK_LCTRL = 306,
-  RETROK_RALT = 307,
-  RETROK_LALT = 308,
-  RETROK_RMETA = 309,
-  RETROK_LMETA = 310,
-  RETROK_LSUPER = 311,
-  RETROK_RSUPER = 312,
-  RETROK_MODE = 313,
-  RETROK_COMPOSE = 314,
+    RETROK_NUMLOCK = 300,
+    RETROK_CAPSLOCK = 301,
+    RETROK_SCROLLOCK = 302,
+    RETROK_RSHIFT = 303,
+    RETROK_LSHIFT = 304,
+    RETROK_RCTRL = 305,
+    RETROK_LCTRL = 306,
+    RETROK_RALT = 307,
+    RETROK_LALT = 308,
+    RETROK_RMETA = 309,
+    RETROK_LMETA = 310,
+    RETROK_LSUPER = 311,
+    RETROK_RSUPER = 312,
+    RETROK_MODE = 313,
+    RETROK_COMPOSE = 314,
 
-  RETROK_HELP = 315,
-  RETROK_PRINT = 316,
-  RETROK_SYSREQ = 317,
-  RETROK_BREAK = 318,
-  RETROK_MENU = 319,
-  RETROK_POWER = 320,
-  RETROK_EURO = 321,
-  RETROK_UNDO = 322,
+    RETROK_HELP = 315,
+    RETROK_PRINT = 316,
+    RETROK_SYSREQ = 317,
+    RETROK_BREAK = 318,
+    RETROK_MENU = 319,
+    RETROK_POWER = 320,
+    RETROK_EURO = 321,
+    RETROK_UNDO = 322,
 
-  RETROK_LAST,
+    RETROK_LAST,
 
-  RETROK_DUMMY = INT_MAX /* Ensure sizeof(enum) == sizeof(int) */
+    RETROK_DUMMY = INT_MAX /* Ensure sizeof(enum) == sizeof(int) */
 };
 
 enum retro_mod {
-  RETROKMOD_NONE = 0x0000,
+    RETROKMOD_NONE = 0x0000,
 
-  RETROKMOD_SHIFT = 0x01,
-  RETROKMOD_CTRL = 0x02,
-  RETROKMOD_ALT = 0x04,
-  RETROKMOD_META = 0x08,
+    RETROKMOD_SHIFT = 0x01,
+    RETROKMOD_CTRL = 0x02,
+    RETROKMOD_ALT = 0x04,
+    RETROKMOD_META = 0x08,
 
-  RETROKMOD_NUMLOCK = 0x10,
-  RETROKMOD_CAPSLOCK = 0x20,
-  RETROKMOD_SCROLLOCK = 0x40,
+    RETROKMOD_NUMLOCK = 0x10,
+    RETROKMOD_CAPSLOCK = 0x20,
+    RETROKMOD_SCROLLOCK = 0x40,
 
-  RETROKMOD_DUMMY = INT_MAX /* Ensure sizeof(enum) == sizeof(int) */
+    RETROKMOD_DUMMY = INT_MAX /* Ensure sizeof(enum) == sizeof(int) */
 };
 
 /* If set, this call is not part of the public libretro API yet. It can
@@ -937,15 +937,15 @@ enum retro_mod {
  */
 
 enum retro_hw_render_interface_type {
-  RETRO_HW_RENDER_INTERFACE_VULKAN = 0,
-  RETRO_HW_RENDER_INTERFACE_DUMMY = INT_MAX
+    RETRO_HW_RENDER_INTERFACE_VULKAN = 0,
+    RETRO_HW_RENDER_INTERFACE_DUMMY = INT_MAX
 };
 
 /* Base struct. All retro_hw_render_interface_* types
  * contain at least these fields. */
 struct retro_hw_render_interface {
-  enum retro_hw_render_interface_type interface_type;
-  unsigned interface_version;
+    enum retro_hw_render_interface_type interface_type;
+    unsigned interface_version;
 };
 #define RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE                              \
   (41 | RETRO_ENVIRONMENT_EXPERIMENTAL)
@@ -971,15 +971,15 @@ struct retro_hw_render_interface {
  */
 
 enum retro_hw_render_context_negotiation_interface_type {
-  RETRO_HW_RENDER_CONTEXT_NEGOTIATION_INTERFACE_VULKAN = 0,
-  RETRO_HW_RENDER_CONTEXT_NEGOTIATION_INTERFACE_DUMMY = INT_MAX
+    RETRO_HW_RENDER_CONTEXT_NEGOTIATION_INTERFACE_VULKAN = 0,
+    RETRO_HW_RENDER_CONTEXT_NEGOTIATION_INTERFACE_DUMMY = INT_MAX
 };
 
 /* Base struct. All retro_hw_render_context_negotiation_interface_* types
  * contain at least these fields. */
 struct retro_hw_render_context_negotiation_interface {
-  enum retro_hw_render_context_negotiation_interface_type interface_type;
-  unsigned interface_version;
+    enum retro_hw_render_context_negotiation_interface_type interface_type;
+    unsigned interface_version;
 };
 #define RETRO_ENVIRONMENT_SET_HW_RENDER_CONTEXT_NEGOTIATION_INTERFACE          \
   (43 | RETRO_ENVIRONMENT_EXPERIMENTAL)
@@ -1039,110 +1039,110 @@ struct retro_hw_render_context_negotiation_interface {
 #define RETRO_MEMDESC_MINSIZE_4 (2 << 24)
 #define RETRO_MEMDESC_MINSIZE_8 (3 << 24)
 struct retro_memory_descriptor {
-  uint64_t flags;
+    uint64_t flags;
 
-  /* Pointer to the start of the relevant ROM or RAM chip.
-   * It's strongly recommended to use 'offset' if possible, rather than
-   * doing math on the pointer.
-   *
-   * If the same byte is mapped my multiple descriptors, their descriptors
-   * must have the same pointer.
-   * If 'start' does not point to the first byte in the pointer, put the
-   * difference in 'offset' instead.
-   *
-   * May be NULL if there's nothing usable here (e.g. hardware registers and
-   * open bus). No flags should be set if the pointer is NULL.
-   * It's recommended to minimize the number of descriptors if possible,
-   * but not mandatory. */
-  void *ptr;
-  size_t offset;
+    /* Pointer to the start of the relevant ROM or RAM chip.
+     * It's strongly recommended to use 'offset' if possible, rather than
+     * doing math on the pointer.
+     *
+     * If the same byte is mapped my multiple descriptors, their descriptors
+     * must have the same pointer.
+     * If 'start' does not point to the first byte in the pointer, put the
+     * difference in 'offset' instead.
+     *
+     * May be NULL if there's nothing usable here (e.g. hardware registers and
+     * open bus). No flags should be set if the pointer is NULL.
+     * It's recommended to minimize the number of descriptors if possible,
+     * but not mandatory. */
+    void *ptr;
+    size_t offset;
 
-  /* This is the location in the emulated address space
-   * where the mapping starts. */
-  size_t start;
+    /* This is the location in the emulated address space
+     * where the mapping starts. */
+    size_t start;
 
-  /* Which bits must be same as in 'start' for this mapping to apply.
-   * The first memory descriptor to claim a certain byte is the one
-   * that applies.
-   * A bit which is set in 'start' must also be set in this.
-   * Can be zero, in which case each byte is assumed mapped exactly once.
-   * In this case, 'len' must be a power of two. */
-  size_t select;
+    /* Which bits must be same as in 'start' for this mapping to apply.
+     * The first memory descriptor to claim a certain byte is the one
+     * that applies.
+     * A bit which is set in 'start' must also be set in this.
+     * Can be zero, in which case each byte is assumed mapped exactly once.
+     * In this case, 'len' must be a power of two. */
+    size_t select;
 
-  /* If this is nonzero, the set bits are assumed not connected to the
-   * memory chip's address pins. */
-  size_t disconnect;
+    /* If this is nonzero, the set bits are assumed not connected to the
+     * memory chip's address pins. */
+    size_t disconnect;
 
-  /* This one tells the size of the current memory area.
-   * If, after start+disconnect are applied, the address is higher than
-   * this, the highest bit of the address is cleared.
-   *
-   * If the address is still too high, the next highest bit is cleared.
-   * Can be zero, in which case it's assumed to be infinite (as limited
-   * by 'select' and 'disconnect'). */
-  size_t len;
+    /* This one tells the size of the current memory area.
+     * If, after start+disconnect are applied, the address is higher than
+     * this, the highest bit of the address is cleared.
+     *
+     * If the address is still too high, the next highest bit is cleared.
+     * Can be zero, in which case it's assumed to be infinite (as limited
+     * by 'select' and 'disconnect'). */
+    size_t len;
 
-  /* To go from emulated address to physical address, the following
-   * order applies:
-   * Subtract 'start', pick off 'disconnect', apply 'len', add 'offset'. */
+    /* To go from emulated address to physical address, the following
+     * order applies:
+     * Subtract 'start', pick off 'disconnect', apply 'len', add 'offset'. */
 
-  /* The address space name must consist of only a-zA-Z0-9_-,
-   * should be as short as feasible (maximum length is 8 plus the NUL),
-   * and may not be any other address space plus one or more 0-9A-F
-   * at the end.
-   * However, multiple memory descriptors for the same address space is
-   * allowed, and the address space name can be empty. NULL is treated
-   * as empty.
-   *
-   * Address space names are case sensitive, but avoid lowercase if possible.
-   * The same pointer may exist in multiple address spaces.
-   *
-   * Examples:
-   * blank+blank - valid (multiple things may be mapped in the same namespace)
-   * 'Sp'+'Sp' - valid (multiple things may be mapped in the same namespace)
-   * 'A'+'B' - valid (neither is a prefix of each other)
-   * 'S'+blank - valid ('S' is not in 0-9A-F)
-   * 'a'+blank - valid ('a' is not in 0-9A-F)
-   * 'a'+'A' - valid (neither is a prefix of each other)
-   * 'AR'+blank - valid ('R' is not in 0-9A-F)
-   * 'ARB'+blank - valid (the B can't be part of the address either, because
-   *                      there is no namespace 'AR')
-   * blank+'B' - not valid, because it's ambigous which address space B1234
-   *             would refer to.
-   * The length can't be used for that purpose; the frontend may want
-   * to append arbitrary data to an address, without a separator. */
-  const char *addrspace;
+    /* The address space name must consist of only a-zA-Z0-9_-,
+     * should be as short as feasible (maximum length is 8 plus the NUL),
+     * and may not be any other address space plus one or more 0-9A-F
+     * at the end.
+     * However, multiple memory descriptors for the same address space is
+     * allowed, and the address space name can be empty. NULL is treated
+     * as empty.
+     *
+     * Address space names are case sensitive, but avoid lowercase if possible.
+     * The same pointer may exist in multiple address spaces.
+     *
+     * Examples:
+     * blank+blank - valid (multiple things may be mapped in the same namespace)
+     * 'Sp'+'Sp' - valid (multiple things may be mapped in the same namespace)
+     * 'A'+'B' - valid (neither is a prefix of each other)
+     * 'S'+blank - valid ('S' is not in 0-9A-F)
+     * 'a'+blank - valid ('a' is not in 0-9A-F)
+     * 'a'+'A' - valid (neither is a prefix of each other)
+     * 'AR'+blank - valid ('R' is not in 0-9A-F)
+     * 'ARB'+blank - valid (the B can't be part of the address either, because
+     *                      there is no namespace 'AR')
+     * blank+'B' - not valid, because it's ambigous which address space B1234
+     *             would refer to.
+     * The length can't be used for that purpose; the frontend may want
+     * to append arbitrary data to an address, without a separator. */
+    const char *addrspace;
 
-  /* TODO: When finalizing this one, add a description field, which should be
-   * "WRAM" or something roughly equally long. */
+    /* TODO: When finalizing this one, add a description field, which should be
+     * "WRAM" or something roughly equally long. */
 
-  /* TODO: When finalizing this one, replace 'select' with 'limit', which tells
-   * which bits can vary and still refer to the same address (limit = ~select).
-   * TODO: limit? range? vary? something else? */
+    /* TODO: When finalizing this one, replace 'select' with 'limit', which tells
+     * which bits can vary and still refer to the same address (limit = ~select).
+     * TODO: limit? range? vary? something else? */
 
-  /* TODO: When finalizing this one, if 'len' is above what 'select' (or
-   * 'limit') allows, it's bankswitched. Bankswitched data must have both 'len'
-   * and 'select' != 0, and the mappings don't tell how the system switches the
-   * banks. */
+    /* TODO: When finalizing this one, if 'len' is above what 'select' (or
+     * 'limit') allows, it's bankswitched. Bankswitched data must have both 'len'
+     * and 'select' != 0, and the mappings don't tell how the system switches the
+     * banks. */
 
-  /* TODO: When finalizing this one, fix the 'len' bit removal order.
-   * For len=0x1800, pointer 0x1C00 should go to 0x1400, not 0x0C00.
-   * Algorithm: Take bits highest to lowest, but if it goes above len, clear
-   * the most recent addition and continue on the next bit.
-   * TODO: Can the above be optimized? Is "remove the lowest bit set in both
-   * pointer and 'len'" equivalent? */
+    /* TODO: When finalizing this one, fix the 'len' bit removal order.
+     * For len=0x1800, pointer 0x1C00 should go to 0x1400, not 0x0C00.
+     * Algorithm: Take bits highest to lowest, but if it goes above len, clear
+     * the most recent addition and continue on the next bit.
+     * TODO: Can the above be optimized? Is "remove the lowest bit set in both
+     * pointer and 'len'" equivalent? */
 
-  /* TODO: Some emulators (MAME?) emulate big endian systems by only accessing
-   * the emulated memory in 32-bit chunks, native endian. But that's nothing
-   * compared to Darek Mihocka <http://www.emulators.com/docs/nx07_vm101.htm>
-   * (section Emulation 103 - Nearly Free Byte Reversal) - he flips the ENTIRE
-   * RAM backwards! I'll want to represent both of those, via some flags.
-   *
-   * I suspect MAME either didn't think of that idea, or don't want the #ifdef.
-   * Not sure which, nor do I really care. */
+    /* TODO: Some emulators (MAME?) emulate big endian systems by only accessing
+     * the emulated memory in 32-bit chunks, native endian. But that's nothing
+     * compared to Darek Mihocka <http://www.emulators.com/docs/nx07_vm101.htm>
+     * (section Emulation 103 - Nearly Free Byte Reversal) - he flips the ENTIRE
+     * RAM backwards! I'll want to represent both of those, via some flags.
+     *
+     * I suspect MAME either didn't think of that idea, or don't want the #ifdef.
+     * Not sure which, nor do I really care. */
 
-  /* TODO: Some of those flags are unused and/or don't really make sense. Clean
-   * them up. */
+    /* TODO: Some of those flags are unused and/or don't really make sense. Clean
+     * them up. */
 };
 
 /* The frontend may use the largest value of 'start'+'select' in a
@@ -1184,86 +1184,86 @@ struct retro_memory_descriptor {
  */
 
 struct retro_memory_map {
-  const struct retro_memory_descriptor *descriptors;
-  unsigned num_descriptors;
+    const struct retro_memory_descriptor *descriptors;
+    unsigned num_descriptors;
 };
 
 struct retro_controller_description {
-  /* Human-readable description of the controller. Even if using a generic
-   * input device type, this can be set to the particular device type the
-   * core uses. */
-  const char *desc;
+    /* Human-readable description of the controller. Even if using a generic
+     * input device type, this can be set to the particular device type the
+     * core uses. */
+    const char *desc;
 
-  /* Device type passed to retro_set_controller_port_device(). If the device
-   * type is a sub-class of a generic input device type, use the
-   * RETRO_DEVICE_SUBCLASS macro to create an ID.
-   *
-   * E.g. RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 1). */
-  unsigned id;
+    /* Device type passed to retro_set_controller_port_device(). If the device
+     * type is a sub-class of a generic input device type, use the
+     * RETRO_DEVICE_SUBCLASS macro to create an ID.
+     *
+     * E.g. RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 1). */
+    unsigned id;
 };
 
 struct retro_controller_info {
-  const struct retro_controller_description *types;
-  unsigned num_types;
+    const struct retro_controller_description *types;
+    unsigned num_types;
 };
 
 struct retro_subsystem_memory_info {
-  /* The extension associated with a memory type, e.g. "psram". */
-  const char *extension;
+    /* The extension associated with a memory type, e.g. "psram". */
+    const char *extension;
 
-  /* The memory type for retro_get_memory(). This should be at
-   * least 0x100 to avoid conflict with standardized
-   * libretro memory types. */
-  unsigned type;
+    /* The memory type for retro_get_memory(). This should be at
+     * least 0x100 to avoid conflict with standardized
+     * libretro memory types. */
+    unsigned type;
 };
 
 struct retro_subsystem_rom_info {
-  /* Describes what the content is (SGB BIOS, GB ROM, etc). */
-  const char *desc;
+    /* Describes what the content is (SGB BIOS, GB ROM, etc). */
+    const char *desc;
 
-  /* Same definition as retro_get_system_info(). */
-  const char *valid_extensions;
+    /* Same definition as retro_get_system_info(). */
+    const char *valid_extensions;
 
-  /* Same definition as retro_get_system_info(). */
-  bool need_fullpath;
+    /* Same definition as retro_get_system_info(). */
+    bool need_fullpath;
 
-  /* Same definition as retro_get_system_info(). */
-  bool block_extract;
+    /* Same definition as retro_get_system_info(). */
+    bool block_extract;
 
-  /* This is set if the content is required to load a game.
-   * If this is set to false, a zeroed-out retro_game_info can be passed. */
-  bool required;
+    /* This is set if the content is required to load a game.
+     * If this is set to false, a zeroed-out retro_game_info can be passed. */
+    bool required;
 
-  /* Content can have multiple associated persistent
-   * memory types (retro_get_memory()). */
-  const struct retro_subsystem_memory_info *memory;
-  unsigned num_memory;
+    /* Content can have multiple associated persistent
+     * memory types (retro_get_memory()). */
+    const struct retro_subsystem_memory_info *memory;
+    unsigned num_memory;
 };
 
 struct retro_subsystem_info {
-  /* Human-readable string of the subsystem type, e.g. "Super GameBoy" */
-  const char *desc;
+    /* Human-readable string of the subsystem type, e.g. "Super GameBoy" */
+    const char *desc;
 
-  /* A computer friendly short string identifier for the subsystem type.
-   * This name must be [a-z].
-   * E.g. if desc is "Super GameBoy", this can be "sgb".
-   * This identifier can be used for command-line interfaces, etc.
-   */
-  const char *ident;
+    /* A computer friendly short string identifier for the subsystem type.
+     * This name must be [a-z].
+     * E.g. if desc is "Super GameBoy", this can be "sgb".
+     * This identifier can be used for command-line interfaces, etc.
+     */
+    const char *ident;
 
-  /* Infos for each content file. The first entry is assumed to be the
-   * "most significant" content for frontend purposes.
-   * E.g. with Super GameBoy, the first content should be the GameBoy ROM,
-   * as it is the most "significant" content to a user.
-   * If a frontend creates new file paths based on the content used
-   * (e.g. savestates), it should use the path for the first ROM to do so. */
-  const struct retro_subsystem_rom_info *roms;
+    /* Infos for each content file. The first entry is assumed to be the
+     * "most significant" content for frontend purposes.
+     * E.g. with Super GameBoy, the first content should be the GameBoy ROM,
+     * as it is the most "significant" content to a user.
+     * If a frontend creates new file paths based on the content used
+     * (e.g. savestates), it should use the path for the first ROM to do so. */
+    const struct retro_subsystem_rom_info *roms;
 
-  /* Number of content files associated with a subsystem. */
-  unsigned num_roms;
+    /* Number of content files associated with a subsystem. */
+    unsigned num_roms;
 
-  /* The type passed to retro_load_game_special(). */
-  unsigned id;
+    /* The type passed to retro_load_game_special(). */
+    unsigned id;
 };
 
 typedef void(RETRO_CALLCONV *retro_proc_address_t)(void);
@@ -1286,24 +1286,24 @@ typedef retro_proc_address_t(RETRO_CALLCONV *retro_get_proc_address_t)(
     const char *sym);
 
 struct retro_get_proc_address_interface {
-  retro_get_proc_address_t get_proc_address;
+    retro_get_proc_address_t get_proc_address;
 };
 
 enum retro_log_level {
-  RETRO_LOG_DEBUG = 0,
-  RETRO_LOG_INFO,
-  RETRO_LOG_WARN,
-  RETRO_LOG_ERROR,
+    RETRO_LOG_DEBUG = 0,
+    RETRO_LOG_INFO,
+    RETRO_LOG_WARN,
+    RETRO_LOG_ERROR,
 
-  RETRO_LOG_DUMMY = INT_MAX
+    RETRO_LOG_DUMMY = INT_MAX
 };
 
 /* Logging function. Takes log level argument as well. */
 typedef void(RETRO_CALLCONV *retro_log_printf_t)(enum retro_log_level level,
-                                                 const char *fmt, ...);
+        const char *fmt, ...);
 
 struct retro_log_callback {
-  retro_log_printf_t log;
+    retro_log_printf_t log;
 };
 
 /* Performance related functions */
@@ -1336,12 +1336,12 @@ typedef uint64_t retro_perf_tick_t;
 typedef int64_t retro_time_t;
 
 struct retro_perf_counter {
-  const char *ident;
-  retro_perf_tick_t start;
-  retro_perf_tick_t total;
-  retro_perf_tick_t call_cnt;
+    const char *ident;
+    retro_perf_tick_t start;
+    retro_perf_tick_t total;
+    retro_perf_tick_t call_cnt;
 
-  bool registered;
+    bool registered;
 };
 
 /* Returns current time in microseconds.
@@ -1414,24 +1414,24 @@ typedef void(RETRO_CALLCONV *retro_perf_stop_t)(
  */
 
 struct retro_perf_callback {
-  retro_perf_get_time_usec_t get_time_usec;
-  retro_get_cpu_features_t get_cpu_features;
+    retro_perf_get_time_usec_t get_time_usec;
+    retro_get_cpu_features_t get_cpu_features;
 
-  retro_perf_get_counter_t get_perf_counter;
-  retro_perf_register_t perf_register;
-  retro_perf_start_t perf_start;
-  retro_perf_stop_t perf_stop;
-  retro_perf_log_t perf_log;
+    retro_perf_get_counter_t get_perf_counter;
+    retro_perf_register_t perf_register;
+    retro_perf_start_t perf_start;
+    retro_perf_stop_t perf_stop;
+    retro_perf_log_t perf_log;
 };
 
 /* FIXME: Document the sensor API and work out behavior.
  * It will be marked as experimental until then.
  */
 enum retro_sensor_action {
-  RETRO_SENSOR_ACCELEROMETER_ENABLE = 0,
-  RETRO_SENSOR_ACCELEROMETER_DISABLE,
+    RETRO_SENSOR_ACCELEROMETER_ENABLE = 0,
+    RETRO_SENSOR_ACCELEROMETER_DISABLE,
 
-  RETRO_SENSOR_DUMMY = INT_MAX
+    RETRO_SENSOR_DUMMY = INT_MAX
 };
 
 /* Id values for SENSOR types. */
@@ -1443,18 +1443,18 @@ typedef bool(RETRO_CALLCONV *retro_set_sensor_state_t)(
     unsigned port, enum retro_sensor_action action, unsigned rate);
 
 typedef float(RETRO_CALLCONV *retro_sensor_get_input_t)(unsigned port,
-                                                        unsigned id);
+        unsigned id);
 
 struct retro_sensor_interface {
-  retro_set_sensor_state_t set_sensor_state;
-  retro_sensor_get_input_t get_sensor_input;
+    retro_set_sensor_state_t set_sensor_state;
+    retro_sensor_get_input_t get_sensor_input;
 };
 
 enum retro_camera_buffer {
-  RETRO_CAMERA_BUFFER_OPENGL_TEXTURE = 0,
-  RETRO_CAMERA_BUFFER_RAW_FRAMEBUFFER,
+    RETRO_CAMERA_BUFFER_OPENGL_TEXTURE = 0,
+    RETRO_CAMERA_BUFFER_RAW_FRAMEBUFFER,
 
-  RETRO_CAMERA_BUFFER_DUMMY = INT_MAX
+    RETRO_CAMERA_BUFFER_DUMMY = INT_MAX
 };
 
 /* Starts the camera driver. Can only be called in retro_run(). */
@@ -1499,37 +1499,37 @@ typedef void(RETRO_CALLCONV *retro_camera_frame_opengl_texture_t)(
     unsigned texture_id, unsigned texture_target, const float *affine);
 
 struct retro_camera_callback {
-  /* Set by libretro core.
-   * Example bitmask: caps = (1 << RETRO_CAMERA_BUFFER_OPENGL_TEXTURE) | (1 <<
-   * RETRO_CAMERA_BUFFER_RAW_FRAMEBUFFER).
-   */
-  uint64_t caps;
+    /* Set by libretro core.
+     * Example bitmask: caps = (1 << RETRO_CAMERA_BUFFER_OPENGL_TEXTURE) | (1 <<
+     * RETRO_CAMERA_BUFFER_RAW_FRAMEBUFFER).
+     */
+    uint64_t caps;
 
-  /* Desired resolution for camera. Is only used as a hint. */
-  unsigned width;
-  unsigned height;
+    /* Desired resolution for camera. Is only used as a hint. */
+    unsigned width;
+    unsigned height;
 
-  /* Set by frontend. */
-  retro_camera_start_t start;
-  retro_camera_stop_t stop;
+    /* Set by frontend. */
+    retro_camera_start_t start;
+    retro_camera_stop_t stop;
 
-  /* Set by libretro core if raw framebuffer callbacks will be used. */
-  retro_camera_frame_raw_framebuffer_t frame_raw_framebuffer;
+    /* Set by libretro core if raw framebuffer callbacks will be used. */
+    retro_camera_frame_raw_framebuffer_t frame_raw_framebuffer;
 
-  /* Set by libretro core if OpenGL texture callbacks will be used. */
-  retro_camera_frame_opengl_texture_t frame_opengl_texture;
+    /* Set by libretro core if OpenGL texture callbacks will be used. */
+    retro_camera_frame_opengl_texture_t frame_opengl_texture;
 
-  /* Set by libretro core. Called after camera driver is initialized and
-   * ready to be started.
-   * Can be NULL, in which this callback is not called.
-   */
-  retro_camera_lifetime_status_t initialized;
+    /* Set by libretro core. Called after camera driver is initialized and
+     * ready to be started.
+     * Can be NULL, in which this callback is not called.
+     */
+    retro_camera_lifetime_status_t initialized;
 
-  /* Set by libretro core. Called right before camera driver is
-   * deinitialized.
-   * Can be NULL, in which this callback is not called.
-   */
-  retro_camera_lifetime_status_t deinitialized;
+    /* Set by libretro core. Called right before camera driver is
+     * deinitialized.
+     * Can be NULL, in which this callback is not called.
+     */
+    retro_camera_lifetime_status_t deinitialized;
 };
 
 /* Sets the interval of time and/or distance at which to update/poll
@@ -1565,20 +1565,20 @@ typedef bool(RETRO_CALLCONV *retro_location_get_position_t)(
 typedef void(RETRO_CALLCONV *retro_location_lifetime_status_t)(void);
 
 struct retro_location_callback {
-  retro_location_start_t start;
-  retro_location_stop_t stop;
-  retro_location_get_position_t get_position;
-  retro_location_set_interval_t set_interval;
+    retro_location_start_t start;
+    retro_location_stop_t stop;
+    retro_location_get_position_t get_position;
+    retro_location_set_interval_t set_interval;
 
-  retro_location_lifetime_status_t initialized;
-  retro_location_lifetime_status_t deinitialized;
+    retro_location_lifetime_status_t initialized;
+    retro_location_lifetime_status_t deinitialized;
 };
 
 enum retro_rumble_effect {
-  RETRO_RUMBLE_STRONG = 0,
-  RETRO_RUMBLE_WEAK = 1,
+    RETRO_RUMBLE_STRONG = 0,
+    RETRO_RUMBLE_WEAK = 1,
 
-  RETRO_RUMBLE_DUMMY = INT_MAX
+    RETRO_RUMBLE_DUMMY = INT_MAX
 };
 
 /* Sets rumble state for joypad plugged in port 'port'.
@@ -1592,7 +1592,7 @@ typedef bool(RETRO_CALLCONV *retro_set_rumble_state_t)(
     unsigned port, enum retro_rumble_effect effect, uint16_t strength);
 
 struct retro_rumble_interface {
-  retro_set_rumble_state_t set_rumble_state;
+    retro_set_rumble_state_t set_rumble_state;
 };
 
 /* Notifies libretro that audio data should be written. */
@@ -1608,8 +1608,8 @@ typedef void(RETRO_CALLCONV *retro_audio_callback_t)(void);
 typedef void(RETRO_CALLCONV *retro_audio_set_state_callback_t)(bool enabled);
 
 struct retro_audio_callback {
-  retro_audio_callback_t callback;
-  retro_audio_set_state_callback_t set_state;
+    retro_audio_callback_t callback;
+    retro_audio_set_state_callback_t set_state;
 };
 
 /* Notifies a libretro core of time spent since last invocation
@@ -1623,11 +1623,11 @@ struct retro_audio_callback {
 typedef int64_t retro_usec_t;
 typedef void(RETRO_CALLCONV *retro_frame_time_callback_t)(retro_usec_t usec);
 struct retro_frame_time_callback {
-  retro_frame_time_callback_t callback;
-  /* Represents the time of one frame. It is computed as
-   * 1000000 / fps, but the implementation will resolve the
-   * rounding to ensure that framestepping, etc is exact. */
-  retro_usec_t reference;
+    retro_frame_time_callback_t callback;
+    /* Represents the time of one frame. It is computed as
+     * 1000000 / fps, but the implementation will resolve the
+     * rounding to ensure that framestepping, etc is exact. */
+    retro_usec_t reference;
 };
 
 /* Pass this to retro_video_refresh_t if rendering to hardware.
@@ -1656,108 +1656,108 @@ typedef retro_proc_address_t(RETRO_CALLCONV *retro_hw_get_proc_address_t)(
     const char *sym);
 
 enum retro_hw_context_type {
-  RETRO_HW_CONTEXT_NONE = 0,
-  /* OpenGL 2.x. Driver can choose to use latest compatibility context. */
-  RETRO_HW_CONTEXT_OPENGL = 1,
-  /* OpenGL ES 2.0. */
-  RETRO_HW_CONTEXT_OPENGLES2 = 2,
-  /* Modern desktop core GL context. Use version_major/
-   * version_minor fields to set GL version. */
-  RETRO_HW_CONTEXT_OPENGL_CORE = 3,
-  /* OpenGL ES 3.0 */
-  RETRO_HW_CONTEXT_OPENGLES3 = 4,
-  /* OpenGL ES 3.1+. Set version_major/version_minor. For GLES2 and GLES3,
-   * use the corresponding enums directly. */
-  RETRO_HW_CONTEXT_OPENGLES_VERSION = 5,
+    RETRO_HW_CONTEXT_NONE = 0,
+    /* OpenGL 2.x. Driver can choose to use latest compatibility context. */
+    RETRO_HW_CONTEXT_OPENGL = 1,
+    /* OpenGL ES 2.0. */
+    RETRO_HW_CONTEXT_OPENGLES2 = 2,
+    /* Modern desktop core GL context. Use version_major/
+     * version_minor fields to set GL version. */
+    RETRO_HW_CONTEXT_OPENGL_CORE = 3,
+    /* OpenGL ES 3.0 */
+    RETRO_HW_CONTEXT_OPENGLES3 = 4,
+    /* OpenGL ES 3.1+. Set version_major/version_minor. For GLES2 and GLES3,
+     * use the corresponding enums directly. */
+    RETRO_HW_CONTEXT_OPENGLES_VERSION = 5,
 
-  /* Vulkan, see RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE. */
-  RETRO_HW_CONTEXT_VULKAN = 6,
+    /* Vulkan, see RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE. */
+    RETRO_HW_CONTEXT_VULKAN = 6,
 
-  RETRO_HW_CONTEXT_DUMMY = INT_MAX
+    RETRO_HW_CONTEXT_DUMMY = INT_MAX
 };
 
 struct retro_hw_render_callback {
-  /* Which API to use. Set by libretro core. */
-  enum retro_hw_context_type context_type;
+    /* Which API to use. Set by libretro core. */
+    enum retro_hw_context_type context_type;
 
-  /* Called when a context has been created or when it has been reset.
-   * An OpenGL context is only valid after context_reset() has been called.
-   *
-   * When context_reset is called, OpenGL resources in the libretro
-   * implementation are guaranteed to be invalid.
-   *
-   * It is possible that context_reset is called multiple times during an
-   * application lifecycle.
-   * If context_reset is called without any notification (context_destroy),
-   * the OpenGL context was lost and resources should just be recreated
-   * without any attempt to "free" old resources.
-   */
-  retro_hw_context_reset_t context_reset;
+    /* Called when a context has been created or when it has been reset.
+     * An OpenGL context is only valid after context_reset() has been called.
+     *
+     * When context_reset is called, OpenGL resources in the libretro
+     * implementation are guaranteed to be invalid.
+     *
+     * It is possible that context_reset is called multiple times during an
+     * application lifecycle.
+     * If context_reset is called without any notification (context_destroy),
+     * the OpenGL context was lost and resources should just be recreated
+     * without any attempt to "free" old resources.
+     */
+    retro_hw_context_reset_t context_reset;
 
-  /* Set by frontend.
-   * TODO: This is rather obsolete. The frontend should not
-   * be providing preallocated framebuffers. */
-  retro_hw_get_current_framebuffer_t get_current_framebuffer;
+    /* Set by frontend.
+     * TODO: This is rather obsolete. The frontend should not
+     * be providing preallocated framebuffers. */
+    retro_hw_get_current_framebuffer_t get_current_framebuffer;
 
-  /* Set by frontend.
-   * Can return all relevant functions, including glClear on Windows. */
-  retro_hw_get_proc_address_t get_proc_address;
+    /* Set by frontend.
+     * Can return all relevant functions, including glClear on Windows. */
+    retro_hw_get_proc_address_t get_proc_address;
 
-  /* Set if render buffers should have depth component attached.
-   * TODO: Obsolete. */
-  bool depth;
+    /* Set if render buffers should have depth component attached.
+     * TODO: Obsolete. */
+    bool depth;
 
-  /* Set if stencil buffers should be attached.
-   * TODO: Obsolete. */
-  bool stencil;
+    /* Set if stencil buffers should be attached.
+     * TODO: Obsolete. */
+    bool stencil;
 
-  /* If depth and stencil are true, a packed 24/8 buffer will be added.
-   * Only attaching stencil is invalid and will be ignored. */
+    /* If depth and stencil are true, a packed 24/8 buffer will be added.
+     * Only attaching stencil is invalid and will be ignored. */
 
-  /* Use conventional bottom-left origin convention. If false,
-   * standard libretro top-left origin semantics are used.
-   * TODO: Move to GL specific interface. */
-  bool bottom_left_origin;
+    /* Use conventional bottom-left origin convention. If false,
+     * standard libretro top-left origin semantics are used.
+     * TODO: Move to GL specific interface. */
+    bool bottom_left_origin;
 
-  /* Major version number for core GL context or GLES 3.1+. */
-  unsigned version_major;
+    /* Major version number for core GL context or GLES 3.1+. */
+    unsigned version_major;
 
-  /* Minor version number for core GL context or GLES 3.1+. */
-  unsigned version_minor;
+    /* Minor version number for core GL context or GLES 3.1+. */
+    unsigned version_minor;
 
-  /* If this is true, the frontend will go very far to avoid
-   * resetting context in scenarios like toggling fullscreen, etc.
-   * TODO: Obsolete? Maybe frontend should just always assume this ...
-   */
-  bool cache_context;
+    /* If this is true, the frontend will go very far to avoid
+     * resetting context in scenarios like toggling fullscreen, etc.
+     * TODO: Obsolete? Maybe frontend should just always assume this ...
+     */
+    bool cache_context;
 
-  /* The reset callback might still be called in extreme situations
-   * such as if the context is lost beyond recovery.
-   *
-   * For optimal stability, set this to false, and allow context to be
-   * reset at any time.
-   */
+    /* The reset callback might still be called in extreme situations
+     * such as if the context is lost beyond recovery.
+     *
+     * For optimal stability, set this to false, and allow context to be
+     * reset at any time.
+     */
 
-  /* A callback to be called before the context is destroyed in a
-   * controlled way by the frontend. */
-  retro_hw_context_reset_t context_destroy;
+    /* A callback to be called before the context is destroyed in a
+     * controlled way by the frontend. */
+    retro_hw_context_reset_t context_destroy;
 
-  /* OpenGL resources can be deinitialized cleanly at this step.
-   * context_destroy can be set to NULL, in which resources will
-   * just be destroyed without any notification.
-   *
-   * Even when context_destroy is non-NULL, it is possible that
-   * context_reset is called without any destroy notification.
-   * This happens if context is lost by external factors (such as
-   * notified by GL_ARB_robustness).
-   *
-   * In this case, the context is assumed to be already dead,
-   * and the libretro implementation must not try to free any OpenGL
-   * resources in the subsequent context_reset.
-   */
+    /* OpenGL resources can be deinitialized cleanly at this step.
+     * context_destroy can be set to NULL, in which resources will
+     * just be destroyed without any notification.
+     *
+     * Even when context_destroy is non-NULL, it is possible that
+     * context_reset is called without any destroy notification.
+     * This happens if context is lost by external factors (such as
+     * notified by GL_ARB_robustness).
+     *
+     * In this case, the context is assumed to be already dead,
+     * and the libretro implementation must not try to free any OpenGL
+     * resources in the subsequent context_reset.
+     */
 
-  /* Creates a debug context. */
-  bool debug_context;
+    /* Creates a debug context. */
+    bool debug_context;
 };
 
 /* Callback type passed in RETRO_ENVIRONMENT_SET_KEYBOARD_CALLBACK.
@@ -1778,12 +1778,12 @@ struct retro_hw_render_callback {
  * character, character should be 0.
  */
 typedef void(RETRO_CALLCONV *retro_keyboard_event_t)(bool down,
-                                                     unsigned keycode,
-                                                     uint32_t character,
-                                                     uint16_t key_modifiers);
+        unsigned keycode,
+        uint32_t character,
+        uint16_t key_modifiers);
 
 struct retro_keyboard_callback {
-  retro_keyboard_event_t callback;
+    retro_keyboard_event_t callback;
 };
 
 /* Callbacks for RETRO_ENVIRONMENT_SET_DISK_CONTROL_INTERFACE.
@@ -1845,103 +1845,103 @@ typedef bool(RETRO_CALLCONV *retro_replace_image_index_t)(
 typedef bool(RETRO_CALLCONV *retro_add_image_index_t)(void);
 
 struct retro_disk_control_callback {
-  retro_set_eject_state_t set_eject_state;
-  retro_get_eject_state_t get_eject_state;
+    retro_set_eject_state_t set_eject_state;
+    retro_get_eject_state_t get_eject_state;
 
-  retro_get_image_index_t get_image_index;
-  retro_set_image_index_t set_image_index;
-  retro_get_num_images_t get_num_images;
+    retro_get_image_index_t get_image_index;
+    retro_set_image_index_t set_image_index;
+    retro_get_num_images_t get_num_images;
 
-  retro_replace_image_index_t replace_image_index;
-  retro_add_image_index_t add_image_index;
+    retro_replace_image_index_t replace_image_index;
+    retro_add_image_index_t add_image_index;
 };
 
 enum retro_pixel_format {
-  /* 0RGB1555, native endian.
-   * 0 bit must be set to 0.
-   * This pixel format is default for compatibility concerns only.
-   * If a 15/16-bit pixel format is desired, consider using RGB565. */
-  RETRO_PIXEL_FORMAT_0RGB1555 = 0,
+    /* 0RGB1555, native endian.
+     * 0 bit must be set to 0.
+     * This pixel format is default for compatibility concerns only.
+     * If a 15/16-bit pixel format is desired, consider using RGB565. */
+    RETRO_PIXEL_FORMAT_0RGB1555 = 0,
 
-  /* XRGB8888, native endian.
-   * X bits are ignored. */
-  RETRO_PIXEL_FORMAT_XRGB8888 = 1,
+    /* XRGB8888, native endian.
+     * X bits are ignored. */
+    RETRO_PIXEL_FORMAT_XRGB8888 = 1,
 
-  /* RGB565, native endian.
-   * This pixel format is the recommended format to use if a 15/16-bit
-   * format is desired as it is the pixel format that is typically
-   * available on a wide range of low-power devices.
-   *
-   * It is also natively supported in APIs like OpenGL ES. */
-  RETRO_PIXEL_FORMAT_RGB565 = 2,
+    /* RGB565, native endian.
+     * This pixel format is the recommended format to use if a 15/16-bit
+     * format is desired as it is the pixel format that is typically
+     * available on a wide range of low-power devices.
+     *
+     * It is also natively supported in APIs like OpenGL ES. */
+    RETRO_PIXEL_FORMAT_RGB565 = 2,
 
-  /* Ensure sizeof() == sizeof(int). */
-  RETRO_PIXEL_FORMAT_UNKNOWN = INT_MAX
+    /* Ensure sizeof() == sizeof(int). */
+    RETRO_PIXEL_FORMAT_UNKNOWN = INT_MAX
 };
 
 struct retro_message {
-  const char *msg; /* Message to be displayed. */
-  unsigned frames; /* Duration in frames of message. */
+    const char *msg; /* Message to be displayed. */
+    unsigned frames; /* Duration in frames of message. */
 };
 
 /* Describes how the libretro implementation maps a libretro input bind
  * to its internal input system through a human readable string.
  * This string can be used to better let a user configure input. */
 struct retro_input_descriptor {
-  /* Associates given parameters with a description. */
-  unsigned port;
-  unsigned device;
-  unsigned index;
-  unsigned id;
+    /* Associates given parameters with a description. */
+    unsigned port;
+    unsigned device;
+    unsigned index;
+    unsigned id;
 
-  /* Human readable description for parameters.
-   * The pointer must remain valid until
-   * retro_unload_game() is called. */
-  const char *description;
+    /* Human readable description for parameters.
+     * The pointer must remain valid until
+     * retro_unload_game() is called. */
+    const char *description;
 };
 
 struct retro_system_info {
-  /* All pointers are owned by libretro implementation, and pointers must
-   * remain valid until retro_deinit() is called. */
+    /* All pointers are owned by libretro implementation, and pointers must
+     * remain valid until retro_deinit() is called. */
 
-  const char *library_name;    /* Descriptive name of library. Should not
+    const char *library_name;    /* Descriptive name of library. Should not
                                 * contain any version numbers, etc. */
-  const char *library_version; /* Descriptive version of core. */
+    const char *library_version; /* Descriptive version of core. */
 
-  const char *valid_extensions; /* A string listing probably content
+    const char *valid_extensions; /* A string listing probably content
                                  * extensions the core will be able to
                                  * load, separated with pipe.
                                  * I.e. "bin|rom|iso".
                                  * Typically used for a GUI to filter
                                  * out extensions. */
 
-  /* If true, retro_load_game() is guaranteed to provide a valid pathname
-   * in retro_game_info::path.
-   * ::data and ::size are both invalid.
-   *
-   * If false, ::data and ::size are guaranteed to be valid, but ::path
-   * might not be valid.
-   *
-   * This is typically set to true for libretro implementations that must
-   * load from file.
-   * Implementations should strive for setting this to false, as it allows
-   * the frontend to perform patching, etc. */
-  bool need_fullpath;
+    /* If true, retro_load_game() is guaranteed to provide a valid pathname
+     * in retro_game_info::path.
+     * ::data and ::size are both invalid.
+     *
+     * If false, ::data and ::size are guaranteed to be valid, but ::path
+     * might not be valid.
+     *
+     * This is typically set to true for libretro implementations that must
+     * load from file.
+     * Implementations should strive for setting this to false, as it allows
+     * the frontend to perform patching, etc. */
+    bool need_fullpath;
 
-  /* If true, the frontend is not allowed to extract any archives before
-   * loading the real content.
-   * Necessary for certain libretro implementations that load games
-   * from zipped archives. */
-  bool block_extract;
+    /* If true, the frontend is not allowed to extract any archives before
+     * loading the real content.
+     * Necessary for certain libretro implementations that load games
+     * from zipped archives. */
+    bool block_extract;
 };
 
 struct retro_game_geometry {
-  unsigned base_width;  /* Nominal video width of game. */
-  unsigned base_height; /* Nominal video height of game. */
-  unsigned max_width;   /* Maximum possible width of game. */
-  unsigned max_height;  /* Maximum possible height of game. */
+    unsigned base_width;  /* Nominal video width of game. */
+    unsigned base_height; /* Nominal video height of game. */
+    unsigned max_width;   /* Maximum possible width of game. */
+    unsigned max_height;  /* Maximum possible height of game. */
 
-  float aspect_ratio; /* Nominal aspect ratio of game. If
+    float aspect_ratio; /* Nominal aspect ratio of game. If
                        * aspect_ratio is <= 0.0, an aspect ratio
                        * of base_width / base_height is assumed.
                        * A frontend could override this setting,
@@ -1949,40 +1949,40 @@ struct retro_game_geometry {
 };
 
 struct retro_system_timing {
-  double fps;         /* FPS of video content. */
-  double sample_rate; /* Sampling rate of audio. */
+    double fps;         /* FPS of video content. */
+    double sample_rate; /* Sampling rate of audio. */
 };
 
 struct retro_system_av_info {
-  struct retro_game_geometry geometry;
-  struct retro_system_timing timing;
+    struct retro_game_geometry geometry;
+    struct retro_system_timing timing;
 };
 
 struct retro_variable {
-  /* Variable to query in RETRO_ENVIRONMENT_GET_VARIABLE.
-   * If NULL, obtains the complete environment string if more
-   * complex parsing is necessary.
-   * The environment string is formatted as key-value pairs
-   * delimited by semicolons as so:
-   * "key1=value1;key2=value2;..."
-   */
-  const char *key;
+    /* Variable to query in RETRO_ENVIRONMENT_GET_VARIABLE.
+     * If NULL, obtains the complete environment string if more
+     * complex parsing is necessary.
+     * The environment string is formatted as key-value pairs
+     * delimited by semicolons as so:
+     * "key1=value1;key2=value2;..."
+     */
+    const char *key;
 
-  /* Value to be obtained. If key does not exist, it is set to NULL. */
-  const char *value;
+    /* Value to be obtained. If key does not exist, it is set to NULL. */
+    const char *value;
 };
 
 struct retro_game_info {
-  const char *path; /* Path to game, UTF-8 encoded.
+    const char *path; /* Path to game, UTF-8 encoded.
                      * Usually used as a reference.
                      * May be NULL if rom was loaded from stdin
                      * or similar.
                      * retro_system_info::need_fullpath guaranteed
                      * that this path is valid. */
-  const void *data; /* Memory buffer of loaded game. Will be NULL
+    const void *data; /* Memory buffer of loaded game. Will be NULL
                      * if need_fullpath was set. */
-  size_t size;      /* Size of memory buffer. */
-  const char *meta; /* String of implementation specific meta-data. */
+    size_t size;      /* Size of memory buffer. */
+    const char *meta; /* String of implementation specific meta-data. */
 };
 
 #define RETRO_MEMORY_ACCESS_WRITE (1 << 0)
@@ -1994,26 +1994,26 @@ struct retro_game_info {
  * If not cached, random writes and/or reading from the buffer is expected to be
  * very slow. */
 struct retro_framebuffer {
-  void *data;      /* The framebuffer which the core can render into.
+    void *data;      /* The framebuffer which the core can render into.
                      Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER.
                      The initial contents of data are unspecified. */
-  unsigned width;  /* The framebuffer width used by the core. Set by core. */
-  unsigned height; /* The framebuffer height used by the core. Set by core. */
-  size_t pitch;    /* The number of bytes between the beginning of a scanline,
+    unsigned width;  /* The framebuffer width used by the core. Set by core. */
+    unsigned height; /* The framebuffer height used by the core. Set by core. */
+    size_t pitch;    /* The number of bytes between the beginning of a scanline,
                      and beginning of the next scanline.
                      Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
-  enum retro_pixel_format
-      format; /* The pixel format the core must use to render into data.
+    enum retro_pixel_format
+    format; /* The pixel format the core must use to render into data.
                 This format could differ from the format used in
                 SET_PIXEL_FORMAT.
                 Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
 
-  unsigned
-      access_flags; /* How the core will access the memory in the framebuffer.
+    unsigned
+    access_flags; /* How the core will access the memory in the framebuffer.
                       RETRO_MEMORY_ACCESS_* flags.
                       Set by core. */
-  unsigned
-      memory_flags; /* Flags telling core how the memory has been mapped.
+    unsigned
+    memory_flags; /* Flags telling core how the memory has been mapped.
                       RETRO_MEMORY_TYPE_* flags.
                       Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
 };
@@ -2036,9 +2036,9 @@ typedef bool(RETRO_CALLCONV *retro_environment_t)(unsigned cmd, void *data);
  * that are not packed in memory.
  */
 typedef void(RETRO_CALLCONV *retro_video_refresh_t)(const void *data,
-                                                    unsigned width,
-                                                    unsigned height,
-                                                    size_t pitch);
+        unsigned width,
+        unsigned height,
+        size_t pitch);
 
 /* Renders a single audio frame. Should only be used if implementation
  * generates a single sample at a time.
@@ -2053,7 +2053,7 @@ typedef void(RETRO_CALLCONV *retro_audio_sample_t)(int16_t left, int16_t right);
  * Only one of the audio callbacks must ever be used.
  */
 typedef size_t(RETRO_CALLCONV *retro_audio_sample_batch_t)(const int16_t *data,
-                                                           size_t frames);
+        size_t frames);
 
 /* Polls input. */
 typedef void(RETRO_CALLCONV *retro_input_poll_t)(void);
@@ -2066,9 +2066,9 @@ typedef void(RETRO_CALLCONV *retro_input_poll_t)(void);
  * will still use the higher level RETRO_DEVICE_JOYPAD to request input.
  */
 typedef int16_t(RETRO_CALLCONV *retro_input_state_t)(unsigned port,
-                                                     unsigned device,
-                                                     unsigned index,
-                                                     unsigned id);
+        unsigned device,
+        unsigned index,
+        unsigned id);
 
 /* Sets callbacks. retro_set_environment() is guaranteed to be called
  * before retro_init().

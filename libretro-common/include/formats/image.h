@@ -27,24 +27,24 @@
 RETRO_BEGIN_DECLS
 
 enum image_process_code {
-  IMAGE_PROCESS_ERROR = -2,
-  IMAGE_PROCESS_ERROR_END = -1,
-  IMAGE_PROCESS_NEXT = 0,
-  IMAGE_PROCESS_END = 1
+    IMAGE_PROCESS_ERROR = -2,
+    IMAGE_PROCESS_ERROR_END = -1,
+    IMAGE_PROCESS_NEXT = 0,
+    IMAGE_PROCESS_END = 1
 };
 
 struct texture_image {
-  unsigned width;
-  unsigned height;
-  uint32_t *pixels;
+    unsigned width;
+    unsigned height;
+    uint32_t *pixels;
 };
 
 enum image_type_enum {
-  IMAGE_TYPE_NONE = 0,
-  IMAGE_TYPE_PNG,
-  IMAGE_TYPE_JPEG,
-  IMAGE_TYPE_BMP,
-  IMAGE_TYPE_TGA
+    IMAGE_TYPE_NONE = 0,
+    IMAGE_TYPE_PNG,
+    IMAGE_TYPE_JPEG,
+    IMAGE_TYPE_BMP,
+    IMAGE_TYPE_TGA
 };
 
 bool image_texture_set_color_shifts(unsigned *r_shift, unsigned *g_shift,
