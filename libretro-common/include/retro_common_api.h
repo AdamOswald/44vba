@@ -1,23 +1,28 @@
-/* Copyright  (C) 2010-2020 The RetroArch team
+/* Copyright  (C) 2010-2016 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
- * The following license statement only applies to this file (retro_common_api.h).
+ * The following license statement only applies to this file
+ * (retro_common_api.h).
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #ifndef _LIBRETRO_COMMON_RETRO_COMMON_API_H
@@ -25,8 +30,8 @@
 
 /*
 This file is designed to normalize the libretro-common compiling environment
-for public API headers. This should be leaner than a normal compiling environment,
-since it gets #included into other project's sources.
+for public API headers. This should be leaner than a normal compiling
+environment, since it gets #included into other project's sources.
 */
 
 /* ------------------------------------ */
@@ -75,44 +80,34 @@ typedef int ssize_t;
 #include <sys/types.h>
 #endif
 
-#ifdef _MSC_VER
-#if _MSC_VER >= 1800
-#include <inttypes.h>
+#ifdef _WIN32
+#define STRING_REP_INT64 "%I64u"
+#define STRING_REP_UINT64 "%I64u"
+#define STRING_REP_ULONG "%Iu"
+#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#define STRING_REP_INT64 "%llu"
+#define STRING_REP_UINT64 "%llu"
+#define STRING_REP_ULONG "%zu"
 #else
-#ifndef PRId64
-#define PRId64 "I64d"
-#define PRIu64 "I64u"
-#define PRIuPTR "Iu"
+#define STRING_REP_INT64 "%llu"
+#define STRING_REP_UINT64 "%llu"
+#define STRING_REP_ULONG "%lu"
 #endif
-#endif
-#else
-/* C++11 says this one isn't needed, but apparently (some versions of) mingw require it anyways */
-/* https://stackoverflow.com/questions/8132399/how-to-printf-uint64-t-fails-with-spurious-trailing-in-format */
-/* https://github.com/libretro/RetroArch/issues/6009 */
-#ifndef __STDC_FORMAT_MACROS
-#define __STDC_FORMAT_MACROS 1
-#endif
-#include <inttypes.h>
-#endif
-#ifndef PRId64
-#error "inttypes.h is being screwy"
-#endif
-#define STRING_REP_INT64 "%" PRId64
-#define STRING_REP_UINT64 "%" PRIu64
-#define STRING_REP_USIZE "%" PRIuPTR
 
 /*
 I would like to see retro_inline.h moved in here; possibly boolean too.
 
 rationale: these are used in public APIs, and it is easier to find problems
 and write code that works the first time portably when theyre included uniformly
-than to do the analysis from scratch each time you think you need it, for each feature.
+than to do the analysis from scratch each time you think you need it, for each
+feature.
 
-Moreover it helps force you to make hard decisions: if you EVER bring in boolean.h,
-then you should pay the price everywhere, so you can see how much grief it will cause.
+Moreover it helps force you to make hard decisions: if you EVER bring in
+boolean.h, then you should pay the price everywhere, so you can see how much
+grief it will cause.
 
-Of course, another school of thought is that you should do as little damage as possible
-in as few places as possible...
+Of course, another school of thought is that you should do as little damage as
+possible in as few places as possible...
 */
 
 /* _LIBRETRO_COMMON_RETRO_COMMON_API_H */

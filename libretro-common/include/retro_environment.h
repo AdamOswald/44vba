@@ -1,23 +1,28 @@
-/* Copyright  (C) 2010-2020 The RetroArch team
+/* Copyright  (C) 2010-2016 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
- * The following license statement only applies to this file (retro_environment.h).
+ * The following license statement only applies to this file
+ * (retro_environment.h).
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
- * to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #ifndef __LIBRETRO_SDK_ENVIRONMENT_H
@@ -31,7 +36,7 @@ This should be an elaborately crafted environment so that sources don't
 need to be full of platform-specific workarounds.
 */
 
-#if defined (__cplusplus)
+#if defined(__cplusplus)
 #if 0
 printf("This is C++, version %d.\n", __cplusplus);
 #endif
@@ -69,11 +74,12 @@ printf("This is C++, version %d.\n", __cplusplus);
 #define __STDC_C89__
 #endif
 
-#else   /* !defined(__STDC__) */
+#else /* !defined(__STDC__) */
 /* This is not standard C. __STDC__ is not defined. */
 #endif
 
-#if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(__MINGW32__)
+#if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) ||                \
+    defined(__MINGW32__)
 /* Try to find out if we're compiling for WinRT or non-WinRT */
 #if defined(_MSC_VER) && defined(__has_include)
 #if __has_include(<winapifamily.h>)
@@ -82,8 +88,11 @@ printf("This is C++, version %d.\n", __cplusplus);
 #define HAVE_WINAPIFAMILY_H 0
 #endif
 
-/* If _USING_V110_SDK71_ is defined it means we are using the Windows XP toolset. */
-#elif defined(_MSC_VER) && (_MSC_VER >= 1700 && !_USING_V110_SDK71_)    /* _MSC_VER == 1700 for Visual Studio 2012 */
+/* If _USING_V110_SDK71_ is defined it means we are using the Windows XP
+ * toolset. */
+#elif defined(_MSC_VER) &&                                                     \
+    (_MSC_VER >= 1700 &&                                                       \
+     !_USING_V110_SDK71_) /* _MSC_VER == 1700 for Visual Studio 2012 */
 #define HAVE_WINAPIFAMILY_H 1
 #else
 #define HAVE_WINAPIFAMILY_H 0
@@ -91,7 +100,9 @@ printf("This is C++, version %d.\n", __cplusplus);
 
 #if HAVE_WINAPIFAMILY_H
 #include <winapifamily.h>
-#define WINAPI_FAMILY_WINRT (!WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP))
+#define WINAPI_FAMILY_WINRT                                                    \
+  (!WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) &&                       \
+   WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP))
 #else
 #define WINAPI_FAMILY_WINRT 0
 #endif /* HAVE_WINAPIFAMILY_H */
