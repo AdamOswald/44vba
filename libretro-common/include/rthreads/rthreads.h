@@ -42,11 +42,29 @@ typedef struct scond scond_t;
  * @userdata                : pointer to userdata that will be made
  *                            available in thread entry callback function
  *
- * Create a new thread.
+ * Create a new thread using the operating system's default thread
+ * priority.
  *
  * Returns: pointer to new thread if successful, otherwise NULL.
  */
 sthread_t *sthread_create(void (*thread_func)(void*), void *userdata);
+
+/**
+ * sthread_create_with_priority:
+ * @start_routine           : thread entry callback function
+ * @userdata                : pointer to userdata that will be made
+ *                            available in thread entry callback function
+ * @thread_priority         : thread priority hint value from [1-100]
+ *
+ * Create a new thread. It is possible for the caller to give a hint
+ * for the thread's priority from [1-100]. Any passed in @thread_priority
+ * values that are outside of this range will cause sthread_create() to
+ * create a new thread using the operating system's default thread
+ * priority.
+ *
+ * Returns: pointer to new thread if successful, otherwise NULL.
+ */
+sthread_t *sthread_create_with_priority(void (*thread_func)(void*), void *userdata, int thread_priority);
 
 /**
  * sthread_detach:
@@ -69,8 +87,6 @@ int sthread_detach(sthread_t *thread);
  * @thread to terminate. If that thread has already terminated, then
  * it will return immediately. The thread specified by @thread must
  * be joinable.
- * 
- * Returns: 0 on success, otherwise it returns a non-zero error number.
  */
 void sthread_join(sthread_t *thread);
 
@@ -86,6 +102,16 @@ void sthread_join(sthread_t *thread);
  * Returns: true (1) if calling thread is the specified thread
  */
 bool sthread_isself(sthread_t *thread);
+
+/**
+ * sthread_set_name:
+ * @thread                  : pointer to thread object
+ * @name                    : name to define for the thread (at most
+ *                            15 bytes)
+ *
+ * Set the thread name, useful for debugging.
+ */
+void sthread_setname(sthread_t *thread, const char *name);
 
 /**
  * slock_new:
