@@ -36,8 +36,8 @@ extern "C" {
 /* Pre-MSVC 2015 compilers don't implement snprintf in a cross-platform manner.
  */
 #if _MSC_VER < 1900
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 #ifndef snprintf
 #define snprintf c99_snprintf_retro__
@@ -116,7 +116,7 @@ typedef int ssize_t;
 #define ceilf(x) ((float)ceil((double)x))
 #define floorf(x) ((float)floor((double)x))
 #define sqrtf(x) ((float)sqrt((double)x))
-#define fabsf(x)    ((float)fabs((double)(x)))
+#define fabsf(x) ((float)fabs((double)(x)))
 #endif
 
 #ifndef _strtoui64
