@@ -36,20 +36,20 @@
 RETRO_BEGIN_DECLS
 
 union string_list_elem_attr {
-  bool b;
-  int i;
-  void *p;
+    bool b;
+    int i;
+    void *p;
 };
 
 struct string_list_elem {
-  char *data;
-  union string_list_elem_attr attr;
+    char *data;
+    union string_list_elem_attr attr;
 };
 
 struct string_list {
-  struct string_list_elem *elems;
-  size_t size;
-  size_t cap;
+    struct string_list_elem *elems;
+    size_t size;
+    size_t cap;
 };
 
 /**

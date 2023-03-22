@@ -44,22 +44,22 @@ RETRO_BEGIN_DECLS
 typedef struct rxml_document rxml_document_t;
 
 struct rxml_attrib_node {
-  char *attrib;
-  char *value;
-  struct rxml_attrib_node *next;
+    char *attrib;
+    char *value;
+    struct rxml_attrib_node *next;
 };
 
 struct rxml_node {
-  char *name;
-  char *data;
-  struct rxml_attrib_node *attrib;
+    char *name;
+    char *data;
+    struct rxml_attrib_node *attrib;
 
-  struct rxml_node *children;
-  struct rxml_node *next;
+    struct rxml_node *children;
+    struct rxml_node *next;
 
-  /* Dummy. Used by libxml2 compat.
-   * Is always set to 0, so XML_ELEMENT_NODE check goes through. */
-  int type;
+    /* Dummy. Used by libxml2 compat.
+     * Is always set to 0, so XML_ELEMENT_NODE check goes through. */
+    int type;
 };
 
 rxml_document_t *rxml_load_document(const char *path);

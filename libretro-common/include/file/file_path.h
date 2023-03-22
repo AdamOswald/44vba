@@ -47,12 +47,12 @@ void path_vfs_init(const struct retro_vfs_interface_info *vfs_info);
 /* Order in this enum is equivalent to negative sort order in filelist
  *  (i.e. DIRECTORY is on top of PLAIN_FILE) */
 enum {
-  RARCH_FILETYPE_UNSET,
-  RARCH_PLAIN_FILE,
-  RARCH_COMPRESSED_FILE_IN_ARCHIVE,
-  RARCH_COMPRESSED_ARCHIVE,
-  RARCH_DIRECTORY,
-  RARCH_FILE_UNSUPPORTED
+    RARCH_FILETYPE_UNSET,
+    RARCH_PLAIN_FILE,
+    RARCH_COMPRESSED_FILE_IN_ARCHIVE,
+    RARCH_COMPRESSED_ARCHIVE,
+    RARCH_DIRECTORY,
+    RARCH_FILE_UNSUPPORTED
 };
 
 /**
@@ -442,10 +442,10 @@ size_t fill_pathname_join_delim_concat(char *out_path, const char *dir,
  *       "/path/to/myarchive.7z#folder/to/game.img" -> game.img
  */
 size_t fill_short_pathname_representation(char *out_rep, const char *in_path,
-                                          size_t size);
+        size_t size);
 
 void fill_short_pathname_representation_noext(char *out_rep,
-                                              const char *in_path, size_t size);
+        const char *in_path, size_t size);
 
 void fill_pathname_expand_special(char *out_path, const char *in_path,
                                   size_t size);
@@ -454,8 +454,8 @@ void fill_pathname_abbreviate_special(char *out_path, const char *in_path,
                                       size_t size);
 
 void fill_pathname_abbreviated_or_relative(char *out_path,
-                                           const char *in_refpath,
-                                           const char *in_path, size_t size);
+        const char *in_refpath,
+        const char *in_path, size_t size);
 
 void pathname_conform_slashes_to_os(char *path);
 
@@ -636,7 +636,7 @@ void fill_short_pathname_representation(char *out_rep, const char *in_path,
                                         size_t size);
 
 void fill_short_pathname_representation_noext(char *out_rep,
-                                              const char *in_path, size_t size);
+        const char *in_path, size_t size);
 
 void fill_pathname_expand_special(char *out_path, const char *in_path,
                                   size_t size);
@@ -654,9 +654,9 @@ void fill_pathname_abbreviate_special(char *out_path, const char *in_path,
  */
 static INLINE bool path_char_is_slash(char c) {
 #ifdef _WIN32
-  return (c == '/') || (c == '\\');
+    return (c == '/') || (c == '\\');
 #else
-  return (c == '/');
+    return (c == '/');
 #endif
 }
 
@@ -669,9 +669,9 @@ static INLINE bool path_char_is_slash(char c) {
  */
 static INLINE const char *path_default_slash(void) {
 #ifdef _WIN32
-  return "\\";
+    return "\\";
 #else
-  return "/";
+    return "/";
 #endif
 }
 

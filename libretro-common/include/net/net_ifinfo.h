@@ -33,13 +33,13 @@
 #include <boolean.h>
 
 struct net_ifinfo_entry {
-  char *name;
-  char *host;
+    char *name;
+    char *host;
 };
 
 struct net_ifinfo {
-  struct net_ifinfo_entry *entries;
-  size_t size;
+    struct net_ifinfo_entry *entries;
+    size_t size;
 };
 
 typedef struct net_ifinfo net_ifinfo_t;

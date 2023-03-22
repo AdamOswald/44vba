@@ -33,7 +33,7 @@
  */
 
 typedef struct math_matrix_4x4 {
-  float data[16];
+    float data[16];
 } math_matrix_4x4;
 
 #define MAT_ELEM_4X4(mat, r, c) ((mat).data[4 * (c) + (r)])

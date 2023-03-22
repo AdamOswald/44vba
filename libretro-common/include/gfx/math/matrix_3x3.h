@@ -30,7 +30,7 @@
 #include <boolean.h>
 
 typedef struct math_matrix_3x3 {
-  float data[9];
+    float data[9];
 } math_matrix_3x3;
 
 #define MAT_ELEM_3X3(mat, r, c) ((mat).data[3 * (r) + (c)])

@@ -42,14 +42,14 @@ typedef struct intfstream_internal intfstream_internal_t;
 typedef struct intfstream intfstream_t;
 
 typedef struct intfstream_info {
-  struct {
     struct {
-      uint8_t *data;
-      unsigned size;
-    } buf;
-    bool writable;
-  } memory;
-  enum intfstream_type type;
+        struct {
+            uint8_t *data;
+            unsigned size;
+        } buf;
+        bool writable;
+    } memory;
+    enum intfstream_type type;
 } intfstream_info_t;
 
 void *intfstream_init(intfstream_info_t *info);
