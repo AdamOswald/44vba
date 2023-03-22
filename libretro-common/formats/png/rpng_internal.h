@@ -39,18 +39,18 @@
 #endif
 
 static const uint8_t png_magic[8] = {
-   0x89, 'P', 'N', 'G', 0x0d, 0x0a, 0x1a, 0x0a,
+    0x89, 'P', 'N', 'G', 0x0d, 0x0a, 0x1a, 0x0a,
 };
 
 struct png_ihdr
 {
-   uint32_t width;
-   uint32_t height;
-   uint8_t depth;
-   uint8_t color_type;
-   uint8_t compression;
-   uint8_t filter;
-   uint8_t interlace;
+    uint32_t width;
+    uint32_t height;
+    uint8_t depth;
+    uint8_t color_type;
+    uint8_t compression;
+    uint8_t filter;
+    uint8_t interlace;
 };
 
 #endif

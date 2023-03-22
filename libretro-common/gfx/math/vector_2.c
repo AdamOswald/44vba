@@ -25,30 +25,30 @@
 
 #include <gfx/math/vector_2.h>
 
-float vec2_dot(const float *a, const float *b) 
+float vec2_dot(const float *a, const float *b)
 {
-	return (a[0]*b[0]) + (a[1]*b[1]);
+    return (a[0]*b[0]) + (a[1]*b[1]);
 }
 
-float vec2_cross(const float *a, const float *b) 
+float vec2_cross(const float *a, const float *b)
 {
-	return (a[0]*b[1]) - (a[1]*b[0]);
+    return (a[0]*b[1]) - (a[1]*b[0]);
 }
 
 void vec2_add(float *dst, const float *src)
 {
-	dst[0] += src[0];
-	dst[1] += src[1];
+    dst[0] += src[0];
+    dst[1] += src[1];
 }
 
 void vec2_subtract(float *dst, const float *src)
 {
-	dst[0] -= src[0];
-	dst[1] -= src[1];
+    dst[0] -= src[0];
+    dst[1] -= src[1];
 }
 
 void vec2_copy(float *dst, const float *src)
 {
-	dst[0] = src[0];
-	dst[1] = src[1];
+    dst[0] = src[0];
+    dst[1] = src[1];
 }
