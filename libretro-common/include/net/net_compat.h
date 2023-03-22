@@ -95,12 +95,12 @@
 #define socklen_t unsigned int
 
 struct hostent {
-    char *h_name;
-    char **h_aliases;
-    int h_addrtype;
-    int h_length;
-    char **h_addr_list;
-    char *h_addr;
+  char *h_name;
+  char **h_aliases;
+  int h_addrtype;
+  int h_length;
+  char **h_addr_list;
+  char *h_addr;
 };
 
 #else
@@ -143,16 +143,16 @@ struct hostent {
 
 static INLINE bool isagain(int bytes) {
 #if defined(_WIN32)
-    if (bytes != SOCKET_ERROR)
-        return false;
-    if (WSAGetLastError() != WSAEWOULDBLOCK)
-        return false;
-    return true;
+  if (bytes != SOCKET_ERROR)
+    return false;
+  if (WSAGetLastError() != WSAEWOULDBLOCK)
+    return false;
+  return true;
 #elif defined(VITA)
-    return (bytes < 0 && (bytes == SCE_NET_ERROR_EAGAIN ||
-                          bytes == SCE_NET_ERROR_EWOULDBLOCK));
+  return (bytes < 0 && (bytes == SCE_NET_ERROR_EAGAIN ||
+                        bytes == SCE_NET_ERROR_EWOULDBLOCK));
 #else
-    return (bytes < 0 && (errno == EAGAIN || errno == EWOULDBLOCK));
+  return (bytes < 0 && (errno == EAGAIN || errno == EWOULDBLOCK));
 #endif
 }
 
@@ -187,14 +187,14 @@ static INLINE bool isagain(int bytes) {
 #define addrinfo addrinfo_retro__
 
 struct addrinfo {
-    int ai_flags;
-    int ai_family;
-    int ai_socktype;
-    int ai_protocol;
-    size_t ai_addrlen;
-    struct sockaddr *ai_addr;
-    char *ai_canonname;
-    struct addrinfo *ai_next;
+  int ai_flags;
+  int ai_family;
+  int ai_socktype;
+  int ai_protocol;
+  size_t ai_addrlen;
+  struct sockaddr *ai_addr;
+  char *ai_canonname;
+  struct addrinfo *ai_next;
 };
 
 #ifndef AI_PASSIVE

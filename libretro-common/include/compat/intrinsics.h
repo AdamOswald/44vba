@@ -45,43 +45,41 @@ RETRO_BEGIN_DECLS
 /* Count Leading Zero, unsigned 16bit input value */
 static INLINE unsigned compat_clz_u16(uint16_t val) {
 #ifdef __GNUC__
-    return __builtin_clz(val << 16 | 0x8000);
+  return __builtin_clz(val << 16 | 0x8000);
 #else
-    unsigned ret = 0;
+  unsigned ret = 0;
 
-    while (!(val & 0x8000) && ret < 16) {
-        val <<= 1;
-        ret++;
-    }
+  while (!(val & 0x8000) && ret < 16) {
+    val <<= 1;
+    ret++;
+  }
 
-    return ret;
+  return ret;
 #endif
 }
 
 /* Count Trailing Zero */
 #if defined(__GNUC__) && !defined(RARCH_CONSOLE)
-static INLINE int compat_ctz(unsigned x) {
-    return __builtin_ctz(x);
-}
+static INLINE int compat_ctz(unsigned x) { return __builtin_ctz(x); }
 #elif _MSC_VER >= 1400
 static INLINE int compat_ctz(unsigned x) {
-    unsigned long r = 0;
-    _BitScanReverse((unsigned long *)&r, x);
-    return (int)r;
+  unsigned long r = 0;
+  _BitScanReverse((unsigned long *)&r, x);
+  return (int)r;
 }
 #else
 /* Only checks at nibble granularity,
  * because that's what we need. */
 static INLINE int compat_ctz(unsigned x) {
-    if (x & 0x000f)
-        return 0;
-    if (x & 0x00f0)
-        return 4;
-    if (x & 0x0f00)
-        return 8;
-    if (x & 0xf000)
-        return 12;
-    return 16;
+  if (x & 0x000f)
+    return 0;
+  if (x & 0x00f0)
+    return 4;
+  if (x & 0x0f00)
+    return 8;
+  if (x & 0xf000)
+    return 12;
+  return 16;
 }
 #endif
 
