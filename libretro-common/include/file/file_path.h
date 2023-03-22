@@ -42,17 +42,17 @@ RETRO_BEGIN_DECLS
 
 #define PATH_REQUIRED_VFS_VERSION 3
 
-void path_vfs_init(const struct retro_vfs_interface_info* vfs_info);
+void path_vfs_init(const struct retro_vfs_interface_info *vfs_info);
 
 /* Order in this enum is equivalent to negative sort order in filelist
  *  (i.e. DIRECTORY is on top of PLAIN_FILE) */
 enum {
-    RARCH_FILETYPE_UNSET,
-    RARCH_PLAIN_FILE,
-    RARCH_COMPRESSED_FILE_IN_ARCHIVE,
-    RARCH_COMPRESSED_ARCHIVE,
-    RARCH_DIRECTORY,
-    RARCH_FILE_UNSUPPORTED
+  RARCH_FILETYPE_UNSET,
+  RARCH_PLAIN_FILE,
+  RARCH_COMPRESSED_FILE_IN_ARCHIVE,
+  RARCH_COMPRESSED_ARCHIVE,
+  RARCH_DIRECTORY,
+  RARCH_FILE_UNSUPPORTED
 };
 
 /**
@@ -79,7 +79,8 @@ bool path_is_compressed_file(const char *path);
  *
  * Returns: true (1) if path contains compressed file, otherwise false (0).
  **/
-#define path_contains_compressed_file(path) (path_get_archive_delim((path)) != NULL)
+#define path_contains_compressed_file(path)                                    \
+  (path_get_archive_delim((path)) != NULL)
 bool path_contains_compressed_file(const char *path);
 
 /**
@@ -181,7 +182,8 @@ char *path_resolve_realpath(char *buf, size_t size, bool resolve_symlinks);
  *
  * E.g. path /a/b/e/f.cgp with base /a/b/c/d/ turns into ../../e/f.cgp
  **/
-size_t path_relative_to(char *out, const char *path, const char *base, size_t size);
+size_t path_relative_to(char *out, const char *path, const char *base,
+                        size_t size);
 void path_resolve_realpath(char *buf, size_t size);
 /**
  * path_is_absolute:
@@ -229,8 +231,7 @@ void fill_pathname(char *out_path, const char *in_path, const char *replace,
  * E.g.:
  * out_filename = "RetroArch-{month}{day}-{Hours}{Minutes}.{@ext}"
  **/
-size_t fill_dated_filename(char *out_filename,
-                           const char *ext, size_t size);
+size_t fill_dated_filename(char *out_filename, const char *ext, size_t size);
 
 /**
  * fill_str_dated_filename:
@@ -245,8 +246,8 @@ size_t fill_dated_filename(char *out_filename,
  * E.g.:
  * out_filename = "RetroArch-{year}{month}{day}-{Hour}{Minute}{Second}.{@ext}"
  **/
-void fill_str_dated_filename(char *out_filename,
-                             const char *in_str, const char *ext, size_t size);
+void fill_str_dated_filename(char *out_filename, const char *in_str,
+                             const char *ext, size_t size);
 void fill_dated_filename(char *out_filename, const char *ext, size_t size);
 
 /**
@@ -310,11 +311,9 @@ void fill_pathname_dir(char *in_dir, const char *in_basename,
  **/
 size_t fill_pathname_base(char *out_path, const char *in_path, size_t size);
 
-void fill_pathname_base_noext(char *out_dir,
-                              const char *in_path, size_t size);
+void fill_pathname_base_noext(char *out_dir, const char *in_path, size_t size);
 
-size_t fill_pathname_base_ext(char *out,
-                              const char *in_path, const char *ext,
+size_t fill_pathname_base_ext(char *out, const char *in_path, const char *ext,
                               size_t size);
 
 void fill_pathname_base(char *out_path, const char *in_path, size_t size);
@@ -336,8 +335,8 @@ void fill_pathname_base_ext(char *out, const char *in_path, const char *ext,
  **/
 void fill_pathname_basedir(char *out_path, const char *in_path, size_t size);
 
-void fill_pathname_basedir_noext(char *out_dir,
-                                 const char *in_path, size_t size);
+void fill_pathname_basedir_noext(char *out_dir, const char *in_path,
+                                 size_t size);
 
 /**
  * fill_pathname_parent_dir_name:
@@ -349,8 +348,8 @@ void fill_pathname_basedir_noext(char *out_dir,
  * The two buffers must not overlap. Removes trailing '/'.
  * Returns true on success, false if a slash was not found in the path.
  **/
-bool fill_pathname_parent_dir_name(char *out_dir,
-                                   const char *in_dir, size_t size);
+bool fill_pathname_parent_dir_name(char *out_dir, const char *in_dir,
+                                   size_t size);
 /**
  * fill_pathname_parent_dir:
  * @out_dir            : output directory
@@ -359,10 +358,10 @@ bool fill_pathname_parent_dir_name(char *out_dir,
  *
  * Copies parent directory of @in_dir into @out_dir.
  * Assumes @in_dir is a directory. Keeps trailing '/'.
- * If the path was already at the root directory, @out_dir will be an empty string.
+ * If the path was already at the root directory, @out_dir will be an empty
+ *string.
  **/
-void fill_pathname_parent_dir(char *out_dir,
-                              const char *in_dir, size_t size);
+void fill_pathname_parent_dir(char *out_dir, const char *in_dir, size_t size);
 
 /**
  * fill_pathname_resolve_relative:
@@ -390,26 +389,23 @@ void fill_pathname_resolve_relative(char *out_path, const char *in_refpath,
  * Makes sure not to get  two consecutive slashes
  * between directory and path.
  **/
-size_t fill_pathname_join(char *out_path, const char *dir,
-                          const char *path, size_t size);
+size_t fill_pathname_join(char *out_path, const char *dir, const char *path,
+                          size_t size);
 
-size_t fill_pathname_join_special_ext(char *out_path,
-                                      const char *dir,  const char *path,
-                                      const char *last, const char *ext,
-                                      size_t size);
+size_t fill_pathname_join_special_ext(char *out_path, const char *dir,
+                                      const char *path, const char *last,
+                                      const char *ext, size_t size);
 
-size_t fill_pathname_join_concat_noext(char *out_path,
-                                       const char *dir, const char *path,
-                                       const char *concat,
+size_t fill_pathname_join_concat_noext(char *out_path, const char *dir,
+                                       const char *path, const char *concat,
                                        size_t size);
 
-size_t fill_pathname_join_concat(char *out_path,
-                                 const char *dir, const char *path,
-                                 const char *concat,
+size_t fill_pathname_join_concat(char *out_path, const char *dir,
+                                 const char *path, const char *concat,
                                  size_t size);
 
-void fill_pathname_join_noext(char *out_path,
-                              const char *dir, const char *path, size_t size);
+void fill_pathname_join_noext(char *out_path, const char *dir, const char *path,
+                              size_t size);
 
 /**
  * fill_pathname_join_delim:
@@ -423,11 +419,12 @@ void fill_pathname_join_noext(char *out_path,
  * using the given delimiter (@delim).
  **/
 size_t fill_pathname_join_delim(char *out_path, const char *dir,
-                                const char *path, const char delim, size_t size);
+                                const char *path, const char delim,
+                                size_t size);
 
 size_t fill_pathname_join_delim_concat(char *out_path, const char *dir,
-                                       const char *path, const char delim, const char *concat,
-                                       size_t size);
+                                       const char *path, const char delim,
+                                       const char *concat, size_t size);
 
 /**
  * fill_short_pathname_representation:
@@ -437,26 +434,28 @@ size_t fill_pathname_join_delim_concat(char *out_path, const char *dir,
  *
  * Generates a short representation of path. It should only
  * be used for displaying the result; the output representation is not
- * binding in any meaningful way (for a normal path, this is the same as basename)
- * In case of more complex URLs, this should cut everything except for
+ * binding in any meaningful way (for a normal path, this is the same as
+ * basename) In case of more complex URLs, this should cut everything except for
  * the main image file.
  *
  * E.g.: "/path/to/game.img" -> game.img
  *       "/path/to/myarchive.7z#folder/to/game.img" -> game.img
  */
-size_t fill_short_pathname_representation(char* out_rep,
-        const char *in_path, size_t size);
+size_t fill_short_pathname_representation(char *out_rep, const char *in_path,
+                                          size_t size);
 
-void fill_short_pathname_representation_noext(char* out_rep,
-        const char *in_path, size_t size);
+void fill_short_pathname_representation_noext(char *out_rep,
+                                              const char *in_path, size_t size);
 
-void fill_pathname_expand_special(char *out_path,
-                                  const char *in_path, size_t size);
+void fill_pathname_expand_special(char *out_path, const char *in_path,
+                                  size_t size);
 
-void fill_pathname_abbreviate_special(char *out_path,
-                                      const char *in_path, size_t size);
+void fill_pathname_abbreviate_special(char *out_path, const char *in_path,
+                                      size_t size);
 
-void fill_pathname_abbreviated_or_relative(char *out_path, const char *in_refpath, const char *in_path, size_t size);
+void fill_pathname_abbreviated_or_relative(char *out_path,
+                                           const char *in_refpath,
+                                           const char *in_path, size_t size);
 
 void pathname_conform_slashes_to_os(char *path);
 
@@ -637,7 +636,7 @@ void fill_short_pathname_representation(char *out_rep, const char *in_path,
                                         size_t size);
 
 void fill_short_pathname_representation_noext(char *out_rep,
-        const char *in_path, size_t size);
+                                              const char *in_path, size_t size);
 
 void fill_pathname_expand_special(char *out_path, const char *in_path,
                                   size_t size);
@@ -655,9 +654,9 @@ void fill_pathname_abbreviate_special(char *out_path, const char *in_path,
  */
 static INLINE bool path_char_is_slash(char c) {
 #ifdef _WIN32
-    return (c == '/') || (c == '\\');
+  return (c == '/') || (c == '\\');
 #else
-    return (c == '/');
+  return (c == '/');
 #endif
 }
 
@@ -670,9 +669,9 @@ static INLINE bool path_char_is_slash(char c) {
  */
 static INLINE const char *path_default_slash(void) {
 #ifdef _WIN32
-    return "\\";
+  return "\\";
 #else
-    return "/";
+  return "/";
 #endif
 }
 
