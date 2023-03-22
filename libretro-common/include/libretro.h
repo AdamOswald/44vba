@@ -1995,27 +1995,27 @@ struct retro_game_info {
  * very slow. */
 struct retro_framebuffer {
   void *data;      /* The framebuffer which the core can render into.
-                     Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER.
-                     The initial contents of data are unspecified. */
+                   Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER.
+                   The initial contents of data are unspecified. */
   unsigned width;  /* The framebuffer width used by the core. Set by core. */
   unsigned height; /* The framebuffer height used by the core. Set by core. */
   size_t pitch;    /* The number of bytes between the beginning of a scanline,
-                     and beginning of the next scanline.
-                     Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
+                   and beginning of the next scanline.
+                   Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
   enum retro_pixel_format
       format; /* The pixel format the core must use to render into data.
-                This format could differ from the format used in
-                SET_PIXEL_FORMAT.
-                Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
+                  This format could differ from the format used in
+                  SET_PIXEL_FORMAT.
+                  Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
 
   unsigned
       access_flags; /* How the core will access the memory in the framebuffer.
-                      RETRO_MEMORY_ACCESS_* flags.
-                      Set by core. */
+                        RETRO_MEMORY_ACCESS_* flags.
+                        Set by core. */
   unsigned
       memory_flags; /* Flags telling core how the memory has been mapped.
-                      RETRO_MEMORY_TYPE_* flags.
-                      Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
+                        RETRO_MEMORY_TYPE_* flags.
+                        Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER. */
 };
 
 /* Callbacks */
