@@ -24,13 +24,13 @@
 #define __LIBRETRO_SDK_GFX_MATH_MATRIX_4X4_H__
 
 /* Column-major matrix (OpenGL-style).
- * Reimplements functionality from FF OpenGL pipeline to be able 
+ * Reimplements functionality from FF OpenGL pipeline to be able
  * to work on GLES 2.0 and modern GL variants.
  */
 
 typedef struct math_matrix_4x4
 {
-   float data[16];
+    float data[16];
 } math_matrix_4x4;
 
 #define MAT_ELEM_4X4(mat, r, c) ((mat).data[4 * (c) + (r)])
@@ -44,9 +44,9 @@ void matrix_4x4_rotate_y(math_matrix_4x4 *mat, float rad);
 void matrix_4x4_rotate_z(math_matrix_4x4 *mat, float rad);
 
 void matrix_4x4_ortho(math_matrix_4x4 *mat,
-      float left, float right,
-      float bottom, float top,
-      float znear, float zfar);
+                      float left, float right,
+                      float bottom, float top,
+                      float znear, float zfar);
 
 void matrix_4x4_multiply(math_matrix_4x4 *out, const math_matrix_4x4 *a, const math_matrix_4x4 *b);
 

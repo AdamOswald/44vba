@@ -33,29 +33,29 @@ RETRO_BEGIN_DECLS
 
 enum socket_domain
 {
-   SOCKET_DOMAIN_INET = 0
+    SOCKET_DOMAIN_INET = 0
 };
 
 enum socket_type
 {
-   SOCKET_TYPE_DATAGRAM = 0,
-   SOCKET_TYPE_STREAM,
-   SOCKET_TYPE_SEQPACKET
+    SOCKET_TYPE_DATAGRAM = 0,
+    SOCKET_TYPE_STREAM,
+    SOCKET_TYPE_SEQPACKET
 };
 
 enum socket_protocol
 {
-   SOCKET_PROTOCOL_NONE = 0,
-   SOCKET_PROTOCOL_TCP,
-   SOCKET_PROTOCOL_UDP
+    SOCKET_PROTOCOL_NONE = 0,
+    SOCKET_PROTOCOL_TCP,
+    SOCKET_PROTOCOL_UDP
 };
 
 typedef struct socket_target
 {
-   unsigned port;
-   const char *server;
-   enum socket_domain domain;
-   enum socket_protocol prot;
+    unsigned port;
+    const char *server;
+    enum socket_domain domain;
+    enum socket_protocol prot;
 } socket_target_t;
 
 int socket_init(void **address, uint16_t port, const char *server, enum socket_type type);
@@ -65,24 +65,24 @@ int socket_close(int fd);
 bool socket_nonblock(int fd);
 
 int socket_select(int nfds, fd_set *readfs, fd_set *writefds,
-      fd_set *errorfds, struct timeval *timeout);
+                  fd_set *errorfds, struct timeval *timeout);
 
 int socket_send_all_blocking(int fd, const void *data_, size_t size, bool no_signal);
 
 int socket_receive_all_blocking(int fd, void *data_, size_t size);
 
 ssize_t socket_receive_all_nonblocking(int fd, bool *error,
-      void *data_, size_t size);
+                                       void *data_, size_t size);
 
 bool socket_bind(int fd, void *data);
 
 int socket_connect(int fd, void *data, bool timeout_enable);
 
 int socket_create(
-      const char *name,
-      enum socket_domain domain_type,
-      enum socket_type socket_type,
-      enum socket_protocol protocol_type);
+    const char *name,
+    enum socket_domain domain_type,
+    enum socket_type socket_type,
+    enum socket_protocol protocol_type);
 
 void socket_set_target(void *data, socket_target_t *in_addr);
 

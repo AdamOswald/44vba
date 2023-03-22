@@ -135,7 +135,7 @@ RETRO_BEGIN_DECLS
 #define glUniformBlockBinding       rglUniformBlockBinding
 #define glGetUniformBlockIndex      rglGetUniformBlockIndex
 #define glGetActiveUniformBlockiv   rglGetActiveUniformBlockiv
-#define glBindBufferBase            rglBindBufferBase 
+#define glBindBufferBase            rglBindBufferBase
 #define glGetUniformIndices         rglGetUniformIndices
 #define glGetActiveUniformsiv       rglGetActiveUniformsiv
 #define glGetError                  rglGetError
@@ -165,65 +165,65 @@ RETRO_BEGIN_DECLS
 const GLubyte* rglGetStringi(GLenum name, GLuint index);
 void rglTexBuffer(GLenum target, GLenum internalFormat, GLuint buffer);
 void rglClearBufferfv( 	GLenum buffer,
-  	GLint drawBuffer,
-  	const GLfloat * value);
+                        GLint drawBuffer,
+                        const GLfloat * value);
 void rglClearBufferfi( 	GLenum buffer,
-  	GLint drawBuffer,
-  	GLfloat depth,
-  	GLint stencil);
+                        GLint drawBuffer,
+                        GLfloat depth,
+                        GLint stencil);
 void rglValidateProgram(GLuint program);
 void rglRenderbufferStorageMultisample( 	GLenum target,
-  	GLsizei samples,
-  	GLenum internalformat,
-  	GLsizei width,
-  	GLsizei height);
+        GLsizei samples,
+        GLenum internalformat,
+        GLsizei width,
+        GLsizei height);
 void rglUniform1iv(GLint location,  GLsizei count,  const GLint *value);
 void rglUniform1fv(GLint location,  GLsizei count,  const GLfloat *value);
 void rglProgramParameteri( 	GLuint program,
-  	GLenum pname,
-  	GLint value);
+                            GLenum pname,
+                            GLint value);
 void rglGetProgramBinary( 	GLuint program,
-  	GLsizei bufsize,
-  	GLsizei *length,
-  	GLenum *binaryFormat,
-  	void *binary);
+                            GLsizei bufsize,
+                            GLsizei *length,
+                            GLenum *binaryFormat,
+                            void *binary);
 void rglProgramBinary(GLuint program,
-  	GLenum binaryFormat,
-  	const void *binary,
-  	GLsizei length);
+                      GLenum binaryFormat,
+                      const void *binary,
+                      GLsizei length);
 void rglBindImageTexture( 	GLuint unit,
-  	GLuint texture,
-  	GLint level,
-  	GLboolean layered,
-  	GLint layer,
-  	GLenum access,
-  	GLenum format);
+                            GLuint texture,
+                            GLint level,
+                            GLboolean layered,
+                            GLint layer,
+                            GLenum access,
+                            GLenum format);
 void rglTexStorage2DMultisample(GLenum target, GLsizei samples,
-      GLenum internalformat, GLsizei width, GLsizei height,
-      GLboolean fixedsamplelocations);
+                                GLenum internalformat, GLsizei width, GLsizei height,
+                                GLboolean fixedsamplelocations);
 void rglGetActiveUniformsiv( 	GLuint program,
-  	GLsizei uniformCount,
-  	const GLuint *uniformIndices,
-  	GLenum pname,
-  	GLint *params);
+                                GLsizei uniformCount,
+                                const GLuint *uniformIndices,
+                                GLenum pname,
+                                GLint *params);
 void rglGetUniformIndices( 	GLuint program,
-  	GLsizei uniformCount,
-  	const GLchar **uniformNames,
-  	GLuint *uniformIndices);
+                            GLsizei uniformCount,
+                            const GLchar **uniformNames,
+                            GLuint *uniformIndices);
 void rglBindBufferBase( 	GLenum target,
-  	GLuint index,
-  	GLuint buffer);
+                            GLuint index,
+                            GLuint buffer);
 void rglGetActiveUniformBlockiv( 	GLuint program,
-  	GLuint uniformBlockIndex,
-  	GLenum pname,
-  	GLint *params);
+                                    GLuint uniformBlockIndex,
+                                    GLenum pname,
+                                    GLint *params);
 GLuint rglGetUniformBlockIndex( 	GLuint program,
-  	const GLchar *uniformBlockName);
+                                    const GLchar *uniformBlockName);
 void * rglMapBuffer(	GLenum target, GLenum access);
 void *rglMapBufferRange( 	GLenum target,
-  	GLintptr offset,
-  	GLsizeiptr length,
-  	GLbitfield access);
+                            GLintptr offset,
+                            GLsizeiptr length,
+                            GLbitfield access);
 GLboolean rglUnmapBuffer( 	GLenum target);
 void rglBlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 void rglBlendEquation(GLenum mode);
@@ -232,23 +232,23 @@ void rglReadBuffer(GLenum mode);
 void rglPixelStorei(GLenum pname, GLint param);
 void rglTexCoord2f(GLfloat s, GLfloat t);
 void rglDrawElements(GLenum mode, GLsizei count, GLenum type,
-                           const GLvoid * indices);
+                     const GLvoid * indices);
 void rglTexStorage2D(GLenum target, GLsizei levels, GLenum internalFormat,
-      GLsizei width, GLsizei height);
+                     GLsizei width, GLsizei height);
 void rglCompressedTexImage2D(GLenum target, GLint level,
-      GLenum internalformat, GLsizei width, GLsizei height,
-      GLint border, GLsizei imageSize, const GLvoid *data);
+                             GLenum internalformat, GLsizei width, GLsizei height,
+                             GLint border, GLsizei imageSize, const GLvoid *data);
 void glBindTexture(GLenum target, GLuint texture);
 void glActiveTexture(GLenum texture);
 void rglFramebufferTexture(GLenum target, GLenum attachment,
-  	GLuint texture, GLint level);
+                           GLuint texture, GLint level);
 void rglFramebufferTexture2D(GLenum target, GLenum attachment,
-      GLenum textarget, GLuint texture, GLint level);
+                             GLenum textarget, GLuint texture, GLint level);
 void rglFramebufferRenderbuffer(GLenum target, GLenum attachment,
-      GLenum renderbuffertarget, GLuint renderbuffer);
+                                GLenum renderbuffertarget, GLuint renderbuffer);
 void rglDeleteFramebuffers(GLsizei n, const GLuint *framebuffers);
 void rglRenderbufferStorage(GLenum target, GLenum internalFormat,
-      GLsizei width, GLsizei height);
+                            GLsizei width, GLsizei height);
 void rglDeleteTextures(GLsizei n, const GLuint *textures);
 void rglBindRenderbuffer(GLenum target, GLuint renderbuffer);
 void rglDeleteRenderbuffers(GLsizei n, GLuint *renderbuffers);
@@ -259,26 +259,26 @@ void rglBindFramebuffer(GLenum target, GLuint framebuffer);
 void rglGenerateMipmap(GLenum target);
 GLenum rglCheckFramebufferStatus(GLenum target);
 void rglBindFragDataLocation(GLuint program, GLuint colorNumber,
-                                   const char * name);
+                             const char * name);
 void rglBindAttribLocation(GLuint program, GLuint index, const GLchar *name);
 void rglLinkProgram(GLuint program);
 void rglGetProgramiv(GLuint shader, GLenum pname, GLint *params);
 void rglGetShaderiv(GLuint shader, GLenum pname, GLint *params);
 void rglAttachShader(GLuint program, GLuint shader);
 void rglShaderSource(GLuint shader, GLsizei count,
-      const GLchar **string, const GLint *length);
+                     const GLchar **string, const GLint *length);
 void rglCompileShader(GLuint shader);
 GLuint rglCreateProgram(void);
 void rglGetShaderInfoLog(GLuint shader, GLsizei maxLength,
-      GLsizei *length, GLchar *infoLog);
+                         GLsizei *length, GLchar *infoLog);
 void rglGetProgramInfoLog(GLuint shader, GLsizei maxLength,
-      GLsizei *length, GLchar *infoLog);
+                          GLsizei *length, GLchar *infoLog);
 GLboolean rglIsProgram(GLuint program);
 void rglEnableVertexAttribArray(GLuint index);
 void rglDisableVertexAttribArray(GLuint index);
 void rglVertexAttribPointer(GLuint name, GLint size,
-      GLenum type, GLboolean normalized, GLsizei stride,
-      const GLvoid* pointer);
+                            GLenum type, GLboolean normalized, GLsizei stride,
+                            const GLvoid* pointer);
 GLint rglGetUniformLocation(GLuint program, const GLchar *name);
 void rglGenBuffers(GLsizei n, GLuint *buffers);
 void rglDisable(GLenum cap);
@@ -288,7 +288,7 @@ void rglDepthMask(GLboolean flag);
 void rglStencilMask(GLenum mask);
 void rglBufferData(GLenum target, GLsizeiptr size, const GLvoid *data, GLenum usage);
 void rglBufferSubData(GLenum target, GLintptr offset,
-      GLsizeiptr size, const GLvoid *data);
+                      GLsizeiptr size, const GLvoid *data);
 void rglBindBuffer(GLenum target, GLuint buffer);
 GLuint rglCreateShader(GLenum shader);
 void rglDeleteShader(GLuint shader);
@@ -304,7 +304,7 @@ void rglUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3
 void rglUniform4fv(GLint location, GLsizei count, const GLfloat *value);
 void rglBlendFunc(GLenum sfactor, GLenum dfactor);
 void rglBlendFuncSeparate(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha,
-      GLenum dstAlpha);
+                          GLenum dstAlpha);
 void rglDepthFunc(GLenum func);
 void rglColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
 void rglClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
@@ -320,80 +320,80 @@ void rglClearDepth(GLdouble depth);
 void rglPolygonOffset(GLfloat factor, GLfloat units);
 void rglDrawArrays(GLenum mode, GLint first, GLsizei count);
 void rglVertexAttrib4f(GLuint name, GLfloat x, GLfloat y,
-      GLfloat z, GLfloat w);
+                       GLfloat z, GLfloat w);
 void rglVertexAttrib4fv(GLuint name, GLfloat* v);
 void rglDeleteProgram(GLuint program);
 void rglDeleteBuffers(GLsizei n, const GLuint *buffers);
 void rglBlitFramebuffer(
-      GLint srcX0, GLint srcY0,
-      GLint srcX1, GLint srcY1,
-      GLint dstX0, GLint dstY0,
-      GLint dstX1, GLint dstY1,
-      GLbitfield mask, GLenum filter);
+    GLint srcX0, GLint srcY0,
+    GLint srcX1, GLint srcY1,
+    GLint dstX0, GLint dstY0,
+    GLint dstX1, GLint dstY1,
+    GLbitfield mask, GLenum filter);
 void rglDetachShader(GLuint program, GLuint shader);
 void rglUniformMatrix4fv(GLint location, GLsizei count, GLboolean transpose,
-      const GLfloat *value);
+                         const GLfloat *value);
 GLint rglGetAttribLocation(GLuint program, const GLchar *name);
 void rglDrawBuffers(GLsizei n, const GLenum *bufs);
 void rglBindVertexArray(GLuint array);
 
 void rglGetActiveUniform(GLuint program, GLuint index, GLsizei bufsize,
-      GLsizei *length, GLint *size, GLenum *type, GLchar *name);
+                         GLsizei *length, GLint *size, GLenum *type, GLchar *name);
 void rglUniform1ui(GLint location, GLuint v);
 void rglUniform2ui(GLint location, GLuint v0, GLuint v1);
 void rglUniform3ui(GLint location, GLuint v0, GLuint v1, GLuint v2);
 void rglUniform4ui(GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
 void rglBlendEquationSeparate(GLenum modeRGB, GLenum modeAlpha);
 void rglCopyImageSubData( 	GLuint srcName,
-  	GLenum srcTarget,
-  	GLint srcLevel,
-  	GLint srcX,
-  	GLint srcY,
-  	GLint srcZ,
-  	GLuint dstName,
-  	GLenum dstTarget,
-  	GLint dstLevel,
-  	GLint dstX,
-  	GLint dstY,
-  	GLint dstZ,
-  	GLsizei srcWidth,
-  	GLsizei srcHeight,
-  	GLsizei srcDepth);
+                            GLenum srcTarget,
+                            GLint srcLevel,
+                            GLint srcX,
+                            GLint srcY,
+                            GLint srcZ,
+                            GLuint dstName,
+                            GLenum dstTarget,
+                            GLint dstLevel,
+                            GLint dstX,
+                            GLint dstY,
+                            GLint dstZ,
+                            GLsizei srcWidth,
+                            GLsizei srcHeight,
+                            GLsizei srcDepth);
 void rglVertexAttribIPointer(
-      GLuint index,
-      GLint size,
-      GLenum type,
-      GLsizei stride,
-      const GLvoid * pointer);
+    GLuint index,
+    GLint size,
+    GLenum type,
+    GLsizei stride,
+    const GLvoid * pointer);
 void rglVertexAttribLPointer(
-      GLuint index,
-      GLint size,
-      GLenum type,
-      GLsizei stride,
-      const GLvoid * pointer);
+    GLuint index,
+    GLint size,
+    GLenum type,
+    GLsizei stride,
+    const GLvoid * pointer);
 void rglUniformBlockBinding( 	GLuint program,
-  	GLuint uniformBlockIndex,
-  	GLuint uniformBlockBinding);
+                                GLuint uniformBlockIndex,
+                                GLuint uniformBlockBinding);
 GLenum rglGetError(void);
 void rglClear(GLbitfield mask);
 void rglPolygonMode(GLenum face, GLenum mode);
 void rglLineWidth(GLfloat width);
 void rglTexImage2DMultisample( 	GLenum target,
-  	GLsizei samples,
-  	GLenum internalformat,
-  	GLsizei width,
-  	GLsizei height,
-  	GLboolean fixedsamplelocations);
+                                GLsizei samples,
+                                GLenum internalformat,
+                                GLsizei width,
+                                GLsizei height,
+                                GLboolean fixedsamplelocations);
 void rglMemoryBarrier( 	GLbitfield barriers);
 void rglTexSubImage2D( 	GLenum target,
-  	GLint level,
-  	GLint xoffset,
-  	GLint yoffset,
-  	GLsizei width,
-  	GLsizei height,
-  	GLenum format,
-  	GLenum type,
-  	const GLvoid * pixels);
+                        GLint level,
+                        GLint xoffset,
+                        GLint yoffset,
+                        GLsizei width,
+                        GLsizei height,
+                        GLenum format,
+                        GLenum type,
+                        const GLvoid * pixels);
 void rglDeleteVertexArrays(GLsizei n, const GLuint *arrays);
 void *rglFenceSync(GLenum condition, GLbitfield flags);
 void rglWaitSync(void *sync, GLbitfield flags, uint64_t timeout);

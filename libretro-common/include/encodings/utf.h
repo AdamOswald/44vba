@@ -33,10 +33,10 @@
 RETRO_BEGIN_DECLS
 
 size_t utf8_conv_utf32(uint32_t *out, size_t out_chars,
-      const char *in, size_t in_size);
+                       const char *in, size_t in_size);
 
 bool utf16_conv_utf8(uint8_t *out, size_t *out_chars,
-      const uint16_t *in, size_t in_size);
+                     const uint16_t *in, size_t in_size);
 
 size_t utf8len(const char *string);
 

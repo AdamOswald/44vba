@@ -45,7 +45,7 @@ char *string_to_lower(char *s);
 char *string_ucwords(char* s);
 
 char *string_replace_substring(const char *in, const char *pattern,
-      const char *by);
+                               const char *by);
 
 /* Remove leading whitespaces */
 char *string_trim_whitespace_left(char *const s);

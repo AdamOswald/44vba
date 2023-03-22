@@ -32,8 +32,8 @@
 
 enum intfstream_type
 {
-   INTFSTREAM_FILE = 0,
-   INTFSTREAM_MEMORY
+    INTFSTREAM_FILE = 0,
+    INTFSTREAM_MEMORY
 };
 
 typedef struct intfstream_internal intfstream_internal_t;
@@ -42,39 +42,39 @@ typedef struct intfstream intfstream_t;
 
 typedef struct intfstream_info
 {
-   struct
-   {
-      struct
-      {
-         uint8_t *data;
-         unsigned size;
-      } buf;
-      bool writable;
-   } memory;
-   enum intfstream_type type;
+    struct
+    {
+        struct
+        {
+            uint8_t *data;
+            unsigned size;
+        } buf;
+        bool writable;
+    } memory;
+    enum intfstream_type type;
 } intfstream_info_t;
 
 void *intfstream_init(intfstream_info_t *info);
 
 bool intfstream_resize(intfstream_internal_t *intf,
-      intfstream_info_t *info);
+                       intfstream_info_t *info);
 
 bool intfstream_open(intfstream_internal_t *intf,
-      const char *path, unsigned mode, ssize_t len);
+                     const char *path, unsigned mode, ssize_t len);
 
 ssize_t intfstream_read(intfstream_internal_t *intf,
-      void *s, size_t len);
+                        void *s, size_t len);
 
 ssize_t intfstream_write(intfstream_internal_t *intf,
-      const void *s, size_t len);
+                         const void *s, size_t len);
 
 char *intfstream_gets(intfstream_internal_t *intf,
-      char *buffer, size_t len);
+                      char *buffer, size_t len);
 
 int intfstream_getc(intfstream_internal_t *intf);
 
 int intfstream_seek(intfstream_internal_t *intf,
-      int offset, int whence);
+                    int offset, int whence);
 
 void intfstream_rewind(intfstream_internal_t *intf);
 

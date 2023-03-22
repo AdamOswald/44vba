@@ -54,7 +54,7 @@ msg_queue_t *msg_queue_new(size_t size);
  * Push a new message onto the queue.
  **/
 void msg_queue_push(msg_queue_t *queue, const char *msg,
-      unsigned prio, unsigned duration);
+                    unsigned prio, unsigned duration);
 
 /**
  * msg_queue_pull:

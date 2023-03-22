@@ -39,12 +39,12 @@ RETRO_BEGIN_DECLS
  *  (i.e. DIRECTORY is on top of PLAIN_FILE) */
 enum
 {
-   RARCH_FILETYPE_UNSET,
-   RARCH_PLAIN_FILE,
-   RARCH_COMPRESSED_FILE_IN_ARCHIVE,
-   RARCH_COMPRESSED_ARCHIVE,
-   RARCH_DIRECTORY,
-   RARCH_FILE_UNSUPPORTED
+    RARCH_FILETYPE_UNSET,
+    RARCH_PLAIN_FILE,
+    RARCH_COMPRESSED_FILE_IN_ARCHIVE,
+    RARCH_COMPRESSED_ARCHIVE,
+    RARCH_DIRECTORY,
+    RARCH_FILE_UNSUPPORTED
 };
 
 
@@ -88,7 +88,7 @@ bool path_file_exists(const char *path);
  * path_get_extension:
  * @path               : path
  *
- * Gets extension of file. Only '.'s 
+ * Gets extension of file. Only '.'s
  * after the last slash are considered.
  *
  * Returns: extension part from the path.
@@ -119,7 +119,7 @@ const char *path_basename(const char *path);
 
 /**
  * path_basedir:
- * @path               : path           
+ * @path               : path
  *
  * Extracts base directory by mutating path.
  * Keeps trailing '/'.
@@ -159,7 +159,7 @@ bool path_is_absolute(const char *path);
  * fill_pathname:
  * @out_path           : output path
  * @in_path            : input  path
- * @replace            : what to replace 
+ * @replace            : what to replace
  * @size               : buffer size of output path
  *
  * FIXME: Verify
@@ -171,13 +171,13 @@ bool path_is_absolute(const char *path);
  * Only '.'s after the last slash are considered as extensions.
  * If no '.' is present, in_path and replace will simply be concatenated.
  * 'size' is buffer size of 'out_path'.
- * E.g.: in_path = "/foo/bar/baz/boo.c", replace = ".asm" => 
- * out_path = "/foo/bar/baz/boo.asm" 
+ * E.g.: in_path = "/foo/bar/baz/boo.c", replace = ".asm" =>
+ * out_path = "/foo/bar/baz/boo.asm"
  * E.g.: in_path = "/foo/bar/baz/boo.c", replace = ""     =>
- * out_path = "/foo/bar/baz/boo" 
+ * out_path = "/foo/bar/baz/boo"
  */
 void fill_pathname(char *out_path, const char *in_path,
-      const char *replace, size_t size);
+                   const char *replace, size_t size);
 
 /**
  * fill_dated_filename:
@@ -185,20 +185,20 @@ void fill_pathname(char *out_path, const char *in_path,
  * @ext                : extension of output filename
  * @size               : buffer size of output filename
  *
- * Creates a 'dated' filename prefixed by 'RetroArch', and 
+ * Creates a 'dated' filename prefixed by 'RetroArch', and
  * concatenates extension (@ext) to it.
  *
- * E.g.: 
+ * E.g.:
  * out_filename = "RetroArch-{month}{day}-{Hours}{Minutes}.{@ext}"
  **/
 void fill_dated_filename(char *out_filename,
-      const char *ext, size_t size);
+                         const char *ext, size_t size);
 
 /**
  * fill_pathname_noext:
  * @out_path           : output path
  * @in_path            : input  path
- * @replace            : what to replace 
+ * @replace            : what to replace
  * @size               : buffer size of output path
  *
  * Appends a filename extension 'replace' to 'in_path', and outputs
@@ -209,7 +209,7 @@ void fill_dated_filename(char *out_filename,
  *
  */
 void fill_pathname_noext(char *out_path, const char *in_path,
-      const char *replace, size_t size);
+                         const char *replace, size_t size);
 
 /**
  * find_last_slash:
@@ -239,11 +239,11 @@ char *find_last_slash(const char *str);
  * replace = ".asm" => in_dir = "/tmp/some_dir/foo.c.asm"
  **/
 void fill_pathname_dir(char *in_dir, const char *in_basename,
-      const char *replace, size_t size);
+                       const char *replace, size_t size);
 
 /**
  * fill_pathname_base:
- * @out                : output path         
+ * @out                : output path
  * @in_path            : input path
  * @size               : size of output path
  *
@@ -252,15 +252,15 @@ void fill_pathname_dir(char *in_dir, const char *in_basename,
 void fill_pathname_base(char *out_path, const char *in_path, size_t size);
 
 void fill_pathname_base_noext(char *out_dir,
-      const char *in_path, size_t size);
+                              const char *in_path, size_t size);
 
 void fill_pathname_base_ext(char *out,
-      const char *in_path, const char *ext,
-      size_t size);
+                            const char *in_path, const char *ext,
+                            size_t size);
 
 /**
  * fill_pathname_basedir:
- * @out_dir            : output directory        
+ * @out_dir            : output directory
  * @in_path            : input path
  * @size               : size of output directory
  *
@@ -271,11 +271,11 @@ void fill_pathname_base_ext(char *out,
 void fill_pathname_basedir(char *out_path, const char *in_path, size_t size);
 
 void fill_pathname_basedir_noext(char *out_dir,
-      const char *in_path, size_t size);
+                                 const char *in_path, size_t size);
 
 /**
  * fill_pathname_parent_dir:
- * @out_dir            : output directory        
+ * @out_dir            : output directory
  * @in_dir             : input directory
  * @size               : size of output directory
  *
@@ -283,7 +283,7 @@ void fill_pathname_basedir_noext(char *out_dir,
  * Assumes @in_dir is a directory. Keeps trailing '/'.
  **/
 void fill_pathname_parent_dir(char *out_dir,
-      const char *in_dir, size_t size);
+                              const char *in_dir, size_t size);
 
 /**
  * fill_pathname_resolve_relative:
@@ -298,52 +298,52 @@ void fill_pathname_parent_dir(char *out_dir,
  * out_path = "/foo/bar/foobar.cg".
  **/
 void fill_pathname_resolve_relative(char *out_path, const char *in_refpath,
-      const char *in_path, size_t size);
+                                    const char *in_path, size_t size);
 
 /**
  * fill_pathname_join:
  * @out_path           : output path
- * @dir                : directory   
+ * @dir                : directory
  * @path               : path
  * @size               : size of output path
  *
  * Joins a directory (@dir) and path (@path) together.
- * Makes sure not to get  two consecutive slashes 
+ * Makes sure not to get  two consecutive slashes
  * between directory and path.
  **/
 void fill_pathname_join(char *out_path, const char *dir,
-      const char *path, size_t size);
+                        const char *path, size_t size);
 
 void fill_pathname_join_special_ext(char *out_path,
-      const char *dir,  const char *path,
-      const char *last, const char *ext,
-      size_t size);
+                                    const char *dir,  const char *path,
+                                    const char *last, const char *ext,
+                                    size_t size);
 
 void fill_pathname_join_concat(char *out_path,
-      const char *dir, const char *path, 
-      const char *concat,
-      size_t size);
+                               const char *dir, const char *path,
+                               const char *concat,
+                               size_t size);
 
 void fill_pathname_join_noext(char *out_path,
-      const char *dir, const char *path, size_t size);
+                              const char *dir, const char *path, size_t size);
 
 /**
  * fill_pathname_join_delim:
  * @out_path           : output path
- * @dir                : directory   
+ * @dir                : directory
  * @path               : path
- * @delim              : delimiter 
+ * @delim              : delimiter
  * @size               : size of output path
  *
- * Joins a directory (@dir) and path (@path) together 
+ * Joins a directory (@dir) and path (@path) together
  * using the given delimiter (@delim).
  **/
 void fill_pathname_join_delim(char *out_path, const char *dir,
-      const char *path, const char delim, size_t size);
+                              const char *path, const char delim, size_t size);
 
 void fill_pathname_join_delim_concat(char *out_path, const char *dir,
-      const char *path, const char delim, const char *concat,
-      size_t size);
+                                     const char *path, const char delim, const char *concat,
+                                     size_t size);
 
 /**
  * fill_short_pathname_representation:
@@ -361,16 +361,16 @@ void fill_pathname_join_delim_concat(char *out_path, const char *dir,
  *       "/path/to/myarchive.7z#folder/to/game.img" -> game.img
  */
 void fill_short_pathname_representation(char* out_rep,
-      const char *in_path, size_t size);
+                                        const char *in_path, size_t size);
 
 void fill_short_pathname_representation_noext(char* out_rep,
-      const char *in_path, size_t size);
+        const char *in_path, size_t size);
 
 void fill_pathname_expand_special(char *out_path,
-      const char *in_path, size_t size);
+                                  const char *in_path, size_t size);
 
 void fill_pathname_abbreviate_special(char *out_path,
-      const char *in_path, size_t size);
+                                      const char *in_path, size_t size);
 
 /**
  * path_char_is_slash:
@@ -383,9 +383,9 @@ void fill_pathname_abbreviate_special(char *out_path,
 static INLINE bool path_char_is_slash(char c)
 {
 #ifdef _WIN32
-   return (c == '/') || (c == '\\');
+    return (c == '/') || (c == '\\');
 #else
-   return (c == '/');
+    return (c == '/');
 #endif
 }
 
@@ -399,13 +399,13 @@ static INLINE bool path_char_is_slash(char c)
 static INLINE const char *path_default_slash(void)
 {
 #ifdef _WIN32
-   return "\\";
+    return "\\";
 #else
-   return "/";
+    return "/";
 #endif
 }
 
-/** 
+/**
  * fill_pathname_slash:
  * @path               : path
  * @size               : size of path

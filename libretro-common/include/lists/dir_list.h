@@ -42,7 +42,7 @@ RETRO_BEGIN_DECLS
  * NULL in case of error. Has to be freed manually.
  **/
 struct string_list *dir_list_new(const char *dir, const char *ext,
-      bool include_dirs, bool include_compressed);
+                                 bool include_dirs, bool include_compressed);
 
 /**
  * dir_list_sort:

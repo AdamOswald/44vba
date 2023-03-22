@@ -33,22 +33,22 @@ RETRO_BEGIN_DECLS
 
 union string_list_elem_attr
 {
-   bool  b;
-   int   i;
-   void *p;
+    bool  b;
+    int   i;
+    void *p;
 };
 
 struct string_list_elem
 {
-   char *data;
-   union string_list_elem_attr attr;
+    char *data;
+    union string_list_elem_attr attr;
 };
 
 struct string_list
 {
-   struct string_list_elem *elems;
-   size_t size;
-   size_t cap;
+    struct string_list_elem *elems;
+    size_t size;
+    size_t cap;
 };
 
 /**
@@ -74,7 +74,7 @@ int string_list_find_elem(const struct string_list *list, const char *elem);
  * Returns: true (1) if element could be found, otherwise false (0).
  */
 bool string_list_find_elem_prefix(const struct string_list *list,
-      const char *prefix, const char *elem);
+                                  const char *prefix, const char *elem);
 
 /**
  * string_split:
@@ -107,7 +107,7 @@ struct string_list *string_list_new(void);
  * Returns: true (1) if successful, otherwise false (0).
  **/
 bool string_list_append(struct string_list *list, const char *elem,
-      union string_list_elem_attr attr);
+                        union string_list_elem_attr attr);
 
 /**
  * string_list_free
@@ -124,11 +124,11 @@ void string_list_free(struct string_list *list);
  * @list             : pointer to string list.
  * @delim            : delimiter character for @list.
  *
- * A string list will be joined/concatenated as a 
+ * A string list will be joined/concatenated as a
  * string to @buffer, delimited by @delim.
  */
 void string_list_join_concat(char *buffer, size_t size,
-      const struct string_list *list, const char *sep);
+                             const struct string_list *list, const char *sep);
 
 /**
  * string_list_set:
@@ -139,7 +139,7 @@ void string_list_join_concat(char *buffer, size_t size,
  * Set value of element inside string list.
  **/
 void string_list_set(struct string_list *list, unsigned idx,
-      const char *str);
+                     const char *str);
 
 RETRO_END_DECLS
 

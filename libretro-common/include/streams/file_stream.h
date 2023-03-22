@@ -37,14 +37,14 @@ typedef struct RFILE RFILE;
 
 enum
 {
-   RFILE_MODE_READ = 0,
-   RFILE_MODE_READ_TEXT,
-   RFILE_MODE_WRITE,
-   RFILE_MODE_READ_WRITE,
+    RFILE_MODE_READ = 0,
+    RFILE_MODE_READ_TEXT,
+    RFILE_MODE_WRITE,
+    RFILE_MODE_READ_WRITE,
 
-   /* There is no garantee these requests will be attended. */
-   RFILE_HINT_UNBUFFERED = 1<<8,
-   RFILE_HINT_MMAP       = 1<<9  /* requires RFILE_MODE_READ */
+    /* There is no garantee these requests will be attended. */
+    RFILE_HINT_UNBUFFERED = 1<<8,
+    RFILE_HINT_MMAP       = 1<<9  /* requires RFILE_MODE_READ */
 };
 
 RFILE *filestream_open(const char *path, unsigned mode, ssize_t len);

@@ -226,7 +226,10 @@ extern RGLSYMGLISVERTEXARRAYOESPROC __rglgen_glIsVertexArrayOES;
 extern RGLSYMGLFRAMEBUFFERTEXTUREMULTIVIEWOVRPROC __rglgen_glFramebufferTextureMultiviewOVR;
 extern RGLSYMGLFRAMEBUFFERTEXTUREMULTISAMPLEMULTIVIEWOVRPROC __rglgen_glFramebufferTextureMultisampleMultiviewOVR;
 
-struct rglgen_sym_map { const char *sym; void *ptr; };
+struct rglgen_sym_map {
+    const char *sym;
+    void *ptr;
+};
 extern const struct rglgen_sym_map rglgen_symbol_map[];
 #ifdef __cplusplus
 }

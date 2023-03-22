@@ -26,68 +26,68 @@
 #include <clamping.h>
 
 void conv_0rgb1555_argb8888(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                            int width, int height,
+                            int out_stride, int in_stride);
 
 void conv_0rgb1555_rgb565(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                          int width, int height,
+                          int out_stride, int in_stride);
 
 void conv_rgb565_0rgb1555(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                          int width, int height,
+                          int out_stride, int in_stride);
 
 void conv_rgb565_argb8888(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                          int width, int height,
+                          int out_stride, int in_stride);
 
 void conv_rgba4444_argb8888(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                            int width, int height,
+                            int out_stride, int in_stride);
 
 void conv_rgba4444_rgb565(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                          int width, int height,
+                          int out_stride, int in_stride);
 
 void conv_bgr24_argb8888(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                         int width, int height,
+                         int out_stride, int in_stride);
 
 void conv_argb8888_0rgb1555(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                            int width, int height,
+                            int out_stride, int in_stride);
 
 void conv_argb8888_rgba4444(void *output_, const void *input_,
-      int width, int height,
-      int out_stride, int in_stride);
+                            int width, int height,
+                            int out_stride, int in_stride);
 
 void conv_argb8888_rgb565(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                          int width, int height,
+                          int out_stride, int in_stride);
 
 void conv_argb8888_bgr24(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                         int width, int height,
+                         int out_stride, int in_stride);
 
 void conv_argb8888_abgr8888(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                            int width, int height,
+                            int out_stride, int in_stride);
 
 void conv_0rgb1555_bgr24(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                         int width, int height,
+                         int out_stride, int in_stride);
 
 void conv_rgb565_bgr24(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                       int width, int height,
+                       int out_stride, int in_stride);
 
 void conv_yuyv_argb8888(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+                        int width, int height,
+                        int out_stride, int in_stride);
 
 void conv_copy(void *output, const void *input,
-      int width, int height,
-      int out_stride, int in_stride);
+               int width, int height,
+               int out_stride, int in_stride);
 
 #endif
 

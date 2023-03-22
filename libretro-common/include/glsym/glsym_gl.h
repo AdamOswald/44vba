@@ -653,8 +653,8 @@ typedef void (APIENTRYP RGLSYMGLVERTEXATTRIBL1UI64ARBPROC) (GLuint index, GLuint
 typedef void (APIENTRYP RGLSYMGLVERTEXATTRIBL1UI64VARBPROC) (GLuint index, const GLuint64EXT *v);
 typedef void (APIENTRYP RGLSYMGLGETVERTEXATTRIBLUI64VARBPROC) (GLuint index, GLenum pname, GLuint64EXT *params);
 #ifdef __APPLE__
-	struct _cl_context;
-	struct _cl_event;
+struct _cl_context;
+struct _cl_event;
 #endif
 typedef GLsync (APIENTRYP RGLSYMGLCREATESYNCFROMCLEVENTARBPROC) (struct _cl_context *context, struct _cl_event *event, GLbitfield flags);
 typedef void (APIENTRYP RGLSYMGLCLAMPCOLORARBPROC) (GLenum target, GLenum clamp);
@@ -3132,7 +3132,10 @@ extern RGLSYMGLIMAGETRANSFORMPARAMETERFVHPPROC __rglgen_glImageTransformParamete
 extern RGLSYMGLGETIMAGETRANSFORMPARAMETERIVHPPROC __rglgen_glGetImageTransformParameterivHP;
 extern RGLSYMGLGETIMAGETRANSFORMPARAMETERFVHPPROC __rglgen_glGetImageTransformParameterfvHP;
 
-struct rglgen_sym_map { const char *sym; void *ptr; };
+struct rglgen_sym_map {
+    const char *sym;
+    void *ptr;
+};
 extern const struct rglgen_sym_map rglgen_symbol_map[];
 #ifdef __cplusplus
 }

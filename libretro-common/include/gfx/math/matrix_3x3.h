@@ -27,7 +27,7 @@
 
 typedef struct math_matrix_3x3
 {
-   float data[9];
+    float data[9];
 } math_matrix_3x3;
 
 #define MAT_ELEM_3X3(mat, r, c) ((mat).data[3 * (r) + (c)])
@@ -40,7 +40,7 @@ void matrix_3x3_identity(math_matrix_3x3 *mat);
 void matrix_3x3_transpose(math_matrix_3x3 *out, const math_matrix_3x3 *in);
 
 void matrix_3x3_multiply(math_matrix_3x3 *out,
-      const math_matrix_3x3 *a, const math_matrix_3x3 *b);
+                         const math_matrix_3x3 *a, const math_matrix_3x3 *b);
 void matrix_3x3_divide_scalar(math_matrix_3x3 *mat, const float s);
 float matrix_3x3_determinant(const math_matrix_3x3 *mat);
 void matrix_3x3_adjoint(math_matrix_3x3 *mat);

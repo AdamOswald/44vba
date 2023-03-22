@@ -31,27 +31,27 @@ RETRO_BEGIN_DECLS
 
 enum rbmp_source_type
 {
-   RBMP_SOURCE_TYPE_DONT_CARE = 0,
-   RBMP_SOURCE_TYPE_BGR24 = 1,
-   RBMP_SOURCE_TYPE_XRGB888 = 2,
-   RBMP_SOURCE_TYPE_RGB565 = 3,
-   RBMP_SOURCE_TYPE_ARGB8888 = 4,
-   RBMP_SOURCE_TYPE_FORMATMASK = 7,
-   RBMP_SOURCE_TYPE_YFLIPPED = 16
+    RBMP_SOURCE_TYPE_DONT_CARE = 0,
+    RBMP_SOURCE_TYPE_BGR24 = 1,
+    RBMP_SOURCE_TYPE_XRGB888 = 2,
+    RBMP_SOURCE_TYPE_RGB565 = 3,
+    RBMP_SOURCE_TYPE_ARGB8888 = 4,
+    RBMP_SOURCE_TYPE_FORMATMASK = 7,
+    RBMP_SOURCE_TYPE_YFLIPPED = 16
 };
 
 typedef struct rbmp rbmp_t;
 
 bool rbmp_save_image(
-      const char *filename,
-      const void *frame,
-      unsigned width,
-      unsigned height,
-      unsigned pitch,
-      enum rbmp_source_type type);
+    const char *filename,
+    const void *frame,
+    unsigned width,
+    unsigned height,
+    unsigned pitch,
+    enum rbmp_source_type type);
 
 int rbmp_process_image(rbmp_t *rbmp, void **buf,
-      size_t size, unsigned *width, unsigned *height);
+                       size_t size, unsigned *width, unsigned *height);
 
 bool rbmp_set_buf_ptr(rbmp_t *rbmp, void *data);
 

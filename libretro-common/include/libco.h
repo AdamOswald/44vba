@@ -26,11 +26,11 @@
 #include <retro_common_api.h>
 
 #ifdef LIBCO_C
-  #ifdef LIBCO_MP
-    #define thread_local __thread
-  #else
-    #define thread_local
-  #endif
+#ifdef LIBCO_MP
+#define thread_local __thread
+#else
+#define thread_local
+#endif
 #endif
 
 RETRO_BEGIN_DECLS

@@ -47,14 +47,14 @@ void rpng_free(rpng_t *rpng);
 bool rpng_iterate_image(rpng_t *rpng);
 
 int rpng_process_image(rpng_t *rpng,
-      void **data, size_t size, unsigned *width, unsigned *height);
+                       void **data, size_t size, unsigned *width, unsigned *height);
 
 bool rpng_start(rpng_t *rpng);
 
 bool rpng_save_image_argb(const char *path, const uint32_t *data,
-      unsigned width, unsigned height, unsigned pitch);
+                          unsigned width, unsigned height, unsigned pitch);
 bool rpng_save_image_bgr24(const char *path, const uint8_t *data,
-      unsigned width, unsigned height, unsigned pitch);
+                           unsigned width, unsigned height, unsigned pitch);
 
 RETRO_END_DECLS
 

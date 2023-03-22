@@ -68,16 +68,16 @@ void sha256_hash(char *out, const uint8_t *in, size_t size);
 
 typedef struct SHA1Context
 {
-   unsigned Message_Digest[5]; /* Message Digest (output)          */
+    unsigned Message_Digest[5]; /* Message Digest (output)          */
 
-   unsigned Length_Low;        /* Message length in bits           */
-   unsigned Length_High;       /* Message length in bits           */
+    unsigned Length_Low;        /* Message length in bits           */
+    unsigned Length_High;       /* Message length in bits           */
 
-   unsigned char Message_Block[64]; /* 512-bit message blocks      */
-   int Message_Block_Index;    /* Index into message block array   */
+    unsigned char Message_Block[64]; /* 512-bit message blocks      */
+    int Message_Block_Index;    /* Index into message block array   */
 
-   int Computed;               /* Is the digest computed?          */
-   int Corrupted;              /* Is the message digest corruped?  */
+    int Computed;               /* Is the digest computed?          */
+    int Corrupted;              /* Is the message digest corruped?  */
 } SHA1Context;
 
 int sha1_calculate(const char *path, char *result);
@@ -88,10 +88,10 @@ uint32_t djb2_calculate(const char *str);
 typedef unsigned int MD5_u32plus;
 
 typedef struct {
-	MD5_u32plus lo, hi;
-	MD5_u32plus a, b, c, d;
-	unsigned char buffer[64];
-	MD5_u32plus block[16];
+    MD5_u32plus lo, hi;
+    MD5_u32plus a, b, c, d;
+    unsigned char buffer[64];
+    MD5_u32plus block[16];
 } MD5_CTX;
 
 /*

@@ -37,9 +37,9 @@ extern "C" {
 #endif
 
 bool rtga_image_load_shift(uint8_t *buf,
-      void *data,
-      unsigned a_shift, unsigned r_shift,
-      unsigned g_shift, unsigned b_shift);
+                           void *data,
+                           unsigned a_shift, unsigned r_shift,
+                           unsigned g_shift, unsigned b_shift);
 
 #ifdef __cplusplus
 }

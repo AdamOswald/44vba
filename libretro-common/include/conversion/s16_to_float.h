@@ -45,7 +45,7 @@ RETRO_BEGIN_DECLS
  * SSE2 implementation callback function.
  **/
 void convert_s16_to_float_SSE2(float *out,
-      const int16_t *in, size_t samples, float gain);
+                               const int16_t *in, size_t samples, float gain);
 
 #elif defined(__ALTIVEC__)
 #define convert_s16_to_float convert_s16_to_float_altivec
@@ -63,13 +63,13 @@ void convert_s16_to_float_SSE2(float *out,
  * AltiVec implementation callback function.
  **/
 void convert_s16_to_float_altivec(float *out,
-      const int16_t *in, size_t samples, float gain);
+                                  const int16_t *in, size_t samples, float gain);
 
 #elif defined(__ARM_NEON__) && !defined(VITA)
 #define convert_s16_to_float convert_s16_to_float_arm
 
 void (*convert_s16_to_float_arm)(float *out,
-      const int16_t *in, size_t samples, float gain);
+                                 const int16_t *in, size_t samples, float gain);
 
 #elif defined(_MIPS_ARCH_ALLEGREX)
 #define convert_s16_to_float convert_s16_to_float_ALLEGREX
@@ -87,7 +87,7 @@ void (*convert_s16_to_float_arm)(float *out,
  * MIPS ALLEGREX implementation callback function.
  **/
 void convert_s16_to_float_ALLEGREX(float *out,
-      const int16_t *in, size_t samples, float gain);
+                                   const int16_t *in, size_t samples, float gain);
 #else
 #define convert_s16_to_float convert_s16_to_float_C
 #endif
@@ -105,7 +105,7 @@ void convert_s16_to_float_ALLEGREX(float *out,
  * C implementation callback function.
  **/
 void convert_s16_to_float_C(float *out,
-      const int16_t *in, size_t samples, float gain);
+                            const int16_t *in, size_t samples, float gain);
 
 /**
  * convert_s16_to_float_init_simd:

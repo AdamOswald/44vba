@@ -35,7 +35,7 @@ RETRO_BEGIN_DECLS
 typedef struct rjpeg rjpeg_t;
 
 int rjpeg_process_image(rjpeg_t *rjpeg, void **buf,
-      size_t size, unsigned *width, unsigned *height);
+                        size_t size, unsigned *width, unsigned *height);
 
 bool rjpeg_set_buf_ptr(rjpeg_t *rjpeg, void *data);
 

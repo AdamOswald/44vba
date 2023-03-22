@@ -34,27 +34,27 @@
 static INLINE int64_t fx32_mul(const int32_t a, const int32_t b)
 {
 #ifdef _MSC_VER
-   return __emul(a, b);
+    return __emul(a, b);
 #else
-   return ((int64_t)a) * ((int64_t)b);
+    return ((int64_t)a) * ((int64_t)b);
 #endif
 }
 
 static INLINE int32_t fx32_shiftdown(const int64_t a)
 {
 #ifdef _MSC_VER
-	return (int32_t)__ll_rshift(a, 12);
+    return (int32_t)__ll_rshift(a, 12);
 #else
-	return (int32_t)(a >> 12);
+    return (int32_t)(a >> 12);
 #endif
 }
 
 static INLINE int64_t fx32_shiftup(const int32_t a)
 {
 #ifdef _MSC_VER
-	return __ll_lshift(a, 12);
+    return __ll_lshift(a, 12);
 #else
-	return ((int64_t)a) << 12;
+    return ((int64_t)a) << 12;
 #endif
 }
 
