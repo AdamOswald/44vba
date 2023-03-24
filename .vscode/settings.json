@@ -3,5 +3,6 @@
         "atomic": "cpp",
         "memory": "cpp"
     },
-    "FSharp.suggestGitignore": false
+    "FSharp.suggestGitignore": false,
+    "python.unitTest.promptToConfigure": false
 }
