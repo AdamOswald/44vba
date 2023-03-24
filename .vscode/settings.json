@@ -2,5 +2,6 @@
     "files.associations": {
         "atomic": "cpp",
         "memory": "cpp"
-    }
+    },
+    "FSharp.suggestGitignore": false
 }
